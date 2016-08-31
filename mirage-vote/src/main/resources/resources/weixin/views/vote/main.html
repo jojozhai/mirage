@@ -1,0 +1,35 @@
+<footer class="ui-footer ui-footer-btn">
+    <ul class="ui-tiled ui-border-t">
+    	<li ui-sref="vote.activity" class="ui-border-r"><span class="fa fa-home"></span><div>主页</div></li>
+        <li ng-click="gotoEnrollPage()" class="ui-border-r"><span class="fa fa-pencil-square-o"></span><div>报名</div></li>
+        <li onclick="_system._guide(true)" class="ui-border-r"><span class="fa fa-share-alt"></span><div>拉票</div></li>
+    </ul>
+</footer>
+
+<section class="ui-container">
+	<ul class="ui-row">
+	    <img class="img-responsive"  ng-src="{{activity.images[0]}}">
+	</ul>
+	
+	<div ui-view></div>
+	
+	<div class="ui-row" style="background: #d9edf7; padding: 10px;">
+		<span class="label label-info" style="font-size: 16px;">活动详情</span>
+		<div style="padding: 10px;" ng-bind-html="activity.desc | toHtml"></div>
+		<span class="label label-info" style="font-size: 16px;">活动奖项</span>
+		<div style="padding: 10px;" ng-bind-html="activity.gift | toHtml"></div>
+		<span class="label label-info" style="font-size: 16px;">活动说明</span>
+		<div style="padding: 10px;" ng-bind-html="activity.declare | toHtml"></div>
+	</div>
+	
+	<div id="cover"></div>
+	<div id="guide"><img src="img/guide1.png"></div>
+	<div id="follow">
+		<div>
+			<img src="images/qrcode.jpg">
+		</div>
+		<div>
+			<span style="color: white">关注微信号参与活动</span>	
+		</div>
+	</div>
+</section>

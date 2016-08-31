@@ -1,0 +1,121 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.ymt.mirage</groupId>
+	<artifactId>mirage</artifactId>
+	<version>1.0.0-SNAPSHOT</version>
+	<packaging>pom</packaging>
+
+	<properties>
+		<pzx.framework.version>1.0.0-SNAPSHOT</pzx.framework.version>
+		<mirage.version>1.0.0-SNAPSHOT</mirage.version>
+	</properties>
+
+	<repositories>
+		<repository>
+			<id>nexus</id>
+			<name>Idea Nexus Repository</name>
+			<url>http://115.182.42.23/nexus/content/groups/public</url>
+		</repository>
+		<repository>
+			<id>mvn-repo</id>
+			<url>http://maven.ansj.org/</url>
+		</repository>
+	</repositories>
+
+	<distributionManagement>
+		<repository>
+			<id>nexus</id>
+			<name>nexus releases repository</name>
+			<url>http://115.182.42.23/nexus/content/repositories/releases</url>
+		</repository>
+		<snapshotRepository>
+			<id>nexus-snapshots</id>
+			<name>nexus snapshots Repository</name>
+			<url>http://115.182.42.23/nexus/content/repositories/snapshots</url>
+		</snapshotRepository>
+	</distributionManagement>
+
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>io.spring.platform</groupId>
+				<artifactId>platform-bom</artifactId>
+				<version>2.0.3.RELEASE</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
+	<build>
+
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+				<version>1.3.3.RELEASE</version>
+				<!-- <executions> <execution> <goals> <goal>repackage</goal> </goals> 
+					</execution> </executions> -->
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>2.3.2</version>
+				<configuration>
+					<source>1.7</source>
+					<target>1.7</target>
+					<encoding>UTF-8</encoding>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+	<profiles>
+		<profile>
+			<id>dev</id>
+			<properties>
+				<spring.profiles.active>dev</spring.profiles.active>
+			</properties>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+		</profile>
+		<profile>
+			<id>test</id>
+			<properties>
+				<spring.profiles.active>test</spring.profiles.active>
+			</properties>
+		</profile>
+		<profile>
+			<id>pro</id>
+			<properties>
+				<spring.profiles.active>pro</spring.profiles.active>
+			</properties>
+		</profile>
+	</profiles>
+	<modules>
+		<module>../mirage-vote</module>
+		<module>../mirage-user</module>
+		<module>../mirage-poster</module>
+		<module>../mirage-challenge</module>
+		<module>../mirage-challenge-service</module>
+		<module>../mirage-social</module>
+		<module>../mirage-social-service</module>
+		<module>../mirage-apply</module>
+		<module>../mirage-apply-service</module>
+		<module>../mirage-video</module>
+		<module>../mirage-video-service</module>
+		<module>../mirage-activity</module>
+		<module>../mirage-activity-service</module>
+		<module>../mirage-tag</module>
+		<module>../mirage-tag-service</module>
+		<module>../mirage-order</module>
+		<module>../mirage-order-service</module>
+		<module>../mirage-swiper</module>
+		<module>../mirage-swiper-service</module>
+		<module>../mirage-lottery</module>
+		<module>../mirage-article</module>
+		<module>../mirage-sms</module>
+	</modules>
+</project>

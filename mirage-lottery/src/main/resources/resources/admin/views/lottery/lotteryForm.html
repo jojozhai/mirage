@@ -1,0 +1,66 @@
+<div class="smart-widget widget-dark-blue margin-md">
+	<div class="smart-widget-header">抽奖信息</div>
+	<div class="smart-widget-inner">
+	<div class="smart-widget-body" >
+		<form name="lotteryForm" class="form-horizontal no-margin" id="type-constraint" data-validate="parsley" novalidate>
+			<div class="form-group"  ng-class="lotteryForm.name.$invalid && lotteryForm.name.$dirty ? 'has-error': ''">
+				<label class="control-label col-lg-3">名称:</label>
+				<div class="col-lg-6">
+					<input name="name" ng-model="lottery.name" type="text" class="form-control input-sm" placeholder="名称" required>
+					<label class="control-label" ng-show="lotteryForm.name.$invalid && lotteryForm.name.$dirty">名称不能为空</label>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="control-label col-lg-3">奖品设置:</label>
+				<div class="col-lg-4">
+					<p ng-repeat="prize in lottery.prizes" class="input-group" style="margin-bottom: 3px;">
+						<input ng-model="prize" type="text" class="form-control input-sm" readonly="readonly" disabled="disabled">
+						<span class="input-group-btn">
+							<button type="button" class="btn btn-danger input-sm" ng-click="removePrize(prize)">
+								<i class="fa fa-times"></i>
+							</button>
+						</span>
+					</p>
+					<p class="input-group" style="margin-bottom: 0px;">
+						<input ng-model="newPrize" type="text" ng-keyup="addPrize2($event)" class="form-control input-sm" placeholder="奖品描述">
+						<span class="input-group-btn">
+							<button type="button" class="btn btn-info input-sm" ng-click="addPrize(newPrize)">
+								<i class="fa fa-plus"></i>
+							</button>
+						</span>
+					</p>
+				</div>
+			</div>
+			<div class="form-group" ng-class="lotteryForm.expiredDate.$invalid && lotteryForm.expiredDate.$dirty ? 'has-error': ''">
+				<label class="control-label col-lg-3">结束时间:</label>
+				<div class="col-md-3">
+					<p class="input-group" style="margin-bottom: 0px;">
+						<input type="text" uib-datepicker-popup name="expiredDate" ng-model="lottery.expiredDate" class="form-control input-sm" is-open="popup1.opened"
+							datepicker-options="dateOptions" placeholder="开始时间" clear-text="清空" close-text="关闭" current-text="今天" on-open-focus="false" required/>
+						<span class="input-group-btn">
+							<button type="button" class="btn btn-default input-sm" ng-click="open1()">
+								<i class="glyphicon glyphicon-calendar"></i>
+							</button>
+						</span>
+					</p>
+					<label class="control-label" ng-show="lotteryForm.expiredDate.$error.date && lotteryForm.expiredDate.$dirty">
+						时间格式错误,正确格式:2001-01-01
+					</label>
+					<label class="control-label" ng-show="lotteryForm.expiredDate.$error.required && lotteryForm.expiredDate.$dirty">
+						结束时间不能为空
+					</label>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="control-label col-lg-3">活动说明:</label>
+				<div class="col-lg-9">
+					<textarea ui-tinymce="tinymceOptions" ng-model="lottery.desc"></textarea>
+				</div>
+			</div>
+			<div class="text-right m-top-md">
+				<button ng-click="save(lottery)" class="btn btn-success btn-sm" ng-disabled="lotteryForm.$invalid"><i class="fa fa-save m-right-xs"></i>保存</button>
+			</div>
+		</form>
+	</div>
+	</div>
+</div>

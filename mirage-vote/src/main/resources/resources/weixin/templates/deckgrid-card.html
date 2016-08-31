@@ -1,0 +1,20 @@
+<div class="photo">
+	<a ui-sref="vote.vote({enrollId:card.id})">
+    	<div class="photo-wrapper">
+        	<img src="" data-ng-src="{{card.images[0]}}" class="animation-fade img-responsive" data-imageloaded data-loadedclass="animation-faded">
+    	</div>
+ 	</a>
+    <div class="container" style="height: 48px;">
+    	<div class="row">
+	    	<div class="col-xs-8 pull-left" style="background-color: #5bc0de; color: #ffff99;">
+	    		<span><font size="2px;">{{card.name}}</font></span><br>
+	    		<span><font size="2px;">{{card.number}}号&nbsp;{{card.voteCount}}票</font></span>
+	    	</div>
+	    	<a ng-click="mother.vote(card)">
+		        <div class="col-xs-4 pull-right" style="height:48px; padding: 10px 0px 10px 0px; text-align: center; background-color: #d9534f; color: white">
+		     		<font size="2px;">投票</font>
+		     	</div>
+	    	</a>
+    	</div>
+    </div>
+</div>

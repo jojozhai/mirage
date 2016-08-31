@@ -1,0 +1,53 @@
+<div class="ui-row" style="background-color: #d9edf7; padding-left: 0px;padding-right: 0px;" >
+<div class="row">
+	<div class="col-xs-12" style="text-align: center;">
+		<form name="conditionForm" novalidate>
+			<div class="form-group">
+				<div class="col-xs-2"></div>
+				<div class="col-xs-8" style="text-align: center;">
+					<p class="input-group">
+						<input type="text" class="form-control" ng-model="condition" placeholder="搜名字或编号" required> 
+						<span class="input-group-btn"> 
+							<button type="button" class="btn btn-info" ng-disabled="conditionForm.$invalid" ng-click="search(condition)">搜索</button>
+						</span>
+					</p>
+				</div>
+				<div class="col-xs-2"></div>
+			</div>
+		</form>
+	</div>
+</div>
+<div style="background-color: #5bc0de; padding: 10px; margin: 10px;" >
+<div class="row" style="margin-bottom: 10px;">
+	<div class="col-xs-12" style="color: #ffff99;">
+		<div class="pull-left" style="margin: 10px;">{{enroll.number}}号&nbsp;&nbsp;{{enroll.name}}</div>
+		<div class="pull-right" style="margin: 10px;">票数:{{enroll.voteCount}}</div>
+	</div>
+	<div class="col-xs-12" style="color: #ffff99;">
+		个人宣言&nbsp;:&nbsp;{{enroll.desc}}
+	</div>
+</div>
+<div class="row" ng-repeat="image in enroll.images" style="margin-bottom: 10px;">
+	<div class="col-xs-12">
+		<img ng-src="{{image}}" class="img-responsive">
+	</div>
+</div>
+</div>
+<div style="padding: 10px;" >
+<div class="row" style="margin-bottom: 10px;">
+	<div class="col-xs-12" style="text-align: center;">
+		<button class="col-xs-12 btn btn-danger btn-lg" ng-click="vote(enroll)">我要投票</button>
+	</div>
+</div>
+<div class="row" style="margin-bottom: 10px;">
+	<div class="col-xs-12" style="text-align: center;">
+		<a class="col-xs-12 btn btn-danger btn-lg" ng-click="gotoEnrollPage()">我也来参加</a>
+	</div>
+</div>
+<div class="row" style="margin-bottom: 10px;">
+	<div class="col-xs-12" style="text-align: center;">
+		<a class="col-xs-12 btn btn-danger btn-lg" ui-sref="vote.activity">查看更多</a>
+	</div>
+</div>
+</div>
+</div>

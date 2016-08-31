@@ -1,0 +1,39 @@
+<div class="smart-widget widget-dark-blue margin-md">
+	<div class="smart-widget-header">挑战任务信息</div>
+	<div class="smart-widget-inner">
+	<div class="smart-widget-body" >
+		<form name="challengeTaskForm" class="form-horizontal no-margin" id="type-constraint" data-validate="parsley" novalidate>
+			<div class="form-group" >
+				<label class="control-label col-lg-3">挑战名称:</label>
+				<div class="col-lg-6">{{challenge.name}}</div>
+			</div>
+			<div class="form-group"  ng-class="challengeTaskForm.name.$invalid && challengeTaskForm.name.$dirty ? 'has-error': ''">
+				<label class="control-label col-lg-3">任务名称:</label>
+				<div class="col-lg-6">
+					<input name="name" ng-model="challengeTask.name" type="text" class="form-control input-sm" placeholder="名称" required>
+					<label class="control-label" ng-show="challengeTaskForm.name.$invalid && challengeTaskForm.name.$dirty">名称不能为空</label>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="control-label col-lg-3">任务图片:</label>
+				<div class="col-lg-4">
+					<div class="fileinput-button" style="border: 1px solid #abcdef; width: 320px;" height: 180px; >
+						<img ng-src="{{challengeTask.image}}" width="320px;", height="180px;">
+						<input type="file" id="file1" name="file1" pz-uploader action="doUpload(files)">
+					</div>
+				</div>
+			</div>
+			<div class="form-group"  ng-class="challengeTaskForm.desc.$invalid && challengeTaskForm.desc.$dirty ? 'has-error': ''">
+				<label class="control-label col-lg-3">任务简介:</label>
+				<div class="col-lg-9">
+					<textarea name="desc" ui-tinymce="tinymceOptions" ng-model="challengeTask.desc" rows="10" cols="70" required></textarea>
+					<label class="control-label" ng-show="challengeTaskForm.desc.$invalid && challengeTaskForm.desc.$dirty">任务简介不能为空</label>
+				</div>
+			</div>
+			<div class="text-right m-top-md">
+				<button ng-click="save(challengeTask)" class="btn btn-success btn-sm" ng-disabled="challengeTaskForm.$invalid"><i class="fa fa-save m-right-xs"></i>保存</button>
+			</div>
+		</form>
+	</div>
+	</div>
+</div>

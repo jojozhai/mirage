@@ -1,0 +1,99 @@
+<div ng-show="currentView == 'info'">
+    <div>
+    	{{userChallenge.userNickname}}:<img style="height:100px; width: 100px;" ng-src="{{userChallenge.userHeadimgurl}}">
+    </div>
+    <div>
+    	<span><a href="javascript:;" ng-click="showView('remind')">提醒设置</a></span>
+    	<span ng-show="userChallenge.privacy"><a href="javascript:;" ng-click="changePrivacy(userChallenge.id)">设为公开</a></span>
+    	<span ng-show="!userChallenge.privacy"><a href="javascript:;" ng-click="changePrivacy(userChallenge.id)">设为私密</a></span>
+    	<span><a href="javascript:;" ng-click="invite()">邀请好友监督</a></span>
+    </div>
+    <div>
+    	我要在{{userChallenge.days}}内完成
+    	<a href="javascript:;" ui-sref="app.signUp.offical({id:userChallenge.challengeId, type:'OFFICAL'})" ng-if="userChallenge.challengeId != null">{{userChallenge.name}}</a>
+    	<span ng-if="userChallenge.challengeId == null">{{userChallenge.name}}</span>
+    	的目标,并将持续在这里发布进展。如果失败将按活跃度分别给监督者{{userChallenge.pledge}}元.
+    </div>
+    <div>
+    	完成度:<span>{{userChallenge.progress}}/{{userChallenge.days}}</span>
+    </div>
+    <div>
+    	赏金:{{userChallenge.pledge}}
+    </div>
+    <div>
+    	参与者:{{userChallenge.participatorCount}}
+    </div>
+    
+    <div ng-show="userChallenge != null">
+    	<div ng-show="userChallenge.status == 'INIT'">
+    		<div ng-show="participator.type == 'NONE'">
+    			<div><a href="javascript:;" ng-click="participate('ONLOOKERS')">申请围观</a></div>
+    			<div><a href="javascript:;" ng-click="participate('PARTICIPATOR')">申请监督</a></div>
+    		</div>
+    		<div ng-show="participator.type == 'CREATER'">
+    			<div><a href="javascript:;" ng-click="invite()">邀请好友监督</a></div>
+    		</div>
+    	</div>
+    	<div ng-show="userChallenge.status == 'PROGRESSING'">
+    		<div ng-show="participator.type == 'NONE'">
+    			<div><a href="javascript:;" ng-click="participate('ONLOOKERS')">申请围观</a></div>
+    			<div><a href="javascript:;" ng-click="participate('PARTICIPATOR')">申请监督</a></div>
+    		</div>
+    		<div ng-show="participator.type == 'CREATER'">
+    			<div><a href="javascript:;" ng-click="showPostView(post)">发布进度</a></div>
+    		</div>
+    	</div>
+    	<div ng-show="userChallenge.status == 'SUCCESS'">
+    		挑战成功
+    	</div>
+    	<div ng-show="userChallenge.status == 'FAIL'">
+    		挑战失败
+    	</div>
+    </div>
+    
+   	<div ng-repeat="post in posts">
+   		<div>
+   			{{post.createrName}}:<img style="height:100px; width: 100px;" ng-src="{{post.createrHeadimgurl}}"> {{post.createdTime | date:yyyy-MM-dd}}
+   		</div>
+   		<div>
+   			{{post.content}}
+   		</div>
+   		<div>
+   			<a href="javascript:;" ng-click="praise(post)">赞</a>
+   			<a href="javascript:;" ng-click="share(post)">分享</a>
+   			<a href="javascript:;" ng-click="showCommentView(post)">评论</a>
+   		</div>
+   		<div>
+   			赞:
+   			<span ng-repeat="praise in post.praises">
+   				<a href="javascript:;">{{praise.createrName}}</a>&nbsp;
+   			</span>
+   		</div>
+   		<div>
+   			评论:
+   			<div ng-repeat="comment in post.comments">
+   				<span>
+   					<a href="javascript:;">{{comment.createrName}}</a> 
+   					<span ng-show="comment.replyToId != null">
+   						回复 <a href="javascript:;">{{comment.replyToName}}</a> 
+   					</span>
+   					:
+   					<span ng-click="reply(post, comment)">{{comment.content}}</span>
+   				</span>
+   			</div>
+   		</div>
+   	</div>
+</div>
+<div ng-show="currentView == 'comment'">
+	<textarea ng-model="comment.content" rows="5" cols="30"></textarea>
+	<a href="javascript:;" ng-click="doComment(comment)">保存</a>
+</div>
+
+<div ng-show="currentView == 'post'">
+	<textarea ng-model="post.content" rows="5" cols="30"></textarea>
+	<a href="javascript:;" ng-click="doPost(post)">保存</a>
+</div>
+
+<div ng-show="currentView == 'remind'">
+	<div ng-include="'weixin/views/challenge/remind.html'"></div>
+</div>

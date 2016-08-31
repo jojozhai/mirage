@@ -1,0 +1,76 @@
+<div class="ui-row" style="background-color: #5bc0de; padding-left: 0px;padding-right: 0px;" >
+	<div class="row">
+		<div class="col-xs-12" style="text-align: center; color: #ffff99; height: 40px; margin-top: 10px;">
+			活动截止日期&nbsp;:&nbsp;{{activity.endTime | date:yyyy-MM-dd}}
+		</div>
+	</div>
+	<div class="row" style="text-align: center;">
+		<div class="col-xs-1"></div>
+		<div class="col-xs-10">
+			<a class="col-xs-12 btn btn-danger btn-lg" ng-click="gotoEnrollPage()">我要报名</a>
+		</div>
+		<div class="col-xs-1"></div>
+	</div>
+	<div class="row" style="height: 85px; color: #ffff99; padding-left: 15px; padding-right: 15px;">
+		<div class="col-xs-4" style="text-align: center; border-right: 1px solid #ffff99; margin-top: 25px;">
+			报名人数<br>{{activity.enrollCount}}
+		</div>
+		<div class="col-xs-4" style="text-align: center; margin-top: 25px;">
+			投票人数<br>{{activity.voteCount}}
+		</div>
+		<div class="col-xs-4" style="text-align: center; border-left: 1px solid #ffff99; margin-top: 25px;">
+			浏览量<br>{{activity.browseCount}}
+		</div>
+	</div>
+</div>
+<div class="ui-row" style="background-color: #d9edf7; padding-top: 10px;">
+	<div class="col-xs-12">
+		<form name="conditionForm" novalidate>
+			<div class="form-group">
+				<div class="col-xs-1"></div>
+				<div class="col-xs-10" style="text-align: center;">
+					<p class="input-group">
+						<input type="text" class="form-control" ng-model="condition" placeholder="搜名字或编号" required> 
+						<span class="input-group-btn">
+							<button type="button" class="btn btn-info" ng-disabled="conditionForm.$invalid" ng-click="search(condition)">搜索</button>
+						</span>
+					</p>
+				</div>
+				<div class="col-xs-1"></div>
+			</div>
+		</form>
+	</div>
+</div>
+<div class="ui-row" style="background-color: #d9edf7; padding-top: 20px; padding-bottom: 20px;">
+	<div class="col-xs-12">
+		<button ng-class="view=='new'?'btn-success':'btn-info'" class="btn" ng-click="changeGrid('new')">最新参赛</button>
+		<button ng-class="view=='rank'?'btn-success':'btn-info'" class="btn btn-info " ng-click="changeGrid('rank')">投票排行</button>
+		<button ng-class="view=='rank300'?'btn-success':'btn-info'" class="btn btn-info " ng-click="changeGrid('rank300')">TOP300</button>
+	</div>
+</div>
+<div ng-show="grid == 'flow'" class="ui-row" style="background-color: #d9edf7; padding-right: 15px;">
+	<div class="deckgrid clearfix" deckgrid source="enrolls" cardTemplate="weixin/templates/deckgrid-card.html"></div>
+</div>
+<div ng-hide="grid == 'flow'" class="ui-row" style="background-color: #d9edf7;">
+	<table class="table table-striped">
+		<thead>
+			<tr>
+				<th width="70">排名</th>
+				<th>名称</th>
+				<th width="70">票数</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr ng-repeat = "enroll in enrolls">
+				<td>{{$index+1}}</td>
+				<td>{{enroll.number}}号 {{enroll.name}}</td>
+				<td>{{enroll.voteCount}}</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+<div class="ui-row" style="background-color: #d9edf7; padding-left: 15px;">
+	<uib-pagination total-items="pageInfo.totalElements" num-pages="pageInfo.totalPages" ng-model="pageInfo.page" max-size="5" 
+		class="pagination" boundary-links="true" force-ellipses="true" ng-change="changePage()" ng-disabled="pageInfo.totalElements <= 0" 
+		first-text="<<" last-text=">>" next-text=">" previous-text="<"></uib-pagination>
+</div>

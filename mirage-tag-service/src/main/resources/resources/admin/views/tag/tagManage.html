@@ -1,0 +1,46 @@
+<div class="row">
+	<div class="col-lg-4">
+		<div class="smart-widget widget-dark-blue">
+			<div class="smart-widget-header">分类管理</div>
+			<div class="smart-widget-inner">
+				<div class="smart-widget-body">
+					<button ng-click="create()" class="btn btn-success btn-sm">
+						<i class="fa fa-plus m-right-xs"></i>新建分类
+					</button>
+				</div>
+				<div class="overflow-hidden" style="height: {{panelHeight}}px; overflow: auto;">
+					<treecontrol tree-model="treedata" expanded-nodes="expandedNodes" options="treeOptions" selected-node="tag" on-selection="selecteMenu(node, selected)">
+						{{node.name}}&nbsp;
+					</treecontrol>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<div class="col-lg-8">
+		<div class="smart-widget widget-dark-blue">
+			<div class="smart-widget-header">分类信息</div>
+			<div class="smart-widget-inner">
+			<div class="smart-widget-body" >
+				<form name="tagForm" class="form-horizontal no-margin" id="type-constraint" data-validate="parsley" novalidate>
+					<div class="form-group">
+						<label class="control-label  col-lg-3">名称:</label>
+						<label class="control-label">{{tag.name}}</label>
+					</div>
+					<div class="form-group">
+						<label class="control-label col-lg-3">背景图片:</label>
+						<img ng-src="{{tag.image}}" width="320px;", height="180px;">
+					</div>
+					<div class="m-top-md">
+						<label class="control-label col-lg-3">&nbsp;</label>
+						<button ng-click="moveUp(tag)" class="btn btn-info btn-sm" ng-disabled="!selected"><i class="fa fa-arrow-up m-right-xs"></i>上移</button>
+						<button ng-click="moveDown(tag)" class="btn btn-info btn-sm" ng-disabled="!selected"><i class="fa fa-arrow-down m-right-xs"></i>下移</button>
+						<button ng-click="update(tag)" class="btn btn-warning btn-sm" ng-disabled="!selected"><i class="ion-edit m-right-xs"></i>修改</button>
+						<button ng-click="remove(tag)" class="btn btn-danger btn-sm" ng-disabled="!selected"><i class="ion-trash-a m-right-xs"></i>删除</button>
+					</div>
+				</form>
+			</div>
+			</div>
+		</div>
+	</div>
+</div>

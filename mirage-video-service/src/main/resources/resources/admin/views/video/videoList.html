@@ -1,0 +1,44 @@
+<div style="padding: 10px;">
+<div class="smart-widget widget-dark-blue">
+	<div class="smart-widget-header">视频列表</div>
+	<div class="smart-widget-inner">
+		<div ng-show="videos != null">
+			<div class="smart-widget-body">
+				<table class="table table-hover">
+					<thead>
+						<tr>
+							<th width="100">序号</th>
+							<th>名称</th>
+							<th width="100">精选</th>
+							<th width="100">价格</th>
+							<th width="100">时长</th>
+							<th width="200">操作</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat = "video in videos">
+							<td>{{$index+1}}</td>
+							<td>{{video.name}}</td>
+							<td>{{video.selection | yesOrNo}}</td>
+							<td>{{video.price | currency}}</td>
+							<td>{{video.duration}}</td>
+							<td>
+								<button ng-click="moveUp(video)" class="btn btn-info btn-xs"><i class="fa fa-arrow-up m-right-xs"></i>上移</button>
+								<button ng-click="moveDown(video)" class="btn btn-info btn-xs"><i class="fa fa-arrow-down m-right-xs"></i>下移</button>
+								<button class="btn btn-danger btn-xs" ng-click="remove(video)">
+									<i class="ion-trash-a m-right-xs"></i>移除
+								</button>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+		<div class="smart-widget-body" ng-hide="videos != null">
+			<div class="alert alert-warning alert-dismissible" role="alert">
+		     	<i class="fa fa-exclamation-circle m-right-xs"></i> <strong>没有查询到任何数据,请修改查询条件并重试</strong>
+		    </div>
+		</div>
+	</div>
+</div>
+</div>

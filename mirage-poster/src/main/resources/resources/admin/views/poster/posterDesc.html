@@ -1,0 +1,19 @@
+<div class="smart-widget widget-dark-blue margin-md">
+	<div class="smart-widget-header">活动信息</div>
+	<div class="smart-widget-inner">
+	<div class="smart-widget-body" >
+		<form name="form" class="form-horizontal no-margin" id="type-constraint" data-validate="parsley" novalidate>
+			<div class="form-group"  ng-class="form.value.$invalid && form.value.$dirty ? 'has-error': ''">
+				<label class="control-label col-lg-3">活动描述文案:</label>
+				<div class="col-lg-9">
+					<textarea name="value" ui-tinymce="tinymceOptions" ng-model="param.value" rows="10" cols="70" required></textarea>
+					<label class="control-label" ng-show="form.value.$invalid && form.value.$dirty">活动描述文案不能为空</label>
+				</div>
+			</div>
+			<div class="text-right m-top-md">
+				<button ng-click="save(param)" class="btn btn-success btn-sm" ng-disabled="form.$invalid"><i class="fa fa-save m-right-xs"></i>保存</button>
+			</div>
+		</form>
+	</div>
+	</div>
+</div>

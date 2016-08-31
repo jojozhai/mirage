@@ -1,0 +1,20 @@
+<div ui-view ng-show="currentView == 'info'"></div>
+<div ng-show="currentView == 'signUp'">
+	<ul class="ui-justify ui-whitespace">
+	    <li><div class="priceChoice" ng-click="choicePledge(30)"></div><p>30</p></li>
+	    <li><div class="priceChoice" ng-click="choicePledge(50)"></div><p>50</p></li>
+	    <li><div class="priceChoice" ng-click="choicePledge(100)"></div><p>100</p></li>
+	    <li><div class="priceChoice" ng-click="choicePledge(200)"></div><p>200</p></li>
+	    <li><div class="priceChoice" ng-click="choicePledge(500)"></div><p>500</p></li>
+	    <li><div class="priceChoice" ng-click="choicePledge(1000)"></div><p>1000</p></li>
+	</ul>
+	<div>
+		押金:{{userChallenge.pledge}}
+	</div>
+	<div>
+		<a ng-click="signUp()">报名</a>
+	</div>
+</div>
+<div ng-show="currentView == 'remind'">
+	<div ng-include="'weixin/views/challenge/remind.html'"></div>
+</div>

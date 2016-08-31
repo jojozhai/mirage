@@ -1,0 +1,51 @@
+<div class="smart-widget widget-dark-blue margin-md">
+	<div class="smart-widget-header">轮播图信息</div>
+	<div class="smart-widget-inner">
+	<div class="smart-widget-body" >
+		<form name="swiperForm" class="form-horizontal no-margin" id="type-constraint" data-validate="parsley" novalidate>
+			<div class="form-group"  ng-class="swiperForm.name.$invalid && swiperForm.name.$dirty ? 'has-error': ''">
+				<label class="control-label col-lg-3"><span class="text_red">*</span>&nbsp;名称:</label>
+				<div class="col-lg-6">
+					<input name="name" ng-model="swiper.name" type="text" class="form-control input-sm" placeholder="名称" required>
+					<label class="control-label" ng-show="swiperForm.name.$invalid && swiperForm.name.$dirty">名称不能为空</label>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="control-label col-lg-3">可用:</label>
+				<div class="col-lg-9">
+					<div class="custom-checkbox todo-checkbox">
+						<input id="selection" ng-model="swiper.enable" ng-checked="swiper.enable" type="checkbox">
+						<label for="selection" style="margin-top: 4px;"></label>
+					</div>
+				</div>
+			</div>
+			<div class="form-group" >
+				<label class="control-label col-lg-3">类型:</label>
+				<div class="col-lg-6">
+					<input name="type" ng-model="swiper.type" type="text" class="form-control input-sm" placeholder="类型">
+				</div>
+			</div>
+			<div class="form-group"  ng-class="swiperForm.link.$invalid && swiperForm.link.$dirty ? 'has-error': ''">
+				<label class="control-label col-lg-3"><span class="text_red">*</span>&nbsp;链接:</label>
+				<div class="col-lg-6">
+					<input name="link" ng-model="swiper.link" type="url" class="form-control input-sm" placeholder="链接" required>
+					<label class="control-label" ng-show="swiperForm.link.$error.required && swiperForm.link.$dirty">链接不能为空</label>
+					<label class="control-label" ng-show="swiperForm.link.$error.url && swiperForm.link.$dirty">请输入正确的URL</label>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="control-label col-lg-3"><span class="text_red">*</span>主题图:</label>
+				<div class="col-lg-4">
+					<div class="fileinput-button" style="border: 1px solid #abcdef; height: 180px; width: 320px;" >
+						<img ng-src="{{swiper.image}}" width="320px;", height="180px;">
+						<input type="file" id="file1" name="file1" pz-uploader action="doUpload(files)">
+					</div>
+				</div>
+			</div>
+			<div class="text-right m-top-md">
+				<button ng-click="save(swiper)" class="btn btn-success btn-sm" ng-disabled="swiperForm.$invalid"><i class="fa fa-save m-right-xs"></i>保存</button>
+			</div>
+		</form>
+	</div>
+	</div>
+</div>

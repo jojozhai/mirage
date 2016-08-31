@@ -1,0 +1,124 @@
+<div class="smart-widget widget-dark-blue margin-md">
+	<div class="smart-widget-header">海报信息</div>
+	<div class="smart-widget-inner">
+	<div class="smart-widget-body" >
+		<form name="posterForm" class="form-horizontal no-margin" id="type-constraint" data-validate="parsley" novalidate>
+			<div class="form-group"  ng-class="posterForm.name.$invalid && posterForm.name.$dirty ? 'has-error': ''">
+				<label class="control-label col-lg-3">名称:</label>
+				<div class="col-lg-6">
+					<input name="name" ng-model="poster.name" type="text" class="form-control input-sm" placeholder="名称" required>
+					<label class="control-label" ng-show="posterForm.name.$invalid && posterForm.name.$dirty">名称不能为空</label>
+				</div>
+			</div>
+			<div class="form-group"  ng-class="posterForm.key.$invalid && posterForm.key.$dirty ? 'has-error': ''">
+				<label class="control-label col-lg-3">关键字:</label>
+				<div class="col-lg-6">
+					<input name="key" ng-model="poster.key" type="text" class="form-control input-sm" placeholder="关键字" required>
+					<label class="control-label" ng-show="posterForm.key.$invalid && posterForm.key.$dirty">关键字不能为空</label>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="control-label col-lg-3">新用户才加分:</label>
+				<div class="col-lg-6">
+					<div class="custom-checkbox todo-checkbox">
+						<input id="onlyNewUserAddPoint" ng-model="poster.onlyNewUserAddPoint" ng-checked="poster.onlyNewUserAddPoint" type="checkbox">
+						<label for="onlyNewUserAddPoint" style="margin-top: 4px;"></label>
+					</div>
+				</div>
+			</div>
+			
+			<div class="form-group">
+				<label class="control-label col-lg-3">背景图片:</label>
+				<div class="col-lg-4">
+					<div class="fileinput-button" style="border: 1px solid #abcdef; height: 284px; width: 160px;" >
+						<img ng-src="{{poster.image}}" width="160px;", height="284px;">
+						<input type="file" id="file1" name="file1" pz-uploader action="doUpload(files)">
+					</div>
+				</div>
+			</div>
+			<div class="form-group" ng-class="posterForm.headTop.$invalid && posterForm.headTop.$dirty ? 'has-error': ''">
+				<label class="control-label col-lg-3">头像上偏移:</label>
+				<div class="col-lg-3">
+					<input name="headTop" ng-model="poster.headTop" type="text" class="form-control input-sm" placeholder="头像上偏移" required>
+					<label class="control-label" ng-show="posterForm.headTop.$invalid && posterForm.headTop.$dirty">头像上偏移不能为空</label>
+				</div>
+			</div>
+			<div class="form-group"  ng-class="posterForm.headLeft.$invalid && posterForm.headLeft.$dirty ? 'has-error': ''">
+				<label class="control-label col-lg-3">头像左偏移:</label>
+				<div class="col-lg-3">
+					<input name="headLeft" ng-model="poster.headLeft" type="text" class="form-control input-sm" placeholder="头像左偏移" required>
+					<label class="control-label" ng-show="posterForm.headLeft.$invalid && posterForm.headLeft.$dirty">头像左偏移不能为空</label>
+				</div>
+			</div>
+			<div class="form-group"  ng-class="posterForm.headScale.$invalid && posterForm.headScale.$dirty ? 'has-error': ''">
+				<label class="control-label col-lg-3">头像缩放比例:</label>
+				<div class="col-lg-3">
+					<input name="headScale" ng-model="poster.headScale" type="text" class="form-control input-sm" placeholder="头像缩放比例" required>
+					<label class="control-label" ng-show="posterForm.headScale.$invalid && posterForm.headScale.$dirty">头像缩放比例不能为空</label>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="control-label col-lg-3">内切圆头像:</label>
+				<div class="col-lg-6">
+					<div class="custom-checkbox todo-checkbox">
+						<input id="incircleHead" ng-model="poster.incircleHead" ng-checked="poster.incircleHead" type="checkbox">
+						<label for="incircleHead" style="margin-top: 4px;"></label>
+					</div>
+				</div>
+			</div>
+			<div class="form-group" ng-class="posterForm.qrcodeTop.$invalid && posterForm.qrcodeTop.$dirty ? 'has-error': ''">
+				<label class="control-label col-lg-3">二维码上偏移:</label>
+				<div class="col-lg-3">
+					<input name="qrcodeTop" ng-model="poster.qrcodeTop" type="text" class="form-control input-sm" placeholder="二维码上偏移" required>
+					<label class="control-label" ng-show="posterForm.qrcodeTop.$invalid && posterForm.qrcodeTop.$dirty">二维码上偏移不能为空</label>
+				</div>
+			</div>
+			<div class="form-group"  ng-class="posterForm.qrcodeLeft.$invalid && posterForm.qrcodeLeft.$dirty ? 'has-error': ''">
+				<label class="control-label col-lg-3">二维码左偏移:</label>
+				<div class="col-lg-3">
+					<input name="qrcodeLeft" ng-model="poster.qrcodeLeft" type="text" class="form-control input-sm" placeholder="二维码左偏移" required>
+					<label class="control-label" ng-show="posterForm.qrcodeLeft.$invalid && posterForm.qrcodeLeft.$dirty">二维码左偏移不能为空</label>
+				</div>
+			</div>
+			<div class="form-group"  ng-class="posterForm.qrcodeScale.$invalid && posterForm.qrcodeScale.$dirty ? 'has-error': ''">
+				<label class="control-label col-lg-3">二维码缩放比例:</label>
+				<div class="col-lg-3">
+					<input name="qrcodeScale" ng-model="poster.qrcodeScale" type="text" class="form-control input-sm" placeholder="二维码缩放比例" required>
+					<label class="control-label" ng-show="posterForm.qrcodeScale.$invalid && posterForm.qrcodeScale.$dirty">二维码缩放比例不能为空</label>
+				</div>
+			</div>
+			<div class="form-group"  ng-class="posterForm.generatedTip.$invalid && posterForm.generatedTip.$dirty ? 'has-error': ''">
+				<label class="control-label col-lg-3">生成后提示文案:</label>
+				<div class="col-lg-9">
+					<textarea name="generatedTip" ng-model="poster.generatedTip" rows="10" cols="70" required></textarea>
+					<label class="control-label" ng-show="posterForm.generatedTip.$invalid && posterForm.generatedTip.$dirty">生成后提示文案不能为空</label>
+				</div>
+			</div>
+			<div class="form-group"  ng-class="posterForm.activePoint.$invalid && posterForm.activePoint.$dirty ? 'has-error': ''">
+				<label class="control-label col-lg-3">激活所需的分数:</label>
+				<div class="col-lg-3">
+					<input name="activePoint" ng-model="poster.activePoint" type="text" class="form-control input-sm" placeholder="激活海报对应的事件所需的分数" required>
+					<label class="control-label" ng-show="posterForm.activePoint.$invalid && posterForm.activePoint.$dirty">激活所需的分数不能为空</label>
+				</div>
+			</div>
+			<div class="form-group"  ng-class="posterForm.activeTip.$invalid && posterForm.activeTip.$dirty ? 'has-error': ''">
+				<label class="control-label col-lg-3">激活后提示文案:</label>
+				<div class="col-lg-9">
+					<textarea name="activeTip" ng-model="poster.activeTip" rows="10" cols="70" required></textarea>
+					<label class="control-label" ng-show="posterForm.activeTip.$invalid && posterForm.activeTip.$dirty">激活后提示文案不能为空</label>
+				</div>
+			</div>
+			<div class="form-group"  ng-class="posterForm.activeUrl.$invalid && posterForm.activeUrl.$dirty ? 'has-error': ''">
+				<label class="control-label col-lg-3">点击激活文案跳转的url:</label>
+				<div class="col-lg-6">
+					<textarea name="activeUrl" ng-model="poster.activeUrl" rows="10" cols="70" required></textarea>
+					<label class="control-label" ng-show="posterForm.activeUrl.$invalid && posterForm.activeUrl.$dirty">点击激活文案跳转的url不能为空</label>
+				</div>
+			</div>
+			<div class="text-right m-top-md">
+				<button ng-click="save(poster)" class="btn btn-success btn-sm" ng-disabled="posterForm.$invalid"><i class="fa fa-save m-right-xs"></i>保存</button>
+			</div>
+		</form>
+	</div>
+	</div>
+</div>

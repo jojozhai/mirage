@@ -1,0 +1,52 @@
+<div style="background:#d9edf7;overflow-x:hidden;"> 
+<div style="margin-top: 20px;" ng-show="currentView == 'lottery'">
+	<!-- 代码 开始 -->
+	<div class="banner">
+		<div class="turnplate" style="background-image:url(images/turnplate-bg.png);background-size:100% 100%;">
+			<canvas pz-lottery class="item" id="wheelcanvas" width="422px" height="422px"></canvas>
+		</div>
+	</div>
+	<!-- 代码 结束 -->
+</div>
+<div ng-show="currentView == 'info'">
+	<div class="ui-row" padding-left: 0px;padding-right: 0px;" >
+	<div style="padding: 10px; margin: 10px;" >
+	<div class="row">
+		<div class="col-xs-12">
+			<span class="label label-info" style="font-size: 16px;">报名抽奖</span><br><br>
+			<form name="userForm" class="form-horizontal no-margin" data-validate="parsley" novalidate>
+				<div class="form-group"  ng-class="userForm.name.$invalid && userForm.name.$dirty ? 'has-error': ''">
+					<label class="control-label col-xs-4" style="text-align: right;">姓名:</label>
+					<div class="col-xs-6">
+						<input name="name" maxlength="4" ng-model="user.name" type="text" class="form-control " placeholder="姓名" required>
+						<label class="control-label" ng-show="userForm.name.$invalid && userForm.name.$dirty">姓名不能为空</label>
+					</div>
+				</div>
+				<div class="form-group"  ng-class="userForm.mobile.$invalid && userForm.mobile.$dirty ? 'has-error': ''">
+					<label class="control-label col-xs-4" style="text-align: right;">联系电话:</label>
+					<div class="col-xs-6">
+						<input name="mobile" ng-pattern="'1[0-9]{10}'" maxlength="11" ng-model="user.mobile" type="text" class="form-control " placeholder="联系电话" required>
+						<label class="control-label" ng-show="userForm.mobile.$error.required && userForm.mobile.$dirty">联系电话不能为空</label>
+						<label class="control-label" ng-show="userForm.mobile.$error.pattern && userForm.mobile.$dirty">请输入合法的电话号码</label>
+					</div>
+				</div>
+				<div class="row form-group" style="text-align: center;">
+					<div class="col-xs-12">
+						<button ng-click="signUp(user)" class="col-xs-12 btn btn-danger btn-lg" ng-disabled="userForm.$invalid">
+							确认报名
+						</button>
+					</div>
+				</div>
+			</form>	
+		</div>
+	</div>
+	</div>
+	</div>
+</div>
+<div>
+<div style="padding: 15px;">
+	<span class="label label-info" style="font-size: 16px;">活动说明</span>
+	<div style="padding: 10px;" ng-bind-html="lottery.desc | toHtml"></div>
+</div>
+</div>
+</div>

@@ -1,0 +1,92 @@
+<div class="smart-widget widget-dark-blue margin-md">
+	<div class="smart-widget-header">挑战信息</div>
+	<div class="smart-widget-inner">
+	<div class="smart-widget-body" >
+		<form name="challengeForm" class="form-horizontal no-margin" id="type-constraint" data-validate="parsley" novalidate>
+		
+		
+	
+			<div class="form-group"  ng-class="challengeForm.name.$invalid && challengeForm.name.$dirty ? 'has-error': ''">
+				<label class="control-label col-lg-3">名称:</label>
+				<div class="col-lg-6">
+					<input name="name" ng-model="challenge.name" type="text" class="form-control input-sm" placeholder="名称" required>
+					<label class="control-label" ng-show="challengeForm.name.$invalid && challengeForm.name.$dirty">名称不能为空</label>
+				</div>
+			</div>
+			<div class="form-group"  ng-class="challengeForm.tag.$invalid && challengeForm.tag.$dirty ? 'has-error': ''">
+				<label class="control-label col-lg-3">标签:</label>
+				<div class="col-lg-6">
+					<input name="tag" ng-model="challenge.tag" type="text" class="form-control input-sm" placeholder="标签" required>
+					<label class="control-label" ng-show="challengeForm.tag.$invalid && challengeForm.tag.$dirty">标签不能为空</label>
+				</div>
+			</div>
+			<div class="form-group"  ng-class="challengeForm.tip.$invalid && challengeForm.tip.$dirty ? 'has-error': ''">
+				<label class="control-label col-lg-3">一句话介绍:</label>
+				<div class="col-lg-6">
+					<input name="tip" ng-model="challenge.tip" type="text" class="form-control input-sm" placeholder="一句话介绍" required>
+					<label class="control-label" ng-show="challengeForm.tip.$invalid && challengeForm.tip.$dirty">一句话介绍不能为空</label>
+				</div>
+			</div>
+			<div class="form-group"  ng-class="challengeForm.days.$invalid && challengeForm.days.$dirty ? 'has-error': ''">
+				<label class="control-label col-lg-3">挑战持续天数:</label>
+				<div class="col-lg-6">
+					<input name="days" ng-model="challenge.days" type="text" class="form-control input-sm" placeholder="挑战持续天数" required>
+					<label class="control-label" ng-show="challengeForm.days.$invalid && challengeForm.days.$dirty">挑战持续天数不能为空</label>
+				</div>
+			</div>
+			<div class="form-group"  ng-class="challengeForm.classTime.$invalid && challengeForm.classTime.$dirty ? 'has-error': ''">
+				<label class="control-label col-lg-3">每节课的时长:</label>
+				<div class="col-lg-6">
+					<input name="classTime" ng-model="challenge.classTime" type="text" class="form-control input-sm" placeholder="每节课的时长" required>
+					<label class="control-label" ng-show="challengeForm.classTime.$invalid && challengeForm.classTime.$dirty">每节课的时长不能为空</label>
+				</div>
+			</div>
+			<div class="form-group"  ng-class="challengeForm.participatorCount.$invalid && challengeForm.participatorCount.$dirty ? 'has-error': ''">
+				<label class="control-label col-lg-3">参与者总数:</label>
+				<div class="col-lg-6">
+					<input name="participatorCount" ng-model="challenge.participatorCount" type="text" class="form-control input-sm" placeholder="参与者总数" required>
+					<label class="control-label" ng-show="challengeForm.participatorCount.$invalid && challengeForm.participatorCount.$dirty">参与者总数不能为空</label>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="control-label col-lg-3">教师:</label>
+				<div class="col-lg-6">
+					<ui-select ng-model="challenge.teacherId" theme="bootstrap">
+			            <ui-select-match placeholder="可以输入教师姓名来查找">{{$select.selected.name}}</ui-select-match>
+			            <ui-select-choices repeat="teacher.id as teacher in teachers | filter: $select.search">
+			              <div ng-bind-html="teacher.name | highlight: $select.search"></div>
+			            </ui-select-choices>
+			    	</ui-select>
+				</div>
+			</div>
+			<div class="form-group"  ng-class="challengeForm.introduceUrl.$invalid && challengeForm.introduceUrl.$dirty ? 'has-error': ''">
+				<label class="control-label col-lg-3">导师及计划介绍的url:</label>
+				<div class="col-lg-6">
+					<input name="introduceUrl" ng-model="challenge.introduceUrl" type="text" class="form-control input-sm" placeholder="导师及计划介绍的url" required>
+					<label class="control-label" ng-show="challengeForm.introduceUrl.$invalid && challengeForm.introduceUrl.$dirty">导师及计划介绍的url不能为空</label>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="control-label col-lg-3">背景图片:</label>
+				<div class="col-lg-4">
+					<div class="fileinput-button" style="border: 1px solid #abcdef; width: 320px;" height: 180px; >
+						<img ng-src="{{challenge.image}}" width="320px;", height="180px;">
+						<input type="file" id="file1" name="file1" pz-uploader action="doUpload(files)">
+					</div>
+				</div>
+			</div>
+			
+			<div class="form-group"  ng-class="challengeForm.desc.$invalid && challengeForm.desc.$dirty ? 'has-error': ''">
+				<label class="control-label col-lg-3">简介:</label>
+				<div class="col-lg-9">
+					<textarea name="desc" ui-tinymce="tinymceOptions" ng-model="challenge.desc" rows="10" cols="70" required></textarea>
+					<label class="control-label" ng-show="challengeForm.desc.$invalid && challengeForm.desc.$dirty">简介不能为空</label>
+				</div>
+			</div>
+			<div class="text-right m-top-md">
+				<button ng-click="save(challenge)" class="btn btn-success btn-sm" ng-disabled="challengeForm.$invalid"><i class="fa fa-save m-right-xs"></i>保存</button>
+			</div>
+		</form>
+	</div>
+	</div>
+</div>

@@ -1,0 +1,113 @@
+<div class="smart-widget widget-dark-blue margin-md">
+	<div class="smart-widget-header">投票活动信息</div>
+	<div class="smart-widget-inner">
+	<div class="smart-widget-body" >
+		<form name="voteForm" class="form-horizontal no-margin" id="type-constraint" data-validate="parsley" novalidate>
+			<div class="form-group"  ng-class="voteForm.name.$invalid && voteForm.name.$dirty ? 'has-error': ''">
+				<label class="control-label col-lg-3">活动名称:</label>
+				<div class="col-lg-4">
+					<input name="name" ng-model="vote.name" type="text" class="form-control input-sm" placeholder="活动名称" required>
+					<label class="control-label" ng-show="voteForm.name.$invalid && voteForm.name.$dirty">活动名称不能为空</label>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="control-label col-lg-3">活动主题图片:</label>
+				<div class="col-lg-4">
+					<div class="fileinput-button" style="border: 1px solid #abcdef; height: 180px; width: 320px;" >
+						<img ng-src="{{vote.images[0]}}" width="320px;", height="180px;">
+						<input type="file" id="file1" name="file1" pz-uploader action="doUpload(files)">
+						
+					</div>
+				</div>
+			</div>
+			<div class="form-group" ng-class="voteForm.startTime.$invalid && voteForm.startTime.$dirty ? 'has-error': ''">
+			<label class="control-label col-lg-3">开始时间:</label>
+			<div class="col-md-3">
+				<p class="input-group" style="margin-bottom: 0px;">
+					<input type="text" uib-datepicker-popup name="startTime" ng-model="vote.startTime" class="form-control input-sm" is-open="popup1.opened"
+						datepicker-options="dateOptions" placeholder="开始时间" clear-text="清空" close-text="关闭" current-text="今天" on-open-focus="false" required/>
+					<span class="input-group-btn">
+						<button type="button" class="btn btn-default input-sm" ng-click="open1()">
+							<i class="glyphicon glyphicon-calendar"></i>
+						</button>
+					</span>
+				</p>
+				<label class="control-label" ng-show="voteForm.startTime.$error.date && voteForm.startTime.$dirty">
+					时间格式错误,正确格式:2001-01-01
+				</label>
+				<label class="control-label" ng-show="voteForm.startTime.$error.required && voteForm.startTime.$dirty">
+					开始时间不能为空
+				</label>
+			</div>
+
+			</div>
+			<div class="form-group" ng-class="voteForm.endTime.$invalid && voteForm.endTime.$dirty ? 'has-error': ''">
+				<label class="control-label col-lg-3">结束时间:</label>
+				<div class="col-md-3">
+					<p class="input-group" style="margin-bottom: 0px;">
+						<input type="text" uib-datepicker-popup name="endTime" ng-model="vote.endTime" class="form-control input-sm" is-open="popup2.opened"
+							datepicker-options="dateOptions" placeholder="开始时间" clear-text="清空" close-text="关闭" current-text="今天" on-open-focus="false" required/>
+						<span class="input-group-btn">
+							<button type="button" class="btn btn-default input-sm" ng-click="open2()">
+								<i class="glyphicon glyphicon-calendar"></i>
+							</button>
+						</span>
+					</p>
+					<label class="control-label" ng-show="voteForm.endTime.$error.date && voteForm.endTime.$dirty">
+						时间格式错误,正确格式:2001-01-01
+					</label>
+					<label class="control-label" ng-show="voteForm.endTime.$error.required && voteForm.endTime.$dirty">
+						结束时间不能为空
+					</label>
+				</div>
+			</div>
+			<div class="form-group" ng-class="voteForm.enrollCount.$invalid && voteForm.enrollCount.$dirty ? 'has-error': ''">
+				<label class="control-label col-lg-3">报名人数:</label>
+				<div class="col-lg-2">
+					<input name="enrollCount" ng-model="vote.enrollCount" type="text" class="form-control input-sm" placeholder="报名人数" required>
+					<label class="control-label" ng-show="voteForm.enrollCount.$invalid && voteForm.enrollCount.$dirty">报名人数不能为空</label>
+				</div>
+			</div>
+			<div class="form-group" ng-class="voteForm.voteCount.$invalid && voteForm.voteCount.$dirty ? 'has-error': ''">
+				<label class="control-label col-lg-3">投票人数:</label>
+				<div class="col-lg-2">
+					<input name="voteCount" ng-model="vote.voteCount" type="text" class="form-control input-sm" placeholder="投票人数" required>
+					<label class="control-label" ng-show="voteForm.voteCount.$invalid && voteForm.voteCount.$dirty">投票人数不能为空</label>
+				</div>
+			</div>
+			<div class="form-group" ng-class="voteForm.browseCount.$invalid && voteForm.browseCount.$dirty ? 'has-error': ''">
+				<label class="control-label col-lg-3">访问量:</label>
+				<div class="col-lg-2">
+					<input name="browseCount" ng-model="vote.browseCount" type="text" class="form-control input-sm" placeholder="访问量" required>
+					<label class="control-label" ng-show="voteForm.browseCount.$invalid && voteForm.browseCount.$dirty">访问量不能为空</label>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="control-label col-lg-3">活动详情:</label>
+				<div class="col-lg-9">
+					<textarea ui-tinymce="tinymceOptions" ng-model="vote.desc"></textarea>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="control-label col-lg-3">活动奖项:</label>
+				<div class="col-lg-9">
+					<textarea ui-tinymce="tinymceOptions" ng-model="vote.gift"></textarea>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="control-label col-lg-3">活动声明:</label>
+				<div class="col-lg-9">
+					<textarea ui-tinymce="tinymceOptions" ng-model="vote.declare"></textarea>
+				</div>
+			</div>
+			
+			<div class="form-group">
+				<div class="col-lg-4 text-right m-top-md">
+				<button ng-click="save(vote)" class="btn btn-success btn-sm" ng-disabled="voteForm.$invalid"><i class="fa fa-save m-right-xs"></i>保存</button>
+			</div>
+			</div>
+			
+		</form>
+	</div>
+	</div>
+</div>

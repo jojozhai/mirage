@@ -1,0 +1,96 @@
+<div class="smart-widget widget-dark-blue margin-md">
+	<div class="smart-widget-header">视频信息</div>
+	<div class="smart-widget-inner">
+	<div class="smart-widget-body" >
+		<form name="videoForm" class="form-horizontal no-margin" id="type-constraint" data-validate="parsley" novalidate>
+			<div class="form-group"  ng-class="videoForm.name.$invalid && videoForm.name.$dirty ? 'has-error': ''">
+				<label class="control-label col-lg-3">名称:</label>
+				<div class="col-lg-9">
+					<input name="name" ng-model="video.name" type="text" class="form-control input-sm" placeholder="名称" required>
+					<label class="control-label" ng-show="videoForm.name.$invalid && videoForm.name.$dirty">名称不能为空</label>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="control-label col-lg-3">精选:</label>
+				<div class="col-lg-9">
+					<div class="custom-checkbox todo-checkbox">
+						<input id="selection" ng-model="video.selection" ng-checked="video.selection" type="checkbox">
+						<label for="selection" style="margin-top: 4px;"></label>
+					</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="control-label col-lg-3">视频类别:</label>
+				<div class="col-lg-9">
+					<ui-select multiple tagging ng-model="video.tags" theme="bootstrap">
+			            <ui-select-match placeholder="可以输入类别名称来查找">{{$item.name}}</ui-select-match>
+			            <ui-select-choices repeat="tag in tags | filter: $select.search" group-by="'parentName'">
+			            	<div ng-bind-html="tag.name | highlight: $select.search"></div>
+			            </ui-select-choices>
+			    	</ui-select>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="control-label col-lg-3">所属套餐:</label>
+				<div class="col-lg-9">
+					<ui-select multiple tagging ng-model="video.setInfos" theme="bootstrap">
+			            <ui-select-match placeholder="可以输入套餐名称来查找">{{$item.name}}</ui-select-match>
+			            <ui-select-choices repeat="set in sets | filter: $select.search">
+			            	<div ng-bind-html="set.name | highlight: $select.search"></div>
+			            </ui-select-choices>
+			    	</ui-select>
+				</div>
+			</div>
+			<div class="form-group"  ng-class="videoForm.price.$invalid && videoForm.price.$dirty ? 'has-error': ''">
+				<label class="control-label col-lg-3">价格:</label>
+				<div class="col-lg-6">
+					<input name="price" ng-model="video.price" type="number" class="form-control input-sm" placeholder="价格" required>
+					<label class="control-label" ng-show="videoForm.price.$invalid && videoForm.price.$dirty">价格不能为空</label>
+				</div>
+			</div>
+			<div class="form-group"  ng-class="videoForm.duration.$invalid && videoForm.duration.$dirty ? 'has-error': ''">
+				<label class="control-label col-lg-3">时长:</label>
+				<div class="col-lg-6">
+					<input name="duration" ng-model="video.duration" type="text" class="form-control input-sm" placeholder="时长" required>
+					<label class="control-label" ng-show="videoForm.duration.$invalid && videoForm.duration.$dirty">时长不能为空</label>
+				</div>
+			</div>
+			
+			<div class="form-group"  ng-class="videoForm.buyerCount.$invalid && videoForm.buyerCount.$dirty ? 'has-error': ''">
+				<label class="control-label col-lg-3">已购买次数:</label>
+				<div class="col-lg-3">
+					<input name="buyerCount" ng-model="video.buyerCount" type="number" class="form-control input-sm" placeholder="已购买次数" required>
+					<label class="control-label" ng-show="videoForm.buyerCount.$invalid && videoForm.buyerCount.$dirty">已购买次数不能为空</label>
+				</div>
+			</div>
+			<div class="form-group"  ng-class="videoForm.playCount.$invalid && videoForm.playCount.$dirty ? 'has-error': ''">
+				<label class="control-label col-lg-3">已播放次数:</label>
+				<div class="col-lg-3">
+					<input name="playCount" ng-model="video.playCount" type="number" class="form-control input-sm" placeholder="已播放次数" required>
+					<label class="control-label" ng-show="videoForm.playCount.$invalid && videoForm.playCount.$dirty">已播放次数不能为空</label>
+				</div>
+			</div>
+			<div class="form-group"  ng-class="videoForm.url.$invalid && videoForm.url.$dirty ? 'has-error': ''">
+				<label class="control-label col-lg-3">视频地址:</label>
+				<div class="col-lg-9">
+					<input name="url" ng-model="video.url" type="url" class="form-control input-sm" placeholder="视频地址" required>
+					<label class="control-label" ng-show="videoForm.url.$error.required && videoForm.url.$dirty">视频地址不能为空</label>
+					<label class="control-label" ng-show="videoForm.url.$error.url && videoForm.url.$dirty">请输入正确的URL</label>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="control-label col-lg-3">主题图:</label>
+				<div class="col-lg-4">
+					<div class="fileinput-button" style="border: 1px solid #abcdef; height: 180px; width: 320px;" >
+						<img ng-src="{{video.image}}" width="320px;", height="180px;">
+						<input type="file" id="file1" name="file1" pz-uploader action="doUpload(files)">
+					</div>
+				</div>
+			</div>
+			<div class="text-right m-top-md">
+				<button ng-click="save(video)" class="btn btn-success btn-sm" ng-disabled="videoForm.$invalid"><i class="fa fa-save m-right-xs"></i>保存</button>
+			</div>
+		</form>
+	</div>
+	</div>
+</div>

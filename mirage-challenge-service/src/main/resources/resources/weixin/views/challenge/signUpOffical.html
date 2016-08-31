@@ -1,0 +1,42 @@
+<div>
+    <div>
+    	名称:{{challenge.name}}
+    </div>
+    <div>
+    	简介:
+    	<div ng-bind-html="challenge.desc | toHtml"></div>
+    </div>
+    <div>
+    	天数:{{challenge.days}}
+    </div>
+    <div>
+    	课均时长:{{challenge.classTime}}
+    </div>
+    <div>
+    	参与者:{{challenge.participatorCount}}
+    </div>
+    <div>
+    	教师头像:<img style="height:100px; width: 100px;" ng-src="{{challenge.teacherImage}}">
+    </div>
+    <div>
+    	教师名称:{{challenge.teacherName}}
+    </div>
+    <div>
+    	教师简介:<div ng-bind-html="challenge.teacherDesc | toHtml"></div>
+    </div>
+    <div>
+    	<a ng-href="{{challenge.introduceUrl}}">导师及计划介绍</a>
+    </div>
+    <div>
+    	计划清单:需在{{challenge.days}}天内完成{{challenge.taskCount}}个任务
+    </div>
+    <div ng-repeat="task in tasks">
+    	{{$index+1}}.{{task.name}}
+    </div>
+    <div>
+    	<a ng-click="showView('remind')">提醒设置</>
+    </div>
+    <div>
+    	<a ng-click="showView('signUp')">报名</>
+    </div>
+</div>

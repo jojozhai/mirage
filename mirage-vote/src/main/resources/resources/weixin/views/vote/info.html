@@ -1,0 +1,36 @@
+<div class="ui-row" style="background-color: #d9edf7; padding-left: 0px;padding-right: 0px;" >
+<div style="padding: 10px; margin: 10px;" >
+<div class="row">
+	<div class="col-xs-12">
+		<form name="userForm" class="form-horizontal no-margin" data-validate="parsley" novalidate>
+			<div class="form-group"  ng-class="userForm.name.$invalid && userForm.name.$dirty ? 'has-error': ''">
+				<label class="control-label col-xs-4" style="text-align: right;">姓名:</label>
+				<div class="col-xs-6">
+					<input name="name" maxlength="4" ng-model="user.name" type="text" class="form-control " placeholder="姓名" required>
+					<label class="control-label" ng-show="userForm.name.$invalid && userForm.name.$dirty">姓名不能为空</label>
+				</div>
+			</div>
+			<div class="form-group"  ng-class="userForm.mobile.$invalid && userForm.mobile.$dirty ? 'has-error': ''">
+				<label class="control-label col-xs-4" style="text-align: right;">联系电话:</label>
+				<div class="col-xs-6">
+					<input name="mobile" ng-pattern="'1[0-9]{10}'" ng-model="user.mobile" type="text" class="form-control " placeholder="联系电话" required>
+					<label class="control-label" ng-show="userForm.mobile.$error.required && userForm.mobile.$dirty">
+						联系电话不能为空
+					</label>
+					<label class="control-label" ng-show="userForm.mobile.$error.pattern && userForm.mobile.$dirty">
+						请输入合法的电话号码
+					</label>
+				</div>
+			</div>
+			<div class="row form-group" style="text-align: center;">
+				<div class="col-xs-12">
+					<button ng-click="updateUserInfo(user)" class="col-xs-12 btn btn-danger btn-lg" ng-disabled="userForm.$invalid">
+						保存
+					</button>
+				</div>
+			</div>
+		</form>	
+	</div>
+</div>
+</div>
+</div>

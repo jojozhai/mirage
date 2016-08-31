@@ -1,0 +1,49 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>com.ymt.mirage</groupId>
+		<artifactId>mirage</artifactId>
+		<version>1.0.0-SNAPSHOT</version>
+		<relativePath>../mirage</relativePath>
+	</parent>
+	<artifactId>mirage-challenge</artifactId>
+
+	<dependencies>
+		<dependency>
+			<groupId>com.ymt.pz365.framework</groupId>
+			<artifactId>pzx-framework-data-jpa</artifactId>
+			<version>${pzx.framework.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.ymt.pz365.framework</groupId>
+			<artifactId>pzx-framework-aliyun</artifactId>
+			<version>${pzx.framework.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.ymt.pz365.framework</groupId>
+			<artifactId>pzx-framework-weixin</artifactId>
+			<version>${pzx.framework.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.ymt.mirage</groupId>
+			<artifactId>mirage-user</artifactId>
+			<version>${mirage.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.ymt.mirage</groupId>
+			<artifactId>mirage-apply</artifactId>
+			<version>${mirage.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.ymt.mirage</groupId>
+			<artifactId>mirage-challenge-service</artifactId>
+			<version>${mirage.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.ymt.mirage</groupId>
+			<artifactId>mirage-social</artifactId>
+			<version>${mirage.version}</version>
+		</dependency>
+	</dependencies>
+</project>

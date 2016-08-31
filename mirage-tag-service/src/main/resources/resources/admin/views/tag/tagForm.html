@@ -1,0 +1,28 @@
+<div class="smart-widget widget-dark-blue margin-md">
+	<div class="smart-widget-header">分类信息</div>
+	<div class="smart-widget-inner">
+	<div class="smart-widget-body" >
+		<form name="tagForm" class="form-horizontal no-margin" id="type-constraint" data-validate="parsley" novalidate>
+			<div class="form-group"  ng-class="tagForm.name.$invalid && tagForm.name.$dirty ? 'has-error': ''">
+				<label class="control-label col-lg-3">名称:</label>
+				<div class="col-lg-9">
+					<input name="name" ng-model="tag.name" type="text" class="form-control input-sm" placeholder="名称" required>
+					<label class="control-label" ng-show="tagForm.name.$invalid && tagForm.name.$dirty">名称不能为空</label>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="control-label col-lg-3">分类背景图片:</label>
+				<div class="col-lg-4">
+					<div class="fileinput-button" style="border: 1px solid #abcdef; height: 180px; width: 320px;" >
+						<img ng-src="{{tag.image}}" width="320px;", height="180px;">
+						<input type="file" id="file1" name="file1" pz-uploader action="doUpload(files)">
+					</div>
+				</div>
+			</div>
+			<div class="text-right m-top-md">
+				<button ng-click="save(tag)" class="btn btn-success btn-sm" ng-disabled="tagForm.$invalid"><i class="fa fa-save m-right-xs"></i>保存</button>
+			</div>
+		</form>
+	</div>
+	</div>
+</div>

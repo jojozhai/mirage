@@ -1,0 +1,12 @@
+<footer ng-show="config.showFooter" class="ui-footer ui-footer-stable ui-border-t">
+    <ul class="ui-tiled">
+        <li><div><a ui-sref="app.index">首页</a></div></li>
+        <li><div><a ui-sref="app.challenge.list">挑战</a></div></li>
+        <li><div><a ui-sref="app.signUp.personal({type:'PERSONAL'})">发布</a></div></li>
+        <li><div><a ui-sref="app.onlookers">看热闹</a></div></li>
+        <li><div><a ui-sref="app.my">我的</a></div></li>
+    </ul>
+</footer>
+<section class="ui-container">
+    <div ui-view></div>
+</section>

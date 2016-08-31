@@ -1,0 +1,67 @@
+<div style="padding: 20px;">
+<div class="smart-widget widget-dark-blue">
+	<div class="smart-widget-header">评论管理</div>
+	<div class="smart-widget-inner">
+		<div class="smart-widget-body">
+			<button type="button" class="btn btn-success btn-sm" ng-click="isConditionCollapsed = !isConditionCollapsed">
+				<i class="fa fa-search m-right-xs"></i>查询
+			</button>
+		</div>
+		<div uib-collapse="isConditionCollapsed" style="padding-left: 20px;padding-right: 20px;">
+			<div class="panel">
+				<div class="panel-body">
+					<div style="float:right; margin-top: 7px;">
+						<a href="javascript:" ng-click="isConditionCollapsed = !isConditionCollapsed" class="widget-remove-option"><i class="fa fa-times"></i></a>
+					</div>
+					<div>
+					<form class="form-inline no-margin" novalidate>
+						<div class="form-group">
+								<input ng-model="key" type="text" class="form-control input-sm" placeholder="评论内容">
+						</div>
+						<div class="form-group">
+								<input ng-model="createrName" type="text" class="form-control input-sm" placeholder="评论人">
+						</div>
+						<button ng-click="query(condition)" class="btn btn-sm btn-success"><i class="fa fa-search m-right-xs"></i>查询</button>
+						<button ng-click="cleanCondition()" class="btn btn-sm btn-warning"><i class="ion-close m-right-xs"></i>清空</button>
+					</form>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<div ng-show="commentable.comments.length > 0">
+			<div class="smart-widget-body">
+				<table class="table table-hover">
+					<thead>
+						<tr>
+							<th width="100">序号</th>
+							<th>评论内容</th>
+							<th width="100">评论人</th>
+							<th width="150">评论时间</th>
+							<th width="100">操作</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat = "comment in commentable.comments | filter: {content: key} | filter: {createrName: createrName}">
+							<td>{{$index+1}}</td>
+							<td style="word-break:break-all">{{comment.content}}</td>
+							<td>{{comment.createrName}}</td>
+							<td>{{comment.createdTime | date: "yyyy-MM-dd HH:mm"}}</td>
+							<td>
+								<button class="btn btn-danger btn-xs" ng-click="remove(comment)">
+									<i class="ion-trash-a m-right-xs"></i>删除
+								</button>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+		<div class="smart-widget-body" ng-hide="commentable.comments.length > 0">
+			<div class="alert alert-warning alert-dismissible" role="alert">
+		     	<i class="fa fa-exclamation-circle m-right-xs"></i> <strong>没有查询到任何数据,请修改查询条件并重试</strong>
+		    </div>
+		</div>
+	</div>
+</div>
+</div>
