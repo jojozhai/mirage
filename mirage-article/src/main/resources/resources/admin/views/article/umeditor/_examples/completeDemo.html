@@ -1,0 +1,128 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+    <title>资讯详情</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <link href="../themes/default/_css/umeditor.css" type="text/css" rel="stylesheet">
+    <script type="text/javascript" src="../third-party/jquery.min.js"></script>
+    <script type="text/javascript" charset="utf-8" src="../umeditor.config.js"></script>
+    <script type="text/javascript" charset="utf-8" src="editor_api.js"></script>
+    <script type="text/javascript" src="../lang/zh-cn/zh-cn.js"></script>
+    <script type="text/javascript" src="save/js/btn.js"></script>
+    <script type="text/javascript" src="save/js/save-plugin.js"></script>
+    <style type="text/css">
+       .con {
+       		width:100%;
+       		margin:0 auto;
+       		position: relative;
+
+       }
+       .edui-btn-toolbar .edui-btn-save .edui-icon-save {
+		    background: url(save/images/save.png) no-repeat 2px 3px transparent;
+		}
+	}
+
+    </style>
+</head>
+<body>
+
+
+<!--style给定宽度可以影响编辑器的最终宽度-->
+
+<div class="con">
+<script type="text/plain" id="myEditor" style="width:100%; height:100%;"></script>
+</div>
+
+<script type="text/javascript">
+
+//注册一个名为“save”的插件
+UM.plugins['save'] = function () {
+
+    UM.commands[ 'save' ] = {
+
+        execCommand: function (cmdName) {
+
+            //在这里实现具体的命令的行为
+            //当调用 editor.execCommand("save") 时， 该方法就会被调用
+            //保存功能的实际代码由用户自己实现
+
+            //alert("触发保存功能");
+            
+        	jsonObj.content=getAllHtml();
+            var jsonObjs=JSON.stringify(jsonObj);
+            $.ajax({
+                      type: "put",
+                      url: "/admin2/article/"+id,
+                      data:jsonObjs,
+                      dataType: "json",
+                      contentType: "application/json; charset=utf-8",
+                      success: function (obj) {
+                          alert("保存成功")
+                      }
+                  });    
+
+        },
+        queryCommandState: function (cmdName) {
+
+            //这里返回只能是 1, 0, -1
+            //1代表当前命令已经执行过了
+            //0代表当前命令未执行
+            //-1代表当前命令不可用
+
+            //在这里总是返回0， 这样做可以使保存按钮一直可点击
+            return 0;
+        },
+        //声明该插件不支持“撤销／保存”功能， 这样就不会触发ctrl+z 和ctrl+y的记忆功能
+        notNeedUndo: 1
+
+    };
+
+};
+
+    //实例化编辑器
+    var um = UM.getEditor('myEditor');
+    function getAllHtml() {
+       return UM.getEditor('myEditor').getContent();
+    }
+
+  //获取传递过来的id值，和类别的id
+    function GetRequest() {
+         var url = location.search;
+         var theRequest = new Object();
+         if (url.indexOf("?") != -1) {
+             var str = url.substr(1);
+             strs = str.split("&");
+             for(var i = 0; i < strs.length; i ++) {
+                 theRequest[strs[i].split("=")[0]]=unescape(strs[i].split("=")[1]);
+             }
+         }
+         return theRequest;
+     }
+     var Request = new Object();
+     Request = GetRequest();
+     var id=Request.id;
+     var jsonObj;
+  // 发起网路请求  创建请求对象
+  var request = new XMLHttpRequest();
+  request.onreadystatechange = function () {
+ 		 if (request.readyState == 4 && request.status == 200) {
+   		var jsonStr = request.responseText;
+   		// 将json转为对象
+  		jsonObj = JSON.parse(jsonStr);
+   		
+   		console.log(jsonObj.content);
+  		um.setContent(jsonObj.content, false);
+
+ 		 }
+    };
+    // 使用请求对象，创建请求
+    request.open("get", "/admin2/article/"+id);
+    // 发送请求
+    request.send();
+
+</script>
+
+</body>
+</html>
