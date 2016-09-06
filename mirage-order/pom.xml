@@ -8,7 +8,7 @@
 		<relativePath>../mirage</relativePath>
 	</parent>
 	<artifactId>mirage-order</artifactId>
-	
+
 	<dependencies>
 		<dependency>
 			<groupId>com.ymt.pz365.framework</groupId>
@@ -16,10 +16,10 @@
 			<version>${pzx.framework.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>com.ymt.mirage</groupId>
-			<artifactId>mirage-order-service</artifactId>
-			<version>${mirage.version}</version>
+			<groupId>org.scala-lang</groupId>
+			<artifactId>scala-library</artifactId>
+			<version>2.11.0</version>
 		</dependency>
 	</dependencies>
-	
+
 </project>

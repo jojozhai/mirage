@@ -111,11 +111,15 @@
 		<module>../mirage-tag</module>
 		<module>../mirage-tag-service</module>
 		<module>../mirage-order</module>
-		<module>../mirage-order-service</module>
+		
 		<module>../mirage-swiper</module>
 		<module>../mirage-swiper-service</module>
 		<module>../mirage-lottery</module>
 		<module>../mirage-article</module>
 		<module>../mirage-sms</module>
+		<module>../mirage-lesson</module>
+		<module>../mirage-clearing</module>
+		<module>../mirage-sell</module>
+		<module>../../../mirage-goods</module>
 	</modules>
 </project>

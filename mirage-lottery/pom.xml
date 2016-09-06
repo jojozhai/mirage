@@ -9,7 +9,7 @@
 	</parent>
 	<artifactId>mirage-lottery</artifactId>
 
-	<dependencies>
+	<dependencies> 
 		<dependency>
 			<groupId>com.ymt.pz365.framework</groupId>
 			<artifactId>pzx-framework-data-jpa</artifactId>
