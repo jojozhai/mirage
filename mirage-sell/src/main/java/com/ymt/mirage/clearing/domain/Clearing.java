@@ -84,6 +84,10 @@ public class Clearing extends DomainImpl {
      * 变动后利润
      */
     private BigDecimal after;
+    /**
+     * 是否已激活
+     */
+    private boolean active;
     
     /**
      * @return the targetId
@@ -240,6 +244,18 @@ public class Clearing extends DomainImpl {
      */
     public void setContributorName(String contributorName) {
         this.contributorName = contributorName;
+    }
+    /**
+     * @return the active
+     */
+    public boolean isActive() {
+        return active;
+    }
+    /**
+     * @param active the active to set
+     */
+    public void setActive(boolean active) {
+        this.active = active;
     }
 
 }

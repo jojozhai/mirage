@@ -39,10 +39,6 @@ public class Profit extends DomainImpl {
      */
     private BigDecimal available;
     /**
-     * 待发放利润
-     */
-    private BigDecimal pending;
-    /**
      * @return the userId
      */
     public Long getUserId() {
@@ -77,18 +73,6 @@ public class Profit extends DomainImpl {
      */
     public void setAvailable(BigDecimal available) {
         this.available = available;
-    }
-    /**
-     * @return the pending
-     */
-    public BigDecimal getPending() {
-        return pending;
-    }
-    /**
-     * @param pending the pending to set
-     */
-    public void setPending(BigDecimal pending) {
-        this.pending = pending;
     }
     
 }

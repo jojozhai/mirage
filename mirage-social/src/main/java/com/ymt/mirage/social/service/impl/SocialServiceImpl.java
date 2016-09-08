@@ -234,5 +234,10 @@ public class SocialServiceImpl implements SocialService {
         
         return false;
     }
+
+    @Override
+    public boolean getPraise(String target, Long targetId, Long currentUserId) {
+        return praiseRepository.findByCreaterIdAndTargetId(currentUserId, targetId) != null;
+    }
 	
 }

@@ -27,6 +27,13 @@ public enum ClearingType {
         public String getDesc(Clearing clearing) {
             return clearing.getLevel()+"级好友'"+clearing.getContributorName()+"'购买了'"+clearing.getTargetValue()+"',您获得了返利:"+clearing.getAmount()+"元";
         }
+    },
+    
+    WITHDRAW {
+        @Override
+        public String getDesc(Clearing clearing) {
+            return "提现";
+        }
     };
 
     /**

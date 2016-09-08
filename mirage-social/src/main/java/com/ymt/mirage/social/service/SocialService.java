@@ -25,4 +25,6 @@ public interface SocialService {
 
 	List<Comment> queryComment(CommentInfo commentInfo);
 
+    boolean getPraise(String target, Long targetId, Long currentUserId);
+
 }

@@ -116,6 +116,7 @@ public class ClearingServiceImpl implements ClearingService {
     }
 
     /**
+     * 
      * @param clearingable
      * @param node
      * @param level
@@ -129,17 +130,13 @@ public class ClearingServiceImpl implements ClearingService {
         boolean reduceProfit = clearingable.getType().isReduceProfit();
         BigDecimal percentage = rebateConfigService.getRebatePercentage(level);
         BigDecimal profitAmount = clearingable.getValue().multiply(percentage.divide(new BigDecimal(100), 4, RoundingMode.HALF_UP));
-        BigDecimal newPendingAmount = reduceProfit?profit.getPending().subtract(profitAmount):profit.getPending().add(profitAmount);
-        
-        if(!reduceProfit) {
-            profit.getTotal().add(profitAmount);
-        }
-        profit.setPending(newPendingAmount);
+        BigDecimal newAvailableAmount = reduceProfit?profit.getAvailable().subtract(profitAmount):profit.getAvailable().add(profitAmount);
+        profit.setAvailable(newAvailableAmount);
         
         Clearing clearing = new Clearing();
-        clearing.setAfter(newPendingAmount);
+        clearing.setAfter(newAvailableAmount);
         clearing.setAmount(profitAmount);
-        clearing.setBefore(profit.getPending());
+        clearing.setBefore(profit.getAvailable());
         clearing.setContributorId(clearingable.getCreaterId());
         clearing.setContributorName(clearingable.getCreaterName());
         clearing.setLevel(level);

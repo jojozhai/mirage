@@ -26,6 +26,15 @@ public class SocialWeixinController {
 	
 	@Autowired
 	private SocialService socialService;
+	
+	@RequestMapping(value = "/praise", method = RequestMethod.GET)
+    public SuccessResponse getPraise(String target, Long targetId) throws Exception {
+        Long currentUserId = CurrentUserHolder.getCurrentUserId();
+        if(currentUserId == null) {
+            throw new PzException("不能识别当前用户");
+        }
+        return new SuccessResponse(socialService.getPraise(target, targetId, currentUserId));
+    }
 
 	@RequestMapping(value = "/praise", method = RequestMethod.POST)
 	public SuccessResponse praise(@RequestBody PraiseInfo praiseInfo) throws Exception {
