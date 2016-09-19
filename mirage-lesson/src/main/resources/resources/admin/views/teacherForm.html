@@ -1,0 +1,42 @@
+<div class="smart-widget widget-dark-blue margin-md">
+	<div class="smart-widget-header">教师信息</div>
+	<div class="smart-widget-inner">
+	<div class="smart-widget-body" >
+		<form name="teacherForm" class="form-horizontal no-margin" id="type-constraint" data-validate="parsley" novalidate>
+			<div class="form-group"  ng-class="teacherForm.name.$invalid && teacherForm.name.$dirty ? 'has-error': ''">
+				<label class="control-label col-lg-3"><span class="text_red">*</span>&nbsp;姓名:</label>
+				<div class="col-lg-6">
+					<input name="name" ng-model="teacher.name" type="text" class="form-control input-sm" placeholder="姓名" required>
+					<label class="control-label" ng-show="teacherForm.name.$invalid && teacherForm.name.$dirty">姓名不能为空</label>
+				</div>
+			</div>
+			<div class="form-group"  ng-class="teacherForm.title.$invalid && teacherForm.title.$dirty ? 'has-error': ''">
+                <label class="control-label col-lg-3"><span class="text_red">*</span>&nbsp;头衔:</label>
+                <div class="col-lg-6">
+                    <input name="title" ng-model="teacher.title" type="text" class="form-control input-sm" placeholder="头衔" required>
+                    <label class="control-label" ng-show="teacherForm.title.$invalid && teacherForm.title.$dirty">头衔不能为空</label>
+                </div>
+            </div>
+			<div class="form-group">
+				<label class="control-label col-lg-3"><span class="text_red">*</span>头像:</label>
+				<div class="col-lg-4">
+					<div class="fileinput-button" style="border: 1px solid #abcdef; height: 140px; width: 110px;" >
+						<img ng-src="{{teacher.image}}" width="110px;", height="140px;">
+						<input type="file" id="file1" name="file1" pz-uploader action="doUpload(files)">
+					</div>
+				</div>
+			</div>
+			<div class="form-group"  ng-class="teacherForm.desc.$invalid && teacherForm.desc.$dirty ? 'has-error': ''">
+                <label class="control-label col-lg-3"><span class="text_red">*</span>老师简介:</label>
+                <div class="col-lg-9">
+                    <textarea name="desc" ui-tinymce="tinymceOptions" ng-model="teacher.desc" rows="10" cols="70" required></textarea>
+                    <label class="control-label" ng-show="teacherForm.desc.$invalid && teacherForm.desc.$dirty">老师简介不能为空</label>
+                </div>
+            </div>
+			<div class="text-right m-top-md">
+				<button ng-click="save(teacher)" class="btn btn-success btn-sm" ng-disabled="teacherForm.$invalid"><i class="fa fa-save m-right-xs"></i>保存</button>
+			</div>
+		</form>
+	</div>
+	</div>
+</div>

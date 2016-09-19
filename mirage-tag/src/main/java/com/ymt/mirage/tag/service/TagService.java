@@ -25,7 +25,7 @@ public interface TagService {
 	 * @date  2015年7月10日下午7:08:26
 	 * @since 1.0.0
 	*/
-	public TagInfo getTagTree();
+	public TagInfo getTagTree(Long id);
 	/**
 	 * @return
 	 * @author zhailiang
@@ -102,5 +102,6 @@ public interface TagService {
 	public List<TagInfo> getTags(Tagable article);
 	
 	public List<TagInfo> getTags(String target, Long targetId);
+    public void addTag(Tagable domain, List<TagInfo> tags, Class<?> clazz) throws Exception;
 
 }

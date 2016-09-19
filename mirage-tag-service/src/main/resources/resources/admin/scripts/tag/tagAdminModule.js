@@ -3,7 +3,7 @@
 angular.module('tagAdminModule',[]).config(function($stateProvider) {
 	//路由配置
 	$stateProvider.state('index.tagManage', {
-		url: "/tagManage",
+		url: "/tagManage?id",
 		controller: "tagManageCtrl",
 		templateUrl: "admin/views/tag/tagManage.html"
 	});
@@ -18,16 +18,16 @@ angular.module('tagAdminModule',[]).config(function($stateProvider) {
 	config.getChildTags = {url:"tag/child?parentId=:parentId", method:"GET", isArray:true};
 	return $resource("tag/:id", {id:"@id"}, config);
 //控制器
-}).controller('tagManageCtrl', function($scope, $uibModal, tagRestService, commonService) {
+}).controller('tagManageCtrl', function($scope, $stateParams, $uibModal, tagRestService, commonService) {
 
 	$scope.treeOptions = commonService.getDefaultTreeSetting();
 	
-	$scope.treedata = tagRestService.query();
+	$scope.treedata = tagRestService.query({rootId: $stateParams.id});
 	
 	$scope.expandedNodes = [];
 	
 	$scope.create = function() {
-		$scope.save({});
+		$scope.save({parentId: $stateParams.id}); 
 	}
 	
 	$scope.update = function(tag) {

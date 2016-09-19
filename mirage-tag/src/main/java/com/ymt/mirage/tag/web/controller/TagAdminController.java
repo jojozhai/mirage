@@ -30,8 +30,8 @@ public class TagAdminController {
 	private TagService tagService;
 	
 	@RequestMapping(value = "/tag", method = RequestMethod.GET)
-	public TagInfo getTagTree(){
-		return tagService.getTagTree();
+	public TagInfo getTagTree(Long rootId){
+		return tagService.getTagTree(rootId);
 	}
 	
 	@RequestMapping(value = "/tags", method = RequestMethod.GET)

@@ -34,6 +34,14 @@ public class Teacher extends DomainImpl {
      */
     @Lob
     private String desc;
+    /**
+     * 头像
+     */
+    private String image;
+    /**
+     * 头衔
+     */
+    private String title;
 
     /**
      * @return the name
@@ -61,6 +69,34 @@ public class Teacher extends DomainImpl {
      */
     public void setDesc(String desc) {
         this.desc = desc;
+    }
+
+    /**
+     * @return the image
+     */
+    public String getImage() {
+        return image;
+    }
+
+    /**
+     * @param image the image to set
+     */
+    public void setImage(String image) {
+        this.image = image;
+    }
+
+    /**
+     * @return the title
+     */
+    public String getTitle() {
+        return title;
+    }
+
+    /**
+     * @param title the title to set
+     */
+    public void setTitle(String title) {
+        this.title = title;
     }
 
 }

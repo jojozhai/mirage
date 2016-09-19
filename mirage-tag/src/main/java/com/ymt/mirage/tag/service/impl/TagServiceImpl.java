@@ -49,8 +49,15 @@ public class TagServiceImpl implements TagService {
 	 * @see com.idea.ams.service.TagService#getTagTree(java.lang.Long, com.idea.ams.domain.Admin)
 	 */
 	@Override
-	public TagInfo getTagTree() {
-		Tag root = tagRepository.findByName("根节点");
+	public TagInfo getTagTree(Long id) {
+	    
+		Tag root;
+		if(id == null) {
+		    root = tagRepository.findByName("根节点");
+		}else{
+		    root = tagRepository.getOne(id);
+		}
+		
 		if(root == null){
 			root = new Tag();
 			root.setName("根节点");
@@ -197,21 +204,28 @@ public class TagServiceImpl implements TagService {
 		return QueryResultConverter.convert(parent.getChilds(), TagInfo.class);
 	}
 
-	@SuppressWarnings({ "rawtypes", "unchecked" })
+	
 	@Override
 	public void addTag(Tagable domain, List<TagInfo> tags) throws Exception {
-		if(CollectionUtils.isNotEmpty(tags)){
-			String domainName = StringUtils.uncapitalize(domain.getClass().getSimpleName());
-			TagRelationRepository repository = (TagRelationRepository) applicationContext.getBean(domainName+"TagRepository");
-			repository.delete(repository.findByTargetId(domain.getId()));
-			for (TagInfo tagInfo : tags) {
-				TagRelation taged = (TagRelation) Class.forName(domain.getClass().getName()+"Tag").newInstance();
-				taged.setTarget(domain);
-				taged.setTag(tagRepository.getOne(tagInfo.getId()));
-				repository.save(taged);
-			}
-		}
+	    addTag(domain, tags, Class.forName(domain.getClass().getName()+"Tag"));
 	}
+	
+
+    @SuppressWarnings({ "rawtypes", "unchecked" })
+	@Override
+    public void addTag(Tagable domain, List<TagInfo> tags, Class<?> clazz) throws Exception  {
+	    if(CollectionUtils.isNotEmpty(tags)){
+	        String clazzName = clazz.getSimpleName();
+            TagRelationRepository repository = (TagRelationRepository) applicationContext.getBean(StringUtils.uncapitalize(clazzName)+"Repository");
+            repository.delete(repository.findByTargetId(domain.getId()));
+            for (TagInfo tagInfo : tags) {
+                TagRelation taged = (TagRelation) clazz.newInstance();
+                taged.setTarget(domain);
+                taged.setTag(tagRepository.getOne(tagInfo.getId()));
+                repository.save(taged);
+            }
+        }
+    }
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
@@ -232,4 +246,5 @@ public class TagServiceImpl implements TagService {
 		PzRepository repository = (PzRepository) applicationContext.getBean(target+"Repository");
 		return getTags((Tagable) repository.findOne(targetId));
 	}
+
 }

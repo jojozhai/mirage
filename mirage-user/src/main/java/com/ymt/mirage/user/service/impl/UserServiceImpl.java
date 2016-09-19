@@ -56,6 +56,12 @@ public class UserServiceImpl implements WeixinUserService, UserService{
 		}else{
 			if(StringUtils.isNotBlank(accessToken.getUnionid())){
 				user = userRepository.findByWeixinUnionId(accessToken.getUnionid());  
+				if(user == null) {
+				    user = userRepository.findByWeixinOpenId(accessToken.getOpenid());
+				    if(user != null){
+				        user.setWeixinUnionId(accessToken.getUnionid());
+				    }
+				}
 			}else{
 				user = userRepository.findByWeixinOpenId(accessToken.getOpenid());
 			}

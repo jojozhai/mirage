@@ -19,7 +19,7 @@ import com.ymt.mirage.swiper.service.SwiperService;
  * @since 2016年5月5日
  */
 @RestController
-@Profile("weixin")
+@Profile({"weixin","app"})
 public class SwiperWeixinController {
 	
 	@Autowired

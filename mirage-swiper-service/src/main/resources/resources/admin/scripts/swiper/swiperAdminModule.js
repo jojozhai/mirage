@@ -25,7 +25,7 @@ angular.module('swiperAdminModule',[]).config(function($stateProvider) {
 	}
 	
 	$scope.create = function() {
-		$scope.save({});
+		$scope.save({enable:true});
 	}
 	
 	$scope.update = function(swiper) {

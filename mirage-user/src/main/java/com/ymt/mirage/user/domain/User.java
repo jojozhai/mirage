@@ -130,6 +130,14 @@ public class User extends DomainImpl implements UserDetails {
 	 * 是否关注了公众号
 	 */
 	private int subscribe;
+	/**
+	 * 职业
+	 */
+	private String job;
+	/**
+	 * 年龄 
+	 */
+	private int age;
 	
 	public boolean isRegisted() {
 	    return StringUtils.isNotBlank(getRealname()) && StringUtils.isNotBlank(getMobile());
@@ -536,6 +544,34 @@ public class User extends DomainImpl implements UserDetails {
      */
     public void setSubscribe(int subscribe) {
         this.subscribe = subscribe;
+    }
+
+    /**
+     * @return the job
+     */
+    public String getJob() {
+        return job;
+    }
+
+    /**
+     * @param job the job to set
+     */
+    public void setJob(String job) {
+        this.job = job;
+    }
+
+    /**
+     * @return the age
+     */
+    public int getAge() {
+        return age;
+    }
+
+    /**
+     * @param age the age to set
+     */
+    public void setAge(int age) {
+        this.age = age;
     }
 
 }
