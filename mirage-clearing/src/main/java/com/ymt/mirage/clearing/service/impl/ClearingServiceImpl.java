@@ -26,6 +26,7 @@ import com.ymt.mirage.clearing.repository.ClearingTreeRepository;
 import com.ymt.mirage.clearing.service.ClearingService;
 import com.ymt.mirage.clearing.service.ProfitService;
 import com.ymt.mirage.clearing.service.RebateConfigService;
+import com.ymt.mirage.user.repository.UserRepository;
 import com.ymt.pz365.framework.core.exception.PzException;
 
 /**
@@ -51,6 +52,9 @@ public class ClearingServiceImpl implements ClearingService {
     
     @Autowired
     private ClearingTreeRepository clearingTreeRepository;
+    
+    @Autowired
+    private UserRepository userRepository;
 
     /* (non-Javadoc)
      * @see com.ymt.mirage.clearing.service.ClearingService#addUser(java.lang.String, java.lang.Long, java.lang.String, java.lang.Long)
@@ -137,7 +141,7 @@ public class ClearingServiceImpl implements ClearingService {
         clearing.setAfter(newAvailableAmount);
         clearing.setAmount(profitAmount);
         clearing.setBefore(profit.getAvailable());
-        clearing.setContributorId(clearingable.getCreaterId());
+        clearing.setContributor(userRepository.getOne(clearingable.getCreaterId()));
         clearing.setContributorName(clearingable.getCreaterName());
         clearing.setLevel(level);
         clearing.setPercentage(percentage);
@@ -145,7 +149,7 @@ public class ClearingServiceImpl implements ClearingService {
         clearing.setTargetName(clearingable.getName());
         clearing.setTargetValue(clearingable.getValue());
         clearing.setType(clearingable.getType());
-        clearing.setUserId(node.getUserId());
+        clearing.setUser(userRepository.getOne(node.getUserId()));
         clearing.setDetails(clearingable.getType().getDesc(clearing));
         
         if(node.getParent() != null) {

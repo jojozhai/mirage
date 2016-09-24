@@ -17,8 +17,10 @@ import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.Index;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.ymt.mirage.user.domain.User;
 import com.ymt.pz365.data.jpa.domain.DomainImpl;
 
 /**
@@ -51,11 +53,13 @@ public class Clearing extends DomainImpl {
     /**
      * 流水所属用户id
      */
-    private Long userId;
+    @ManyToOne
+    private User user;
     /**
      * 产生可结算物的用户的id
      */
-    private Long contributorId;
+    @ManyToOne
+    private User contributor;
     /**
      * 产生可结算物的用户的名称
      */
@@ -100,18 +104,6 @@ public class Clearing extends DomainImpl {
      */
     public void setTargetId(Long targetId) {
         this.targetId = targetId;
-    }
-    /**
-     * @return the userId
-     */
-    public Long getUserId() {
-        return userId;
-    }
-    /**
-     * @param userId the userId to set
-     */
-    public void setUserId(Long userId) {
-        this.userId = userId;
     }
     /**
      * @return the amount
@@ -186,16 +178,28 @@ public class Clearing extends DomainImpl {
         this.targetValue = targetValue;
     }
     /**
+     * @return the user
+     */
+    public User getUser() {
+        return user;
+    }
+    /**
+     * @param user the user to set
+     */
+    public void setUser(User user) {
+        this.user = user;
+    }
+    /**
      * @return the contributor
      */
-    public Long getContributorId() {
-        return contributorId;
+    public User getContributor() {
+        return contributor;
     }
     /**
      * @param contributor the contributor to set
      */
-    public void setContributorId(Long contributor) {
-        this.contributorId = contributor;
+    public void setContributor(User contributor) {
+        this.contributor = contributor;
     }
     /**
      * @return the type

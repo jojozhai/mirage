@@ -40,6 +40,10 @@ public class Comment extends DomainImpl implements Praiseable {
 	 */
 	private String createrName;
 	/**
+	 * 发送人描述
+	 */
+	private String createrDesc;
+	/**
 	 * 发送人头像
 	 */
 	private String createrHeadimgurl;
@@ -213,6 +217,18 @@ public class Comment extends DomainImpl implements Praiseable {
      */
     public void setComment(Comment comment) {
         this.comment = comment;
+    }
+    /**
+     * @return the createrDesc
+     */
+    public String getCreaterDesc() {
+        return createrDesc;
+    }
+    /**
+     * @param createrDesc the createrDesc to set
+     */
+    public void setCreaterDesc(String createrDesc) {
+        this.createrDesc = createrDesc;
     }
 
 }

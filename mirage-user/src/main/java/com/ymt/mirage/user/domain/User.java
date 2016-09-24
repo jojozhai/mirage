@@ -3,6 +3,7 @@
  */
 package com.ymt.mirage.user.domain;
 
+import java.math.BigDecimal;
 import java.util.Collection;
 import java.util.Date;
 
@@ -138,6 +139,11 @@ public class User extends DomainImpl implements UserDetails {
 	 * 年龄 
 	 */
 	private int age;
+	
+	/**
+	 * 返利钱数
+	 */
+	private BigDecimal money;
 	
 	public boolean isRegisted() {
 	    return StringUtils.isNotBlank(getRealname()) && StringUtils.isNotBlank(getMobile());
@@ -572,6 +578,20 @@ public class User extends DomainImpl implements UserDetails {
      */
     public void setAge(int age) {
         this.age = age;
+    }
+
+    /**
+     * @return the money
+     */
+    public BigDecimal getMoney() {
+        return money;
+    }
+
+    /**
+     * @param money the money to set
+     */
+    public void setMoney(BigDecimal money) {
+        this.money = money;
     }
 
 }

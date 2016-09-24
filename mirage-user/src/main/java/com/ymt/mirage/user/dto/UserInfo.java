@@ -3,6 +3,7 @@
  */
 package com.ymt.mirage.user.dto;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 /**
@@ -103,6 +104,10 @@ public class UserInfo {
 	 * 
 	 */
 	private String car;
+	/**
+	 * 返利钱数
+	 */
+	private BigDecimal money;
 	/**
 	 * @return
 	 * @author zhailiang
@@ -398,5 +403,17 @@ public class UserInfo {
 	public void setCar(String car) {
 		this.car = car;
 	}
+    /**
+     * @return the money
+     */
+    public BigDecimal getMoney() {
+        return money;
+    }
+    /**
+     * @param money the money to set
+     */
+    public void setMoney(BigDecimal money) {
+        this.money = money;
+    }
 	
 }

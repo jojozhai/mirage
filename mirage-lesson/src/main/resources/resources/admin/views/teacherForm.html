@@ -33,6 +33,18 @@
                     <label class="control-label" ng-show="teacherForm.desc.$invalid && teacherForm.desc.$dirty">老师简介不能为空</label>
                 </div>
             </div>
+            <div class="form-group">
+                <label class="control-label col-lg-3">成交量:</label>
+                <div class="col-lg-2">
+                    <input name="saleCount" ng-model="teacher.saleCount" type="number" class="form-control input-sm" placeholder="成交量" required readonly="readonly">
+                    <label class="control-label" ng-show="teacherForm.saleCount.$invalid && teacherForm.saleCount.$dirty">成交量不能为空</label>
+                </div>
+                <label class="control-label col-lg-2">成交量加成:</label>
+                <div class="col-lg-2" ng-class="teacherForm.saleCountPlus.$invalid && teacherForm.saleCountPlus.$dirty ? 'has-error': ''">
+                    <input name="saleCountPlus" ng-model="teacher.saleCountPlus" type="number" class="form-control input-sm" placeholder="成交量加成" required>
+                    <label class="control-label" ng-show="teacherForm.saleCountPlus.$invalid && teacherForm.saleCountPlus.$dirty">成交量加成不能为空</label>
+                </div>
+            </div>
 			<div class="text-right m-top-md">
 				<button ng-click="save(teacher)" class="btn btn-success btn-sm" ng-disabled="teacherForm.$invalid"><i class="fa fa-save m-right-xs"></i>保存</button>
 			</div>

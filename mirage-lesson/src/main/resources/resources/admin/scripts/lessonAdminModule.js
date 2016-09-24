@@ -10,6 +10,7 @@ angular.module('lessonAdminModule',[]).config(function($stateProvider) {
 //服务配置
 }).service("lessonRestService", function($resource, commonService){
 	var config = commonService.getDefaultRestSetting();
+	config.findAll = {url:"lesson/all", method:"GET", isArray:true};
 	return $resource("lesson/:id", {id:"@id"}, config);
 //控制器
 }).controller('lessonManageCtrl', function($scope, $uibModal, lessonRestService, commonService) {

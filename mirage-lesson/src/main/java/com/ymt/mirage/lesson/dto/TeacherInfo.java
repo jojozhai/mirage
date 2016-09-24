@@ -39,6 +39,18 @@ public class TeacherInfo {
      * 头衔
      */
     private String title;
+    /**
+     * 卖出次数
+     */
+    private int saleCount;
+    /**
+     * 卖出次数加成
+     */
+    private int saleCountPlus;
+    /**
+     * 星级
+     */
+    private int rate;
     
     /**
      * @return the name
@@ -99,6 +111,42 @@ public class TeacherInfo {
      */
     public void setId(Long id) {
         this.id = id;
+    }
+    /**
+     * @return the saleCount
+     */
+    public int getSaleCount() {
+        return saleCount;
+    }
+    /**
+     * @param saleCount the saleCount to set
+     */
+    public void setSaleCount(int saleCount) {
+        this.saleCount = saleCount;
+    }
+    /**
+     * @return the rate
+     */
+    public int getRate() {
+        return rate;
+    }
+    /**
+     * @param rate the rate to set
+     */
+    public void setRate(int rate) {
+        this.rate = rate;
+    }
+    /**
+     * @return the saleCountPlus
+     */
+    public int getSaleCountPlus() {
+        return saleCountPlus;
+    }
+    /**
+     * @param saleCountPlus the saleCountPlus to set
+     */
+    public void setSaleCountPlus(int saleCountPlus) {
+        this.saleCountPlus = saleCountPlus;
     }
     
 }

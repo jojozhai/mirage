@@ -3,6 +3,8 @@
  */
 package com.ymt.mirage.social.web.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.data.domain.Page;
@@ -45,6 +47,11 @@ public class CommentWeixinController {
 	public Page<CommentInfo> query(CommentInfo commentInfo, Pageable pageable) throws Exception {
 		return commentService.query(commentInfo, pageable);
 	}
+	
+	@RequestMapping(value = "/comment/praise", method = RequestMethod.GET)
+    public List<Boolean> getCommentPraise(CommentInfo commentInfo, Pageable pageable) throws Exception {
+        return commentService.getCommentPraise(commentInfo, pageable, CurrentUserHolder.getCurrentUserId());
+    }
 	
 	/**
 	 * @param commentInfo

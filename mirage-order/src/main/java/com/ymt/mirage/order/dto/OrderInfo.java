@@ -1,7 +1,7 @@
 /*
  * 项目名称：mirage-order
- * 类名称: Order
- * 创建时间: 2016年9月5日 下午3:02:46
+ * 类名称: OrderInfo
+ * 创建时间: 2016年9月20日 下午2:28:53
  * 创建人: zhailiang@pz365.com
  *
  * 修改历史:
@@ -9,15 +9,13 @@
  * Copyright: 2016 www.pz365.com Inc. All rights reserved.
  * 
  */
-package com.ymt.mirage.order.domain;
+package com.ymt.mirage.order.dto;
 
 import java.math.BigDecimal;
+import java.util.List;
 
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.MappedSuperclass;
-
-import com.ymt.pz365.data.jpa.domain.DomainImpl;
+import com.ymt.mirage.order.domain.OrderState;
+import com.ymt.mirage.user.dto.UserInfo;
 
 /**
  *
@@ -25,8 +23,9 @@ import com.ymt.pz365.data.jpa.domain.DomainImpl;
  * @author zhailiang@pz365.com
  * @version 1.0.0
  */
-@MappedSuperclass
-public abstract class AbstractOrder extends DomainImpl {
+public class OrderInfo {
+    
+    private Long id;
     
     /**
      * 订单号
@@ -43,8 +42,32 @@ public abstract class AbstractOrder extends DomainImpl {
     /**
      * 订单状态
      */
-    @Enumerated(EnumType.STRING)
     private OrderState state;
+    /**
+     * 商品信息
+     */
+    private List<CartInfo> cartInfos;
+    /**
+     * 留言
+     */
+    private String message;
+    /**
+     * 用户信息
+     */
+    private UserInfo userInfo;
+    
+    /**
+     * @return the id
+     */
+    public Long getId() {
+        return id;
+    }
+    /**
+     * @param id the id to set
+     */
+    public void setId(Long id) {
+        this.id = id;
+    }
     /**
      * @return the number
      */
@@ -93,5 +116,42 @@ public abstract class AbstractOrder extends DomainImpl {
     public void setState(OrderState state) {
         this.state = state;
     }
+    /**
+     * @return the cartInfos
+     */
+    public List<CartInfo> getCartInfos() {
+        return cartInfos;
+    }
+    /**
+     * @param cartInfos the cartInfos to set
+     */
+    public void setCartInfos(List<CartInfo> cartInfos) {
+        this.cartInfos = cartInfos;
+    }
+    /**
+     * @return the message
+     */
+    public String getMessage() {
+        return message;
+    }
+    /**
+     * @param message the message to set
+     */
+    public void setMessage(String message) {
+        this.message = message;
+    }
+    /**
+     * @return the userInfo
+     */
+    public UserInfo getUserInfo() {
+        return userInfo;
+    }
+    /**
+     * @param userInfo the userInfo to set
+     */
+    public void setUserInfo(UserInfo userInfo) {
+        this.userInfo = userInfo;
+    }
     
+
 }

@@ -3,6 +3,7 @@
  */
 package com.ymt.mirage.social.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
@@ -21,6 +22,7 @@ import com.ymt.mirage.social.dto.CommentInfo;
 import com.ymt.mirage.social.dto.Commentable;
 import com.ymt.mirage.social.dto.DeleteAll;
 import com.ymt.mirage.social.repository.CommentRepository;
+import com.ymt.mirage.social.repository.PraiseRepository;
 import com.ymt.mirage.social.repository.spec.CommentSpec;
 import com.ymt.mirage.social.service.CommentService;
 import com.ymt.mirage.social.service.SocialService;
@@ -39,6 +41,9 @@ public class CommentServiceImpl implements CommentService {
 	private CommentRepository commentRepository;
 	
 	@Autowired
+	private PraiseRepository praiseRepository;
+	
+	@Autowired
 	private SocialService socialService;
 	
 	private ObjectMapper mapper = new ObjectMapper();
@@ -55,11 +60,23 @@ public class CommentServiceImpl implements CommentService {
         return QueryResultConverter.convert(pageData, pageable, new AbstractDomain2InfoConverter<Comment, CommentInfo>() {
             @Override
             protected void doConvert(Comment domain, CommentInfo info) throws Exception {
-                List<Comment> replys = commentRepository.findByCommentId(domain.getId(), new Sort(Direction.ASC, "createdTime"));
+                List<Comment> replys = commentRepository.findByCommentId(domain.getId(), new Sort(Direction.DESC, "createdTime"));
                 info.setReplys(QueryResultConverter.convert(replys, CommentInfo.class));
             }
         });
     }
+    
+    @Override
+    public List<Boolean> getCommentPraise(CommentInfo commentInfo, Pageable pageable, Long currentUserId) {
+        Page<Comment> pageData = commentRepository.findByTargetAndTargetIdAndReplyToIdIsNull(commentInfo.getTarget(), commentInfo.getTargetId(), pageable);
+        List<Boolean> result = new ArrayList<Boolean>();
+        List<Comment> comments = pageData.getContent();
+        for (Comment comment : comments) {
+            result.add(praiseRepository.findByCreaterIdAndTargetId(currentUserId, comment.getId()) != null);
+        }
+        return result;
+    }
+
 
 	@Override
 	public CommentInfo create(CommentInfo commentInfo) {
@@ -113,4 +130,5 @@ public class CommentServiceImpl implements CommentService {
         return comments.toArray(new Comment[comments.size()]);
     }
 
+    
 }

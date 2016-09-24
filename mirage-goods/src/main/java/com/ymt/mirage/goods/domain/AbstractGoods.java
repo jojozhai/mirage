@@ -17,6 +17,7 @@ import javax.persistence.Lob;
 import javax.persistence.MappedSuperclass;
 
 import com.ymt.pz365.data.jpa.domain.DomainImpl;
+import com.ymt.pz365.data.jpa.domain.Goods;
 
 /**
  *
@@ -40,10 +41,26 @@ public class AbstractGoods extends DomainImpl implements Goods {
      */
     private BigDecimal price;
     /**
+     * 简介
+     */
+    private String intro;
+    /**
+     * 发布
+     */
+    private boolean enable;
+    /**
      * 描述
      */
     @Lob
     private String desc;
+    /**
+     * 卖出人次
+     */
+    private int saleCount;
+    /**
+     * 卖出人次
+     */
+    private int saleCountPlus;
     
     /**
      * @return the name
@@ -92,6 +109,54 @@ public class AbstractGoods extends DomainImpl implements Goods {
      */
     public void setDesc(String desc) {
         this.desc = desc;
+    }
+    /**
+     * @return the intro
+     */
+    public String getIntro() {
+        return intro;
+    }
+    /**
+     * @param intro the intro to set
+     */
+    public void setIntro(String intro) {
+        this.intro = intro;
+    }
+    /**
+     * @return the saleCount
+     */
+    public int getSaleCount() {
+        return saleCount;
+    }
+    /**
+     * @param saleCount the saleCount to set
+     */
+    public void setSaleCount(int saleCount) {
+        this.saleCount = saleCount;
+    }
+    /**
+     * @return the saleCountPlus
+     */
+    public int getSaleCountPlus() {
+        return saleCountPlus;
+    }
+    /**
+     * @param saleCountPlus the saleCountPlus to set
+     */
+    public void setSaleCountPlus(int saleCountPlus) {
+        this.saleCountPlus = saleCountPlus;
+    }
+    /**
+     * @return the enable
+     */
+    public boolean isEnable() {
+        return enable;
+    }
+    /**
+     * @param enable the enable to set
+     */
+    public void setEnable(boolean enable) {
+        this.enable = enable;
     }
 
 }

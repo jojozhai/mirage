@@ -24,7 +24,7 @@ public interface LessonService {
 	
 	LessonInfo getInfo(Long id, Long currentUserId);
 
-	LessonInfo update(LessonInfo teacherInfo);
+	LessonInfo update(LessonInfo teacherInfo) throws Exception;
 
 	void delete(Long id);
 	

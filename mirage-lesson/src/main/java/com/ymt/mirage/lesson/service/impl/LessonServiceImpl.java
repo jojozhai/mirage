@@ -164,10 +164,13 @@ public class LessonServiceImpl implements LessonService {
     }
 
     @Override
-    public LessonInfo update(LessonInfo lessonInfo) {
+    public LessonInfo update(LessonInfo lessonInfo) throws Exception {
         Lesson lesson = lessonRepository.findOne(lessonInfo.getId());
         BeanUtils.copyProperties(lessonInfo, lesson);
+        lesson.setTeacher(teacherRepository.findOne(lessonInfo.getTeacherInfo().getId()));
         lessonRepository.save(lesson);
+        tagService.addTag(lesson, lessonInfo.getTypeTags());
+        tagService.addTag(lesson, lessonInfo.getSetTags(), LessonSet.class);
         return lessonInfo;
     }
 

@@ -3,6 +3,8 @@
  */
 package com.ymt.mirage.social.service;
 
+import java.util.List;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -34,5 +36,7 @@ public interface CommentService {
     Page<CommentInfo> queryWithReply(CommentInfo commentInfo, Pageable pageable);
 
     Comment[] getComments(Long id, String target);
+
+    List<Boolean> getCommentPraise(CommentInfo commentInfo, Pageable pageable, Long currentUserId);
 
 }

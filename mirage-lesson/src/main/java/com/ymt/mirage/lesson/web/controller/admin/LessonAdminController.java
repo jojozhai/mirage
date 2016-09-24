@@ -45,7 +45,7 @@ public class LessonAdminController {
 	}
 
 	@RequestMapping(value = "/lesson/{id}", method = RequestMethod.PUT)
-	public LessonInfo update(@RequestBody LessonInfo lessonInfo) {
+	public LessonInfo update(@RequestBody LessonInfo lessonInfo) throws Exception {
 		return lessonService.update(lessonInfo);
 	}
 

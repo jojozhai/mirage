@@ -18,5 +18,18 @@ package com.ymt.mirage.order.domain;
  * @version 1.0.0
  */
 public enum OrderState {
+    
+    /**
+     * 下单未处理
+     */
+    INIT,
+    /**
+     * 取消
+     */
+    CANCEL,
+    /**
+     * 完成
+     */
+    FINISH
 
 }
