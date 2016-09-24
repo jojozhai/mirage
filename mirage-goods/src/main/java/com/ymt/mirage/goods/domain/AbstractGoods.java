@@ -33,6 +33,10 @@ public class AbstractGoods extends DomainImpl implements Goods {
      */
     private String name;
     /**
+     * 关键商品
+     */
+    private boolean key;
+    /**
      * 图片
      */
     private String image;
@@ -157,6 +161,18 @@ public class AbstractGoods extends DomainImpl implements Goods {
      */
     public void setEnable(boolean enable) {
         this.enable = enable;
+    }
+    /**
+     * @return the key
+     */
+    public boolean isKey() {
+        return key;
+    }
+    /**
+     * @param key the key to set
+     */
+    public void setKey(boolean key) {
+        this.key = key;
     }
 
 }

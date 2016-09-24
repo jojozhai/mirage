@@ -27,6 +27,10 @@ public class Tag extends TreeImpl<Tag> {
 	
 	private String image;
 
+    private String desc;
+    
+    private int hot;
+    
 	public TagInfo toTree() {
 		TagInfo result = new TagInfo();
 		BeanUtils.copyProperties(this, result);
@@ -65,6 +69,34 @@ public class Tag extends TreeImpl<Tag> {
 	public void setImage(String image) {
 		this.image = image;
 	}
+
+    /**
+     * @return the desc
+     */
+    public String getDesc() {
+        return desc;
+    }
+
+    /**
+     * @param desc the desc to set
+     */
+    public void setDesc(String desc) {
+        this.desc = desc;
+    }
+
+    /**
+     * @return the hot
+     */
+    public int getHot() {
+        return hot;
+    }
+
+    /**
+     * @param hot the hot to set
+     */
+    public void setHot(int hot) {
+        this.hot = hot;
+    }
 
 
 }

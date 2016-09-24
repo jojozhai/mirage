@@ -74,6 +74,7 @@ public class OrderServiceImpl implements OrderService {
         
         Order order = new Order();
         order.setUser(user);
+        order.setSharer(userRepository.getOne(orderInfo.getSharerId()));
         order.setState(OrderState.INIT);
         order.setMessage(orderInfo.getMessage());
         orderRepository.save(order);
@@ -87,6 +88,7 @@ public class OrderServiceImpl implements OrderService {
             orderGoods.setOrder(order);
             orderGoods.setCount(new BigDecimal(cartInfo.getCount()));
             orderGoods.setGoodsId(cartInfo.getProductId());
+            
             orderGoodsRepository.save(orderGoods);
             amount = amount.add(goods.getPrice());
         }

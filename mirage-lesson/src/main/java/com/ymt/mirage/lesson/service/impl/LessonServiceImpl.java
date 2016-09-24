@@ -17,6 +17,7 @@ import java.util.List;
 import org.joda.time.DateTime;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -27,6 +28,7 @@ import com.ymt.mirage.lesson.domain.LessonSet;
 import com.ymt.mirage.lesson.domain.LessonTag;
 import com.ymt.mirage.lesson.dto.LessonInfo;
 import com.ymt.mirage.lesson.dto.SignUpState;
+import com.ymt.mirage.lesson.event.LessonInfoChangedEvent;
 import com.ymt.mirage.lesson.repository.LessonRepository;
 import com.ymt.mirage.lesson.repository.LessonSetRepository;
 import com.ymt.mirage.lesson.repository.LessonTagRepository;
@@ -73,6 +75,9 @@ public class LessonServiceImpl implements LessonService {
     @Autowired
     private TeacherService teacherService;
     
+    @Autowired
+    private ApplicationEventPublisher applicationEventPublisher;
+    
     @Override
     public Page<LessonInfo> query(LessonInfo lessonInfo, Pageable pageable) {
         if(lessonInfo.getTypeId() != null) {
@@ -115,6 +120,9 @@ public class LessonServiceImpl implements LessonService {
         lessonInfo.setId(lessonRepository.save(lesson).getId());
         tagService.addTag(lesson, lessonInfo.getTypeTags());
         tagService.addTag(lesson, lessonInfo.getSetTags(), LessonSet.class);
+        
+        applicationEventPublisher.publishEvent(new LessonInfoChangedEvent(lessonInfo));
+        
         return lessonInfo;
     }
 
@@ -171,6 +179,9 @@ public class LessonServiceImpl implements LessonService {
         lessonRepository.save(lesson);
         tagService.addTag(lesson, lessonInfo.getTypeTags());
         tagService.addTag(lesson, lessonInfo.getSetTags(), LessonSet.class);
+        
+        applicationEventPublisher.publishEvent(new LessonInfoChangedEvent(lessonInfo));
+        
         return lessonInfo;
     }
 

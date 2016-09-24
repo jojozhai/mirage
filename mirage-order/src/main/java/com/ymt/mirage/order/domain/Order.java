@@ -48,6 +48,11 @@ public class Order extends DomainImpl {
     @ManyToOne
     private User user;
     /**
+     * 分享者
+     */
+    @ManyToOne
+    private User sharer;
+    /**
      * 订单金额
      */
     private BigDecimal amount;
@@ -138,6 +143,18 @@ public class Order extends DomainImpl {
      */
     public void setMessage(String message) {
         this.message = message;
+    }
+    /**
+     * @return the sharer
+     */
+    public User getSharer() {
+        return sharer;
+    }
+    /**
+     * @param sharer the sharer to set
+     */
+    public void setSharer(User sharer) {
+        this.sharer = sharer;
     }
 
 }

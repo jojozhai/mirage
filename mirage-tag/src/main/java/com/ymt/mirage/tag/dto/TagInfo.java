@@ -20,6 +20,10 @@ public class TagInfo {
 	
 	private String name;
 	
+	private String desc;
+	
+	private int hot;
+	
 	private String image;
 	/**
 	 * 子节点
@@ -97,5 +101,29 @@ public class TagInfo {
 	public void setParentName(String parentName) {
 		this.parentName = parentName;
 	}
+    /**
+     * @return the desc
+     */
+    public String getDesc() {
+        return desc;
+    }
+    /**
+     * @param desc the desc to set
+     */
+    public void setDesc(String desc) {
+        this.desc = desc;
+    }
+    /**
+     * @return the hot
+     */
+    public int getHot() {
+        return hot;
+    }
+    /**
+     * @param hot the hot to set
+     */
+    public void setHot(int hot) {
+        this.hot = hot;
+    }
 
 }

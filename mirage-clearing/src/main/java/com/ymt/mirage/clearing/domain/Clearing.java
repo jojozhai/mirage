@@ -33,6 +33,8 @@ import com.ymt.pz365.data.jpa.domain.DomainImpl;
 @Table(indexes = {@Index(columnList = "targetId"), @Index(columnList = "userId")})
 public class Clearing extends DomainImpl {
     
+    public static final String TARGET_ID = "jojo";
+    
     /**
      * 可结算物id.
      */

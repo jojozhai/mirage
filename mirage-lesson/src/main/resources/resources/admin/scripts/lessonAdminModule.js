@@ -82,7 +82,7 @@ angular.module('lessonAdminModule',[]).config(function($stateProvider) {
 	
 	$scope.query();
 	
-}).controller('lessonFormCtrl',function ($scope, $uibModalInstance, lesson, commonService, lessonRestService, tagRestService, teacherRestService) {
+}).controller('lessonFormCtrl',function ($scope, $uibModalInstance, lesson, commonService, lessonRestService, tagRestService, teacherRestService, productRestService) {
 	
 	$scope.popup1 = {
 		opened : false
@@ -134,6 +134,7 @@ angular.module('lessonAdminModule',[]).config(function($stateProvider) {
 	$scope.typeTags = tagRestService.getChildTags({parentId:1});
 	$scope.setTags = tagRestService.getChildTags({parentId:2});
 	$scope.teachers = teacherRestService.findAll();
+	$scope.products = productRestService.findAll();
 	
 	$scope.doUpload1 = function(files){
 		commonService.uploadImage(files, $scope, function(imageUrl){

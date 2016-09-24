@@ -27,6 +27,7 @@ import com.ymt.mirage.clearing.service.ClearingService;
 import com.ymt.mirage.clearing.service.ProfitService;
 import com.ymt.mirage.clearing.service.RebateConfigService;
 import com.ymt.mirage.user.repository.UserRepository;
+import com.ymt.pz365.data.jpa.spi.order.OrderGoodsService;
 import com.ymt.pz365.framework.core.exception.PzException;
 
 /**
@@ -55,31 +56,37 @@ public class ClearingServiceImpl implements ClearingService {
     
     @Autowired
     private UserRepository userRepository;
+    
+    @Autowired
+    private OrderGoodsService orderGoodsService;
 
     /* (non-Javadoc)
      * @see com.ymt.mirage.clearing.service.ClearingService#addUser(java.lang.String, java.lang.Long, java.lang.String, java.lang.Long)
      */
     @Override
-    public void addUser(String identify, Long userId, String name, Long parentUserId) {
+    public void addUser(String identify, Long userId, Long sharerId) {
         
-        ClearingTree node = clearingTreeRepository.findByIdentifyAndUserId(identify, userId);
-        
-        if(node == null) {
+        if(orderGoodsService.getGoodsInfo(new Long(identify)).isKey()){
             
-            ClearingTree parent = clearingTreeRepository.findByIdentifyAndUserId(identify, parentUserId);
-            if(parent == null) {
-                if(DEFAULT_ROOT_USER_ID == parentUserId) {
-                    parent = createClearingTreeNode(identify, DEFAULT_ROOT_USER_ID, "root", null);
-                }else{
-                    throw new PzException("父用户id不存在:"+parentUserId+", type:"+identify);
+            identify = Clearing.TARGET_ID;
+            
+            ClearingTree node = clearingTreeRepository.findByIdentifyAndUserId(identify, userId);
+            
+            if(node == null) {
+                
+                ClearingTree parent = clearingTreeRepository.findByIdentifyAndUserId(identify, sharerId);
+                if(parent == null) {
+                    if(DEFAULT_ROOT_USER_ID == sharerId) {
+                        parent = createClearingTreeNode(identify, DEFAULT_ROOT_USER_ID, null);
+                    }else{
+                        throw new PzException("父用户id不存在:"+sharerId+", type:"+identify);
+                    }
                 }
+                createClearingTreeNode(identify, userId, parent);
+                
+            }else{
+                throw new PzException("用户'"+userId+"'已经存在于类型为'"+identify+"'的结算树中，父节点为:"+node.getParent().getName()+"("+node.getParent().getId()+")");
             }
-            createClearingTreeNode(identify, userId, name, parent);
-            
-        }else{
-            
-            throw new PzException("用户'"+userId+"'已经存在于类型为'"+identify+"'的结算树中，父节点为:"+node.getParent().getName()+"("+node.getParent().getId()+")");
-            
         }
     }
 
@@ -93,11 +100,10 @@ public class ClearingServiceImpl implements ClearingService {
      * @author zhailiang
      * @since 2016年9月5日
      */
-    private ClearingTree createClearingTreeNode(String identify, Long userId, String name, ClearingTree parent) {
+    private ClearingTree createClearingTreeNode(String identify, Long userId, ClearingTree parent) {
         ClearingTree node = new ClearingTree();
         node.setIdentify(identify);
-        node.setUserId(userId);
-        node.setName(name);
+        node.setUser(userRepository.getOne(userId));
         node.setParent(parent);
         return clearingTreeRepository.save(node);
     }
@@ -129,7 +135,7 @@ public class ClearingServiceImpl implements ClearingService {
      */
     private void clearing(Clearingable clearingable, ClearingTree node, int level) {
         
-        Profit profit = profitService.findByUserId(node.getUserId());
+        Profit profit = profitService.findByUserId(node.getUser().getId());
         
         boolean reduceProfit = clearingable.getType().isReduceProfit();
         BigDecimal percentage = rebateConfigService.getRebatePercentage(level);
@@ -149,7 +155,7 @@ public class ClearingServiceImpl implements ClearingService {
         clearing.setTargetName(clearingable.getName());
         clearing.setTargetValue(clearingable.getValue());
         clearing.setType(clearingable.getType());
-        clearing.setUser(userRepository.getOne(node.getUserId()));
+        clearing.setUser(node.getUser());
         clearing.setDetails(clearingable.getType().getDesc(clearing));
         
         if(node.getParent() != null) {

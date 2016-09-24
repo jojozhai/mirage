@@ -11,6 +11,19 @@
 				</div>
 			</div>
 			<div class="form-group">
+                <label class="control-label col-lg-3">描述:</label>
+                <div class="col-lg-9">
+                    <input name="desc" ng-model="tag.desc" type="text" class="form-control input-sm" placeholder="描述">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-lg-3">热度:</label>
+                <div class="col-lg-2">
+                    <input name="hot" ng-model="tag.hot" type="number" class="form-control input-sm" placeholder="热度" required>
+                    <label class="control-label" ng-show="tagForm.hot.$invalid && tagForm.hot.$dirty">热度不能为空</label>
+                </div>
+            </div>
+			<div class="form-group">
 				<label class="control-label col-lg-3">分类背景图片:</label>
 				<div class="col-lg-4">
 					<div class="fileinput-button" style="border: 1px solid #abcdef; height: 180px; width: 320px;" >

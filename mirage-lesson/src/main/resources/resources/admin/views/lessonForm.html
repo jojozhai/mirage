@@ -66,6 +66,17 @@
                     </ui-select>
                 </div>
             </div>
+            <div class="form-group">
+                <label class="control-label col-lg-3"><span class="text_red">*</span>&nbsp;推荐商品:</label>
+                <div class="col-lg-9">
+                    <ui-select multiple tagging ng-model="lesson.products" theme="bootstrap">
+                        <ui-select-match placeholder="可以输入商品名称来查找">{{$item.name}}</ui-select-match>
+                        <ui-select-choices repeat="product in products | filter: $select.search">
+                            <div ng-bind-html="product.name | highlight: $select.search"></div>
+                        </ui-select-choices>
+                    </ui-select>
+                </div>
+            </div>
             <div class="form-group" ng-class="lessonForm.signStartTime.$invalid && lessonForm.signStartTime.$dirty ? 'has-error': ''">
                 <label class="control-label col-lg-3" style="padding-top: 40px;"><span class="text_red">*</span>&nbsp;报名开始时间:</label>
                 <div class="col-md-3">

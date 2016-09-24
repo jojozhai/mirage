@@ -13,8 +13,10 @@ package com.ymt.mirage.clearing.domain;
 
 import javax.persistence.Entity;
 import javax.persistence.Index;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.ymt.mirage.user.domain.User;
 import com.ymt.pz365.data.jpa.domain.TreeImpl;
 
 /**
@@ -36,38 +38,21 @@ public class ClearingTree extends TreeImpl<ClearingTree> {
     /**
      * 结算用户的id
      */
-    private Long userId;
-    /**
-     * 结算用户的名称
-     */
-    private String name;
+    @ManyToOne
+    private User user;
 
     /**
-     * @return the name
+     * @return the user
      */
-    public String getName() {
-        return name;
+    public User getUser() {
+        return user;
     }
 
     /**
-     * @param name the name to set
+     * @param user the user to set
      */
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    /**
-     * @return the userId
-     */
-    public Long getUserId() {
-        return userId;
-    }
-
-    /**
-     * @param userId the userId to set
-     */
-    public void setUserId(Long userId) {
-        this.userId = userId;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     /**
@@ -82,6 +67,16 @@ public class ClearingTree extends TreeImpl<ClearingTree> {
      */
     public void setIdentify(String identify) {
         this.identify = identify;
+    }
+
+    @Override
+    public String getName() {
+        return getUser().getNickname();
+    }
+
+    @Override
+    public void setName(String name) {
+        
     }
 
 

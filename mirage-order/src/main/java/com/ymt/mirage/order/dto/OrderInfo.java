@@ -36,6 +36,10 @@ public class OrderInfo {
      */
     private Long userId;
     /**
+     * 分享者
+     */
+    private Long sharerId;
+    /**
      * 订单金额
      */
     private BigDecimal amount;
@@ -151,6 +155,18 @@ public class OrderInfo {
      */
     public void setUserInfo(UserInfo userInfo) {
         this.userInfo = userInfo;
+    }
+    /**
+     * @return the sharerId
+     */
+    public Long getSharerId() {
+        return sharerId;
+    }
+    /**
+     * @param sharerId the sharerId to set
+     */
+    public void setSharerId(Long sharerId) {
+        this.sharerId = sharerId;
     }
     
 

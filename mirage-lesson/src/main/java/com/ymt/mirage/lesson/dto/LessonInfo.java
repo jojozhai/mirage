@@ -107,6 +107,10 @@ public class LessonInfo {
      */
     private List<TagInfo> setTags;
     /**
+     * 相关商品
+     */
+    private List<ProductInfo> products;
+    /**
      * 预告
      */
     private Boolean herald;
@@ -453,6 +457,20 @@ public class LessonInfo {
      */
     public void setTeacherName(String teacherName) {
         this.teacherName = teacherName;
+    }
+
+    /**
+     * @return the products
+     */
+    public List<ProductInfo> getProducts() {
+        return products;
+    }
+
+    /**
+     * @param products the products to set
+     */
+    public void setProducts(List<ProductInfo> products) {
+        this.products = products;
     }
 
 }
