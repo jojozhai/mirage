@@ -30,11 +30,14 @@ import com.ymt.mirage.order.dto.OrderInfo;
 import com.ymt.mirage.order.dto.OrderViewInfo;
 import com.ymt.mirage.order.repository.OrderGoodsRepository;
 import com.ymt.mirage.order.repository.OrderRepository;
+import com.ymt.mirage.order.repository.spec.OrderSpec;
 import com.ymt.mirage.order.service.OrderService;
 import com.ymt.mirage.user.domain.User;
 import com.ymt.mirage.user.repository.UserRepository;
 import com.ymt.pz365.data.jpa.domain.Goods;
 import com.ymt.pz365.data.jpa.spi.order.OrderGoodsService;
+import com.ymt.pz365.data.jpa.support.AbstractDomain2InfoConverter;
+import com.ymt.pz365.data.jpa.support.QueryResultConverter;
 import com.ymt.pz365.framework.weixin.pay.JsapiPaymentInfo;
 import com.ymt.pz365.framework.weixin.pay.UnifiedorderInfo;
 import com.ymt.pz365.framework.weixin.service.WeixinService;
@@ -147,6 +150,18 @@ public class OrderServiceImpl implements OrderService {
         Order order = orderRepository.findOne(id);
         order.setState(OrderState.FINISH);
         orderRepository.save(order);
+    }
+
+    @Override
+    public Page<OrderInfo> query(OrderInfo orderInfo, Pageable pageable) {
+        Page<Order> pageData = orderRepository.findAll(new OrderSpec(orderInfo), pageable);
+        return QueryResultConverter.convert(pageData, pageable, new AbstractDomain2InfoConverter<Order, OrderInfo>() {
+            @Override
+            protected void doConvert(Order domain, OrderInfo info) throws Exception {
+                info.setUserNickname(domain.getUser().getNickname());
+                info.setGoodsName(orderGoodsService.getGoodsInfo(domain.getProducts().get(0).getGoodsId()).getName());
+            }
+        });
     }
 
 }

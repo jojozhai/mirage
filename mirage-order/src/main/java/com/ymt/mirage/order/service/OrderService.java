@@ -32,4 +32,6 @@ public interface OrderService {
 
     void confirm(Long id);
 
+    Page<OrderInfo> query(OrderInfo orderInfo, Pageable pageable);
+
 }

@@ -72,7 +72,7 @@ public class ArticleServiceImpl implements ArticleService {
 				}
 			});
 		}else{
-			Page<ArticleTag> articles = articleTagRepository.findByTagId(articleInfo.getTagId(), pageable);
+			Page<ArticleTag> articles = articleTagRepository.findByTagIdWithTop(articleInfo.getTagId(), pageable);
 			return QueryResultConverter.convert(articles, pageable, new AbstractDomain2InfoConverter<ArticleTag, ArticleInfo>() {
 				@Override
 				protected void doConvert(ArticleTag domain, ArticleInfo info) throws Exception {

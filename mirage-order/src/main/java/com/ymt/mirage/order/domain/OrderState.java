@@ -20,15 +20,27 @@ package com.ymt.mirage.order.domain;
 public enum OrderState {
     
     /**
-     * 下单未处理
+     * 下单未支付
      */
     INIT,
+    /**
+     * 已支付
+     */
+    PAYED,
+    /**
+     * 执行中
+     */
+    WORKING,
     /**
      * 取消
      */
     CANCEL,
     /**
-     * 完成
+     * 订单完成
+     */
+    COMPLETE,
+    /**
+     * 结算完成
      */
     FINISH
 

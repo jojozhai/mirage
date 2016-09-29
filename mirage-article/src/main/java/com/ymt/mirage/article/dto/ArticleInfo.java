@@ -6,6 +6,7 @@ package com.ymt.mirage.article.dto;
 import java.util.Date;
 import java.util.List;
 
+import com.ymt.mirage.article.domain.DisplayType;
 import com.ymt.mirage.tag.dto.TagInfo;
 
 /**
@@ -39,10 +40,22 @@ public class ArticleInfo {
      * 发布日期
      */
     private Date enableDate;
+    /**
+     * 
+     */
+    private DisplayType displayType;
 	/**
 	 * 置顶
 	 */
 	private Boolean top;
+	/**
+     * 使用外部链接
+     */
+    private Boolean linkOut;
+    /**
+     * 外部链接
+     */
+    private String outLink;
 	/**
 	 * 标题
 	 */
@@ -63,6 +76,10 @@ public class ArticleInfo {
 	 * 阅读量
 	 */
 	private int readCount;
+	/**
+     * 阅读量
+     */
+    private int readCountPlus;
 	/**
 	 * 评论数
 	 */
@@ -266,6 +283,54 @@ public class ArticleInfo {
      */
     public void setBusiness(Boolean business) {
         this.business = business;
+    }
+    /**
+     * @return the displayType
+     */
+    public DisplayType getDisplayType() {
+        return displayType;
+    }
+    /**
+     * @param displayType the displayType to set
+     */
+    public void setDisplayType(DisplayType displayType) {
+        this.displayType = displayType;
+    }
+    /**
+     * @return the readCountPlus
+     */
+    public int getReadCountPlus() {
+        return readCountPlus;
+    }
+    /**
+     * @param readCountPlus the readCountPlus to set
+     */
+    public void setReadCountPlus(int readCountPlus) {
+        this.readCountPlus = readCountPlus;
+    }
+    /**
+     * @return the linkOuter
+     */
+    public Boolean getLinkOut() {
+        return linkOut;
+    }
+    /**
+     * @param linkOuter the linkOuter to set
+     */
+    public void setLinkOut(Boolean linkOuter) {
+        this.linkOut = linkOuter;
+    }
+    /**
+     * @return the outLink
+     */
+    public String getOutLink() {
+        return outLink;
+    }
+    /**
+     * @param outLink the outLink to set
+     */
+    public void setOutLink(String outLink) {
+        this.outLink = outLink;
     }
 
 }

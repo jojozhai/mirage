@@ -33,6 +33,7 @@ import com.ymt.pz365.framework.core.exception.PzException;
 import com.ymt.pz365.framework.weixin.service.WeixinUserService;
 import com.ymt.pz365.framework.weixin.support.WeixinAccessToken;
 import com.ymt.pz365.framework.weixin.support.WeixinIdAware;
+import com.ymt.pz365.framework.weixin.support.WeixinUserInfo;
 
 /**
  * @author zhailiang
@@ -160,5 +161,19 @@ public class UserServiceImpl implements WeixinUserService, UserService{
 		}
 		user.setMobile(info.getNewMobile());
 	}
+
+    @Override
+    public void updateUserWeixinInfo(UserDetails userD, WeixinUserInfo weixinUserInfo) {
+        if(userD != null && weixinUserInfo != null) {
+            User user = (User)userD;
+            if(StringUtils.isBlank(user.getNickname())){
+                user.setNickname(weixinUserInfo.getNickname());
+            }
+            if(StringUtils.isBlank(user.getHeadimgurl())){
+                user.setHeadimgurl(weixinUserInfo.getHeadimgurl());
+            }
+            userRepository.save(user); 
+        }
+    }
 
 }

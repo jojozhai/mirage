@@ -12,6 +12,7 @@
 package com.ymt.mirage.order.dto;
 
 import java.math.BigDecimal;
+import java.util.Date;
 import java.util.List;
 
 import com.ymt.mirage.order.domain.OrderState;
@@ -26,7 +27,7 @@ import com.ymt.mirage.user.dto.UserInfo;
 public class OrderInfo {
     
     private Long id;
-    
+    private Date createdTime;
     /**
      * 订单号
      */
@@ -35,6 +36,14 @@ public class OrderInfo {
      * 用户id
      */
     private Long userId;
+    /**
+     * 用户昵称
+     */
+    private String userNickname;
+    /**
+     * 商品名称
+     */
+    private String goodsName;
     /**
      * 分享者
      */
@@ -167,6 +176,42 @@ public class OrderInfo {
      */
     public void setSharerId(Long sharerId) {
         this.sharerId = sharerId;
+    }
+    /**
+     * @return the userNickname
+     */
+    public String getUserNickname() {
+        return userNickname;
+    }
+    /**
+     * @param userNickname the userNickname to set
+     */
+    public void setUserNickname(String userNickname) {
+        this.userNickname = userNickname;
+    }
+    /**
+     * @return the goodsName
+     */
+    public String getGoodsName() {
+        return goodsName;
+    }
+    /**
+     * @param goodsName the goodsName to set
+     */
+    public void setGoodsName(String goodsName) {
+        this.goodsName = goodsName;
+    }
+    /**
+     * @return the createdTime
+     */
+    public Date getCreatedTime() {
+        return createdTime;
+    }
+    /**
+     * @param createdTime the createdTime to set
+     */
+    public void setCreatedTime(Date createdTime) {
+        this.createdTime = createdTime;
     }
     
 

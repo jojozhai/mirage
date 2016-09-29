@@ -26,10 +26,13 @@ angular.module('articleAdminModule',[]).config(function($stateProvider) {
 	
 	$scope.create = function() {
 		$scope.save({
+			linkOut: false,
 			business: false,
 			enable: false,
 			top: false,
-			readCount: 1000
+			readCount: 0,
+			readCountPlus: 1000,
+			displayType: 'MIX'
 		});
 	}
 	
@@ -105,6 +108,8 @@ angular.module('articleAdminModule',[]).config(function($stateProvider) {
 	
 }).controller('articleFormCtrl',function ($scope, $uibModalInstance, tinymceOptions, article, commonService, tagRestService) {
 
+	$scope.types = [{name: '图文混编', value: 'MIX'}, {name:'纯图片', value:'IMAGE'}]
+	
 	$scope.popup1 = {
 		opened : false
 	};

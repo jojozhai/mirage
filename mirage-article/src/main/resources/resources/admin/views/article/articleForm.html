@@ -22,6 +22,18 @@
 				</div>
 			</div>
 			<div class="form-group">
+			    <label class="control-label col-lg-3">阅读量:</label>
+                <div class="col-lg-2">
+                    <input name="readCount" ng-model="article.readCount" type="number" class="form-control input-sm" placeholder="阅读量" readonly="readonly" required>
+                    <label class="control-label" ng-show="articleForm.readCount.$invalid && articleForm.readCount.$dirty">阅读量不能为空</label>
+                </div>
+                <label class="control-label col-lg-2" >阅读量加成:</label>
+                <div class="col-lg-2" ng-class="articleForm.readCountPlus.$invalid && articleForm.readCountPlus.$dirty ? 'has-error': ''">
+                    <input name="readCountPlus" ng-model="article.readCountPlus" type="number" class="form-control input-sm" placeholder="阅读量加成" required>
+                    <label class="control-label" ng-show="articleForm.readCountPlus.$invalid && articleForm.readCountPlus.$dirty">阅读量加成不能为空</label>
+                </div>
+            </div>
+			<div class="form-group">
 				<label class="control-label col-lg-3">发布:</label>
 				<div class="col-lg-1">
 					<div class="custom-checkbox todo-checkbox">
@@ -29,7 +41,7 @@
 						<label for="selection" style="margin-top: 4px;"></label>
 					</div>
 				</div>
-				<label class="control-label col-lg-1">推文:</label>
+				<label class="control-label col-lg-1">广告:</label>
 				<div class="col-lg-1">
 					<div class="custom-checkbox todo-checkbox">
 						<input id="selection2" ng-model="article.business" ng-checked="article.business" type="checkbox">
@@ -43,12 +55,25 @@
                         <label for="selection3" style="margin-top: 4px;"></label>
                     </div>
                 </div>
-				<label class="control-label col-lg-2">阅读量:</label>
-				<div class="col-lg-2">
-					<input name="readCount" ng-model="article.readCount" type="number" class="form-control input-sm" placeholder="阅读量" required>
-					<label class="control-label" ng-show="articleForm.readCount.$invalid && articleForm.readCount.$dirty">阅读量不能为空</label>
-				</div>
+				<label class="control-label col-lg-2">显示方式:</label>
+                <div class="col-lg-2">
+                    <select class="form-control input-sm" ng-model="article.displayType" ng-options="type.value as type.name for type in types"></select>
+                </div>
 			</div>
+			<div class="form-group">
+                <label class="control-label col-lg-3">使用外链:</label>
+                <div class="col-lg-1">
+                    <div class="custom-checkbox todo-checkbox">
+                        <input id="selection5" ng-model="article.linkOut" ng-checked="article.linkOut" type="checkbox">
+                        <label for="selection5" style="margin-top: 4px;"></label>
+                    </div>
+                </div>
+                <label class="control-label col-lg-2" >外链地址:</label>
+                <div class="col-lg-6" ng-class="articleForm.outLink.$invalid && articleForm.outLink.$dirty ? 'has-error': ''">
+                    <input name="outLink" ng-model="article.outLink" type="url" class="form-control input-sm" placeholder="外链地址">
+                    <label class="control-label" ng-show="articleForm.outLink.$invalid && articleForm.outLink.$dirty">请输入正确的url地址</label>
+                </div>
+            </div>
 			<div class="form-group" ng-class="articleForm.enableDate.$invalid && articleForm.enableDate.$dirty ? 'has-error': ''">
                 <label class="control-label col-lg-3" style="padding-top: 40px;">自动发布时间:</label>
                 <div class="col-md-3">

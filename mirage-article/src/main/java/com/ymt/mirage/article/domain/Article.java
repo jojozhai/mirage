@@ -9,6 +9,8 @@ import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.Lob;
 import javax.persistence.OneToMany;
 
@@ -44,6 +46,19 @@ public class Article extends DomainImpl implements Tagable, Commentable {
 	 */
 	private boolean top;
 	/**
+	 * 使用外部链接
+	 */
+	private boolean linkOut;
+	/**
+	 * 外部链接
+	 */
+	private String outLink;
+	/**
+	 * 图文混
+	 */
+	@Enumerated(EnumType.STRING)
+	private DisplayType displayType;
+	/**
 	 * 标题
 	 */
 	private String title;
@@ -64,6 +79,10 @@ public class Article extends DomainImpl implements Tagable, Commentable {
 	 * 阅读量
 	 */
 	private int readCount;
+	/**
+     * 阅读量
+     */
+    private int readCountPlus;
 	/**
 	 * 负责人
 	 */
@@ -233,6 +252,54 @@ public class Article extends DomainImpl implements Tagable, Commentable {
      */
     public void setBusiness(boolean business) {
         this.business = business;
+    }
+    /**
+     * @return the displayType
+     */
+    public DisplayType getDisplayType() {
+        return displayType;
+    }
+    /**
+     * @param displayType the displayType to set
+     */
+    public void setDisplayType(DisplayType displayType) {
+        this.displayType = displayType;
+    }
+    /**
+     * @return the readCountPlus
+     */
+    public int getReadCountPlus() {
+        return readCountPlus;
+    }
+    /**
+     * @param readCountPlus the readCountPlus to set
+     */
+    public void setReadCountPlus(int readCountPlus) {
+        this.readCountPlus = readCountPlus;
+    }
+    /**
+     * @return the linkOuter
+     */
+    public boolean isLinkOut() {
+        return linkOut;
+    }
+    /**
+     * @param linkOuter the linkOuter to set
+     */
+    public void setLinkOut(boolean linkOuter) {
+        this.linkOut = linkOuter;
+    }
+    /**
+     * @return the outLink
+     */
+    public String getOutLink() {
+        return outLink;
+    }
+    /**
+     * @param outLink the outLink to set
+     */
+    public void setOutLink(String outLink) {
+        this.outLink = outLink;
     }
 	
 }

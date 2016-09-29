@@ -12,9 +12,7 @@
 package com.ymt.mirage.clearing.domain;
 
 import javax.persistence.Entity;
-import javax.persistence.Index;
 import javax.persistence.ManyToOne;
-import javax.persistence.Table;
 
 import com.ymt.mirage.user.domain.User;
 import com.ymt.pz365.data.jpa.domain.TreeImpl;
@@ -26,9 +24,9 @@ import com.ymt.pz365.data.jpa.domain.TreeImpl;
  * @version 1.0.0
  */
 @Entity
-@Table(indexes = {
-        @Index(columnList = "type"),
-        @Index(columnList = "userId")})
+//@Table(indexes = {
+//        @Index(columnList = "type"),
+//        @Index(columnList = "userId")})
 public class ClearingTree extends TreeImpl<ClearingTree> {
     
     /**
