@@ -13,6 +13,11 @@ package com.ymt.mirage.clearing.service;
 
 import java.math.BigDecimal;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
+import com.ymt.mirage.clearing.dto.RebateConfigInfo;
+
 /**
  *
  *
@@ -22,5 +27,15 @@ import java.math.BigDecimal;
 public interface RebateConfigService {
 
     BigDecimal getRebatePercentage(int level);
+    
+    Page<RebateConfigInfo> query(RebateConfigInfo rebateConfigInfo, Pageable pageable);
+    
+    RebateConfigInfo create(RebateConfigInfo rebateConfigInfo);
+
+    RebateConfigInfo getInfo(Long id);
+
+    RebateConfigInfo update(RebateConfigInfo rebateConfigInfo);
+
+    void delete(Long id);
 
 }

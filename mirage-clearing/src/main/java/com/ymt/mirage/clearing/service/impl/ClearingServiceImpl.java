@@ -139,6 +139,9 @@ public class ClearingServiceImpl implements ClearingService {
         
         boolean reduceProfit = clearingable.getType().isReduceProfit();
         BigDecimal percentage = rebateConfigService.getRebatePercentage(level);
+        if(percentage.equals(BigDecimal.ZERO)) {
+            return;
+        }
         BigDecimal profitAmount = clearingable.getValue().multiply(percentage.divide(new BigDecimal(100), 4, RoundingMode.HALF_UP));
         BigDecimal newAvailableAmount = reduceProfit?profit.getAvailable().subtract(profitAmount):profit.getAvailable().add(profitAmount);
         profit.setAvailable(newAvailableAmount);

@@ -56,11 +56,11 @@ public class CommentServiceImpl implements CommentService {
 	
     @Override
     public Page<CommentInfo> queryWithReply(CommentInfo commentInfo, Pageable pageable) {
-        Page<Comment> pageData = commentRepository.findByTargetAndTargetIdAndReplyToIdIsNull(commentInfo.getTarget(), commentInfo.getTargetId(), pageable);
+        Page<Comment> pageData = commentRepository.findByTargetAndTargetIdAndReplyToIdIsNullAndDisable(commentInfo.getTarget(), commentInfo.getTargetId(), false, pageable);
         return QueryResultConverter.convert(pageData, pageable, new AbstractDomain2InfoConverter<Comment, CommentInfo>() {
             @Override
             protected void doConvert(Comment domain, CommentInfo info) throws Exception {
-                List<Comment> replys = commentRepository.findByCommentId(domain.getId(), new Sort(Direction.DESC, "createdTime"));
+                List<Comment> replys = commentRepository.findByCommentIdAndDisable(domain.getId(), false, new Sort(Direction.DESC, "createdTime"));
                 info.setReplys(QueryResultConverter.convert(replys, CommentInfo.class));
             }
         });
@@ -68,7 +68,7 @@ public class CommentServiceImpl implements CommentService {
     
     @Override
     public List<Boolean> getCommentPraise(CommentInfo commentInfo, Pageable pageable, Long currentUserId) {
-        Page<Comment> pageData = commentRepository.findByTargetAndTargetIdAndReplyToIdIsNull(commentInfo.getTarget(), commentInfo.getTargetId(), pageable);
+        Page<Comment> pageData = commentRepository.findByTargetAndTargetIdAndReplyToIdIsNullAndDisable(commentInfo.getTarget(), commentInfo.getTargetId(), false, pageable);
         List<Boolean> result = new ArrayList<Boolean>();
         List<Comment> comments = pageData.getContent();
         for (Comment comment : comments) {
@@ -104,8 +104,11 @@ public class CommentServiceImpl implements CommentService {
 
 	@Override
 	public void delete(Long id) throws Exception {
+	    Comment comment = commentRepository.findOne(id);
+	    comment.setDisable(true);
+	    commentRepository.save(comment);
 //		commentRepository.delete(id);
-		socialService.deleteComment(getInfo(id));
+//		socialService.deleteComment(getInfo(id));
 	}
 
 	@Override
@@ -126,7 +129,7 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public Comment[] getComments(Long id, String target) {
-        List<Comment> comments = commentRepository.findByTargetAndTargetId(target, id);
+        List<Comment> comments = commentRepository.findByTargetAndTargetIdAndDisable(target, id, false);
         return comments.toArray(new Comment[comments.size()]);
     }
 

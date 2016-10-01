@@ -23,6 +23,8 @@ public class CommentSpec extends PzSimpleSpecification<Comment, CommentInfo> {
 		addLikeCondition(queryWraper, "content");
 		addEqualsCondition(queryWraper, "target");
 		addEqualsCondition(queryWraper, "targetId");
+		
+		addEqualsConditionToColumn(queryWraper, "disable", false);
 	}
 
 }

@@ -125,6 +125,7 @@ public class ArticleServiceImpl implements ArticleService {
         article.setReadCount(article.getReadCount() + 1);
         BeanUtils.copyProperties(article, info);
         info.setTagInfos(tagService.getTags(article));
+        info.setTagName(article.getTags().get(0).getTag().getName());
         info.setCommentCount(commentService.getComments(article.getId(), "article").length);
         return info;
     }

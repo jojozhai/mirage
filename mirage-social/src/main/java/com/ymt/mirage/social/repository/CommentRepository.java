@@ -20,12 +20,12 @@ import com.ymt.pz365.data.jpa.repository.PzRepository;
 @Repository
 public interface CommentRepository extends PzRepository<Comment> {
 
-    Page<Comment> findByTargetAndTargetIdAndReplyToIdIsNull(String target, Long targetId, Pageable pageable);
+    Page<Comment> findByTargetAndTargetIdAndReplyToIdIsNullAndDisable(String target, Long targetId, boolean disable, Pageable pageable);
 
-    List<Comment> findByReplyToId(Long id, Sort sort);
+    List<Comment> findByReplyToIdAndDisable(Long id, boolean disable, Sort sort);
 
-    List<Comment> findByTargetAndTargetId(String target, Long id);
+    List<Comment> findByTargetAndTargetIdAndDisable(String target, Long id, boolean disable);
 
-    List<Comment> findByCommentId(Long id, Sort sort);
+    List<Comment> findByCommentIdAndDisable(Long id, boolean disable, Sort sort);
 
 }

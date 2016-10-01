@@ -25,6 +25,10 @@ public class ArticleInfo {
 	 */
 	private Long tagId;
 	/**
+	 * 
+	 */
+	private String tagName; 
+	/**
 	 * 审计日志，记录条目创建时间，自动赋值，不需要程序员手工赋值
 	 */
 	private Date createdTime = new Date();
@@ -331,6 +335,18 @@ public class ArticleInfo {
      */
     public void setOutLink(String outLink) {
         this.outLink = outLink;
+    }
+    /**
+     * @return the tagName
+     */
+    public String getTagName() {
+        return tagName;
+    }
+    /**
+     * @param tagName the tagName to set
+     */
+    public void setTagName(String tagName) {
+        this.tagName = tagName;
     }
 
 }

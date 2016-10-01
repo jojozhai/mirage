@@ -73,7 +73,10 @@ public class Comment extends DomainImpl implements Praiseable {
 	 * 赞的总数
 	 */
 	private int praiseCount;
-	
+	/**
+	 * 屏蔽 
+	 */
+	private boolean disable;
 	/**
 	 * @return the createrId
 	 */
@@ -229,6 +232,18 @@ public class Comment extends DomainImpl implements Praiseable {
      */
     public void setCreaterDesc(String createrDesc) {
         this.createrDesc = createrDesc;
+    }
+    /**
+     * @return the disable
+     */
+    public boolean isDisable() {
+        return disable;
+    }
+    /**
+     * @param disable the disable to set
+     */
+    public void setDisable(boolean disable) {
+        this.disable = disable;
     }
 
 }

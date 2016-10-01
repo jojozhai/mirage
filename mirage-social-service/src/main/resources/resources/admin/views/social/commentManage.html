@@ -48,6 +48,7 @@
 							<th width="100">序号</th>
 							<th>评论内容</th>
 							<th width="200">评论对象</th>
+							<th width="200">评论时间</th>
 							<th width="200">操作</th>
 						</tr>
 					</thead>
@@ -62,6 +63,7 @@
 							<td>{{$index+1}}</td>
 							<td style="word-break:break-all">{{comment.content}}</td>
 							<td>{{comment.target | commentTarget}}</td>
+							<td>{{comment.createdTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
 							<td>
 								<button class="btn btn-danger btn-xs" ng-click="remove(comment)">
 									<i class="ion-trash-a m-right-xs"></i>删除

@@ -1,8 +1,10 @@
 <div class="smart-widget widget-dark-blue">
-	<div class="smart-widget-header">提现管理</div>
+	<div class="smart-widget-header">分润配置管理</div>
 	<div class="smart-widget-inner">
 		<div class="smart-widget-body">
-		      
+		    <button ng-click="create()" class="btn btn-success btn-sm">
+                <i class="ion-plus m-right-xs"></i>新建分润配置
+            </button>
 			<button type="button" class="btn btn-success btn-sm" ng-click="isConditionCollapsed = !isConditionCollapsed">
 				<i class="fa fa-search m-right-xs"></i>查询
 			</button>
@@ -32,22 +34,23 @@
 					<thead>
 						<tr>
 							<th width="100">序号</th>
-							<th>姓名</th>
-							<th width="100">金额</th>
-							<th width="100">状态</th>
+							<th>级数</th>
+							<th width="100">百分比</th>
 							<th width="200">操作</th>
 						</tr>
 					</thead>
 					<tbody>
-						<tr ng-repeat = "withdrawals in withdrawalss">
+						<tr ng-repeat = "rebateConfig in rebateConfigs">
 							<td>{{$index+1}}</td>
-							<td>{{withdrawals.username}}</td>
-							<td>{{withdrawals.amount : currency}}</td>
-							<td>{{withdrawals.state : withdrawalsState}}</td>
+							<td>{{rebateConfig.level}}</td>
+							<td>{{rebateConfig.percentage}}</td>
 							<td>
-								<button class="btn btn-warning btn-xs" ng-click="update(withdrawals)">
-									<i class="ion-edit m-right-xs"></i>发放
-								</button>
+								<button class="btn btn-warning btn-xs" ng-click="update(rebateConfig)">
+                                    <i class="ion-edit m-right-xs"></i>修改
+                                </button>
+                                <button class="btn btn-danger btn-xs" ng-click="remove(rebateConfig)">
+                                    <i class="ion-trash-a m-right-xs"></i>删除
+                                </button>
 							</td>
 						</tr>
 					</tbody>
