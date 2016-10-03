@@ -20,13 +20,13 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.ymt.mirage.clearing.domain.Clearing;
 import com.ymt.mirage.clearing.domain.ClearingTree;
-import com.ymt.mirage.clearing.domain.Clearingable;
 import com.ymt.mirage.clearing.domain.Profit;
 import com.ymt.mirage.clearing.repository.ClearingTreeRepository;
 import com.ymt.mirage.clearing.service.ClearingService;
 import com.ymt.mirage.clearing.service.ProfitService;
 import com.ymt.mirage.clearing.service.RebateConfigService;
 import com.ymt.mirage.user.repository.UserRepository;
+import com.ymt.pz365.data.jpa.domain.Clearingable;
 import com.ymt.pz365.data.jpa.spi.order.OrderGoodsService;
 import com.ymt.pz365.framework.core.exception.PzException;
 
@@ -66,6 +66,14 @@ public class ClearingServiceImpl implements ClearingService {
     @Override
     public void addUser(String identify, Long userId, Long sharerId) {
         
+        System.out.println("clearing add User identify:"+identify);
+        System.out.println("clearing add User userId:"+userId);
+        System.out.println("clearing add User sharerId:"+sharerId);
+        
+        if(userId.equals(sharerId)) {
+            return;
+        }
+        
         if(orderGoodsService.getGoodsInfo(new Long(identify)).isKey()){
             
             identify = Clearing.TARGET_ID;
@@ -73,6 +81,10 @@ public class ClearingServiceImpl implements ClearingService {
             ClearingTree node = clearingTreeRepository.findByIdentifyAndUserId(identify, userId);
             
             if(node == null) {
+                
+                if(sharerId == null) {
+                    sharerId = DEFAULT_ROOT_USER_ID;
+                }
                 
                 ClearingTree parent = clearingTreeRepository.findByIdentifyAndUserId(identify, sharerId);
                 if(parent == null) {
@@ -84,8 +96,8 @@ public class ClearingServiceImpl implements ClearingService {
                 }
                 createClearingTreeNode(identify, userId, parent);
                 
-            }else{
-                throw new PzException("用户'"+userId+"'已经存在于类型为'"+identify+"'的结算树中，父节点为:"+node.getParent().getName()+"("+node.getParent().getId()+")");
+//            }else{
+//                throw new PzException("用户'"+userId+"'已经存在于类型为'"+identify+"'的结算树中，父节点为:"+node.getParent().getName()+"("+node.getParent().getId()+")");
             }
         }
     }
@@ -145,6 +157,8 @@ public class ClearingServiceImpl implements ClearingService {
         BigDecimal profitAmount = clearingable.getValue().multiply(percentage.divide(new BigDecimal(100), 4, RoundingMode.HALF_UP));
         BigDecimal newAvailableAmount = reduceProfit?profit.getAvailable().subtract(profitAmount):profit.getAvailable().add(profitAmount);
         profit.setAvailable(newAvailableAmount);
+        
+        node.getUser().setMoney(newAvailableAmount);
         
         Clearing clearing = new Clearing();
         clearing.setAfter(newAvailableAmount);

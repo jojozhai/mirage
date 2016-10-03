@@ -11,7 +11,7 @@
  */
 package com.ymt.mirage.clearing.service;
 
-import com.ymt.mirage.clearing.domain.Clearingable;
+import com.ymt.pz365.data.jpa.domain.Clearingable;
 
 /**
  *

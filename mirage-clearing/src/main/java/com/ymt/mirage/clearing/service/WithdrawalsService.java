@@ -20,7 +20,7 @@ public interface WithdrawalsService {
 
 	WithdrawalsInfo getInfo(Long id);
 
-	WithdrawalsInfo update(WithdrawalsInfo withdrawalsInfo);
+	WithdrawalsInfo update(WithdrawalsInfo withdrawalsInfo) throws Exception;
 
 	void delete(Long id);
 	

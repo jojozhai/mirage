@@ -11,6 +11,8 @@
  */
 package com.ymt.mirage.clearing.web.controller.weixin;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -41,12 +43,13 @@ public class ClearingWeixinController {
     private WithdrawalsService withdrawalsService;
 
     @RequestMapping(value = "/clearing/user", method = RequestMethod.POST)
-    public void addUser(@RequestParam Long goodsId, @RequestParam Long sharerId) {
+    public void addUser(@RequestParam Long goodsId, Long sharerId) {
         clearingService.addUser(goodsId.toString(), CurrentUserHolder.getCurrentUserId(), sharerId);
     }
     
     @RequestMapping(value = "/withdrawals", method = RequestMethod.POST)
-    public void getInfo(@RequestBody WithdrawalsInfo withdrawalsInfo) {
+    public void getInfo(@RequestBody WithdrawalsInfo withdrawalsInfo, HttpServletRequest request) {
+        withdrawalsInfo.setIp(request.getRemoteAddr());
         withdrawalsInfo.setUserId(CurrentUserHolder.getCurrentUserId());
         withdrawalsService.create(withdrawalsInfo);
     }

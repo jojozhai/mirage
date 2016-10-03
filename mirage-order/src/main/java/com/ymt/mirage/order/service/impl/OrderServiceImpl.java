@@ -73,6 +73,10 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public JsapiPaymentInfo create(OrderInfo orderInfo, String ip) throws Exception {
         
+        if(orderInfo.getSharerId() == null) {
+            orderInfo.setSharerId(0L);
+        }
+        
         User user = userRepository.getOne(orderInfo.getUserId());
         
         Order order = new Order();
@@ -105,10 +109,10 @@ public class OrderServiceImpl implements OrderService {
         unifiedorderInfo.setIp(ip);
         unifiedorderInfo.setOpenId(order.getUser().getWeixinOpenId());
         unifiedorderInfo.setOrderId(order.getId());
-//      unifiedorderInfo.setAttach(order.getType());
+        unifiedorderInfo.setAttach(order.getType().toString());
         
-//        return weixinService.unifiedorder(unifiedorderInfo);
-        return null;
+        return weixinService.unifiedorder(unifiedorderInfo);
+//      return null;
         
     }
 

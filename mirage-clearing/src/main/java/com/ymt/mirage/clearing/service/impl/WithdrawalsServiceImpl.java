@@ -11,6 +11,8 @@
  */
 package com.ymt.mirage.clearing.service.impl;
 
+import java.math.BigDecimal;
+
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -24,8 +26,11 @@ import com.ymt.mirage.clearing.dto.WithdrawalsInfo;
 import com.ymt.mirage.clearing.repository.WithdrawalsRepository;
 import com.ymt.mirage.clearing.repository.spec.WithdrawalsSpec;
 import com.ymt.mirage.clearing.service.WithdrawalsService;
+import com.ymt.mirage.user.domain.User;
+import com.ymt.mirage.user.repository.UserRepository;
 import com.ymt.pz365.data.jpa.support.AbstractDomain2InfoConverter;
 import com.ymt.pz365.data.jpa.support.QueryResultConverter;
+import com.ymt.pz365.framework.weixin.service.WeixinService;
 
 /**
  *
@@ -39,6 +44,12 @@ public class WithdrawalsServiceImpl implements WithdrawalsService {
     
     @Autowired
     private WithdrawalsRepository withdrawalsRepository;
+    
+    @Autowired
+    private UserRepository userRepository;
+    
+    @Autowired
+    private WeixinService weixinService;
     
     @Override
     public Page<WithdrawalsInfo> query(WithdrawalsInfo withdrawalsInfo, Pageable pageable) {
@@ -69,11 +80,14 @@ public class WithdrawalsServiceImpl implements WithdrawalsService {
     }
 
     @Override
-    public WithdrawalsInfo update(WithdrawalsInfo withdrawalsInfo) {
+    public WithdrawalsInfo update(WithdrawalsInfo withdrawalsInfo) throws Exception {
         Withdrawals withdrawals = withdrawalsRepository.findOne(withdrawalsInfo.getId());
 //        BeanUtils.copyProperties(withdrawalsInfo, withdrawals);
         withdrawals.setState(WithdrawalsState.FINISH);
         withdrawalsRepository.save(withdrawals);
+        User user = userRepository.findOne(withdrawalsInfo.getUserId());
+        BigDecimal amount = withdrawals.getAmount().multiply(new BigDecimal(100));
+        weixinService.sendRedpack(withdrawals.getId(), withdrawalsInfo.getIp(), user.getWeixinOpenId(), amount.intValue());
         return withdrawalsInfo;
     }
 

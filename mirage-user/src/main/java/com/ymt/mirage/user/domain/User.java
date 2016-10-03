@@ -584,7 +584,7 @@ public class User extends DomainImpl implements UserDetails {
      * @return the money
      */
     public BigDecimal getMoney() {
-        return money;
+        return money == null ? BigDecimal.ZERO : money;
     }
 
     /**

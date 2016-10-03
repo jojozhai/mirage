@@ -43,7 +43,7 @@ public class WithdrawalsAdminController {
 	}
 
 	@RequestMapping(value = "/withdrawals/{id}", method = RequestMethod.PUT)
-	public WithdrawalsInfo update(@RequestBody WithdrawalsInfo withdrawalsInfo) {
+	public WithdrawalsInfo update(@RequestBody WithdrawalsInfo withdrawalsInfo) throws Exception {
 		return withdrawalsService.update(withdrawalsInfo);
 	}
 

@@ -16,11 +16,11 @@ import java.math.BigDecimal;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.Index;
 import javax.persistence.ManyToOne;
-import javax.persistence.Table;
 
 import com.ymt.mirage.user.domain.User;
+import com.ymt.pz365.data.jpa.domain.ClearingLog;
+import com.ymt.pz365.data.jpa.domain.ClearingType;
 import com.ymt.pz365.data.jpa.domain.DomainImpl;
 
 /**
@@ -31,7 +31,7 @@ import com.ymt.pz365.data.jpa.domain.DomainImpl;
  */
 @Entity
 //@Table(indexes = {@Index(columnList = "targetId"), @Index(columnList = "userId")})
-public class Clearing extends DomainImpl {
+public class Clearing extends DomainImpl implements ClearingLog {
     
     public static final String TARGET_ID = "jojo";
     

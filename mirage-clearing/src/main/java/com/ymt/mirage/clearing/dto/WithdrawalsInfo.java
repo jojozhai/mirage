@@ -41,6 +41,10 @@ public class WithdrawalsInfo {
      */
     private WithdrawalsState state;
     /**
+     * 
+     */
+    private String ip;
+    /**
      * @return the userId
      */
     public Long getUserId() {
@@ -99,6 +103,18 @@ public class WithdrawalsInfo {
      */
     public void setUsername(String username) {
         this.username = username;
+    }
+    /**
+     * @return the ip
+     */
+    public String getIp() {
+        return ip;
+    }
+    /**
+     * @param ip the ip to set
+     */
+    public void setIp(String ip) {
+        this.ip = ip;
     }
 
 }

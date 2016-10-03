@@ -26,6 +26,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 import com.ymt.mirage.user.domain.User;
+import com.ymt.pz365.data.jpa.domain.ClearingType;
+import com.ymt.pz365.data.jpa.domain.Clearingable;
 import com.ymt.pz365.data.jpa.domain.DomainImpl;
 
 /**
@@ -36,7 +38,7 @@ import com.ymt.pz365.data.jpa.domain.DomainImpl;
  */
 @Entity
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
-public class Order extends DomainImpl {
+public class Order extends DomainImpl implements Clearingable {
     
     /**
      * 订单号
@@ -155,6 +157,30 @@ public class Order extends DomainImpl {
      */
     public void setSharer(User sharer) {
         this.sharer = sharer;
+    }
+    @Override
+    public Long getCreaterId() {
+        return getUser().getId();
+    }
+    @Override
+    public String getCreaterName() {
+        return getUser().getNickname();
+    }
+    @Override
+    public String getIdentify() {
+        return getId().toString();
+    }
+    @Override
+    public ClearingType getType() {
+        return ClearingType.REBATE;
+    }
+    @Override
+    public BigDecimal getValue() {
+        return getAmount();
+    }
+    @Override
+    public String getName() {
+        return "order:"+getId();
     }
 
 }
