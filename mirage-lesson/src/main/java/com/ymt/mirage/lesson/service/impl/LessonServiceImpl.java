@@ -88,6 +88,7 @@ public class LessonServiceImpl implements LessonService {
                     BeanUtils.copyProperties(domain.getTarget(), info);
                     info.setContent("");
                     info.setTeacherName(domain.getTarget().getTeacher().getName());
+                    info.setTeacherImage(domain.getTarget().getTeacher().getImage());
                 }
             });
         }else if(lessonInfo.getSetId() != null) {
@@ -98,6 +99,7 @@ public class LessonServiceImpl implements LessonService {
                     BeanUtils.copyProperties(domain.getTarget(), info);
                     info.setContent("");
                     info.setTeacherName(domain.getTarget().getTeacher().getName());
+                    info.setTeacherImage(domain.getTarget().getTeacher().getImage());
                 }
             });
         }else{
@@ -107,6 +109,7 @@ public class LessonServiceImpl implements LessonService {
                 protected void doConvert(Lesson domain, LessonInfo info) throws Exception {
                     info.setContent("");
                     info.setTeacherName(domain.getTeacher().getName());
+                    info.setTeacherImage(domain.getTeacher().getImage());
                 }
             });
         }

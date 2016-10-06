@@ -68,6 +68,10 @@ public class LessonInfo {
      */
     private String teacherName;
     /**
+     * 
+     */
+    private String teacherImage;
+    /**
      * 报名开始时间
      */
     private Date signStartTime;
@@ -525,5 +529,19 @@ public class LessonInfo {
      */
     public void setOffline(Boolean offline) {
         this.offline = offline;
+    }
+
+    /**
+     * @return the teacherImage
+     */
+    public String getTeacherImage() {
+        return teacherImage;
+    }
+
+    /**
+     * @param teacherImage the teacherImage to set
+     */
+    public void setTeacherImage(String teacherImage) {
+        this.teacherImage = teacherImage;
     }
 }

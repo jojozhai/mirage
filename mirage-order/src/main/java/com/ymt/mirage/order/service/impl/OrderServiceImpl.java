@@ -16,6 +16,7 @@ import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -28,6 +29,7 @@ import com.ymt.mirage.order.domain.OrderState;
 import com.ymt.mirage.order.dto.CartInfo;
 import com.ymt.mirage.order.dto.OrderInfo;
 import com.ymt.mirage.order.dto.OrderViewInfo;
+import com.ymt.mirage.order.event.OrderStateChangeEvent;
 import com.ymt.mirage.order.repository.OrderGoodsRepository;
 import com.ymt.mirage.order.repository.OrderRepository;
 import com.ymt.mirage.order.repository.spec.OrderSpec;
@@ -66,6 +68,9 @@ public class OrderServiceImpl implements OrderService {
     
     @Autowired
     private WeixinService weixinService;
+    
+    @Autowired
+    private ApplicationEventPublisher applicationEventPublisher;
 
     /* (non-Javadoc)
      * @see com.ymt.mirage.order.service.OrderService#create(com.ymt.mirage.order.dto.OrderInfo)
@@ -137,12 +142,18 @@ public class OrderServiceImpl implements OrderService {
     @SuppressWarnings({ "rawtypes", "unchecked" })
     @Override
     public Page<OrderViewInfo> query(Long currentUserId, Boolean finish, Pageable pageable) {
+        
         OrderState[] states = new OrderState[]{OrderState.CANCEL, OrderState.FINISH};
         Page<Order> orderPage;
-        if(finish) {
-            orderPage = orderRepository.findByUserIdAndStateIn(currentUserId, states, pageable);
+        
+        if(finish == null) {
+            orderPage = orderRepository.findByUserId(currentUserId, pageable);
         }else{
-            orderPage = orderRepository.findByUserIdAndStateNotIn(currentUserId, states, pageable);
+            if(finish) {
+                orderPage = orderRepository.findByUserIdAndStateIn(currentUserId, states, pageable);
+            }else{
+                orderPage = orderRepository.findByUserIdAndStateNotIn(currentUserId, states, pageable);
+            }
         }
         
         List infos = orderGoodsService.convertOrderInfo(orderPage.getContent());
@@ -151,9 +162,17 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public void confirm(Long id) {
+        OrderStateChangeEvent orderStateChangeEvent = new OrderStateChangeEvent(id);
+        
         Order order = orderRepository.findOne(id);
+        
+        orderStateChangeEvent.setFromState(order.getState());
+        orderStateChangeEvent.setToState(OrderState.FINISH);
+        
         order.setState(OrderState.FINISH);
         orderRepository.save(order);
+        
+        applicationEventPublisher.publishEvent(orderStateChangeEvent);
     }
 
     @Override
@@ -170,9 +189,19 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public OrderInfo update(OrderInfo orderInfo) {
+        
+        OrderStateChangeEvent orderStateChangeEvent = new OrderStateChangeEvent(orderInfo.getId());
+        
         Order order = orderRepository.findOne(orderInfo.getId());
+        
+        orderStateChangeEvent.setFromState(order.getState());
+        orderStateChangeEvent.setToState(orderInfo.getState());
+        
         order.setState(orderInfo.getState());
         orderRepository.save(order);
+        
+        applicationEventPublisher.publishEvent(orderStateChangeEvent);
+        
         return orderInfo;
     }
 

@@ -50,7 +50,7 @@ public class OrderWeixinController {
     }
     
     @RequestMapping(value = "/order", method = RequestMethod.GET)
-    public Page<OrderViewInfo> query(@RequestParam(defaultValue = "false") Boolean finish, Pageable pageable) throws Exception {
+    public Page<OrderViewInfo> query(Boolean finish, Pageable pageable) throws Exception {
         return orderService.query(CurrentUserHolder.getCurrentUserId(), finish, pageable);
     }
     

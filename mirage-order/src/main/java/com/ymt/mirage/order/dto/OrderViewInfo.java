@@ -32,6 +32,8 @@ public class OrderViewInfo {
     private String teacherTitle;
     
     private String teacherImage;
+    
+    private int saleCount;
 
     /**
      * @return the id
@@ -115,6 +117,20 @@ public class OrderViewInfo {
      */
     public void setState(OrderState state) {
         this.state = state;
+    }
+
+    /**
+     * @return the saleCount
+     */
+    public int getSaleCount() {
+        return saleCount;
+    }
+
+    /**
+     * @param saleCount the saleCount to set
+     */
+    public void setSaleCount(int saleCount) {
+        this.saleCount = saleCount;
     }
     
 }

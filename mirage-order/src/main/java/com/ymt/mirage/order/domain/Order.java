@@ -13,6 +13,7 @@ package com.ymt.mirage.order.domain;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -24,6 +25,8 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import com.ymt.mirage.user.domain.User;
 import com.ymt.pz365.data.jpa.domain.ClearingType;
@@ -73,6 +76,11 @@ public class Order extends DomainImpl implements Clearingable {
      */
     @Column(length = 2000)
     private String message;
+    /**
+     * 
+     */
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date completeTime;
     
     /**
      * @return the number
@@ -181,6 +189,18 @@ public class Order extends DomainImpl implements Clearingable {
     @Override
     public String getName() {
         return "order:"+getId();
+    }
+    /**
+     * @return the completeTime
+     */
+    public Date getCompleteTime() {
+        return completeTime;
+    }
+    /**
+     * @param completeTime the completeTime to set
+     */
+    public void setCompleteTime(Date completeTime) {
+        this.completeTime = completeTime;
     }
 
 }

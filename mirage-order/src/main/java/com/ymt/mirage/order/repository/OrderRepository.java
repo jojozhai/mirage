@@ -11,6 +11,8 @@
  */
 package com.ymt.mirage.order.repository;
 
+import java.util.List;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
@@ -31,5 +33,9 @@ public interface OrderRepository extends PzRepository<Order>{
     Page<Order> findByUserIdAndStateIn(Long currentUserId, OrderState[] states, Pageable pageable);
 
     Page<Order> findByUserIdAndStateNotIn(Long currentUserId, OrderState[] states, Pageable pageable);
+
+    Page<Order> findByUserId(Long currentUserId, Pageable pageable);
+
+    List<Order> findByState(OrderState complete);
 
 }

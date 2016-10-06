@@ -35,7 +35,7 @@ angular.module('orderAdminModule',[]).config(function($stateProvider) {
 	$scope.updateState = function(order, state) {
 		commonService.showConfirm("您确认要修改订单状态?").result.then(function() {
 			order.state = state;
-			orderRestService.update({id: order.id, state: state});
+			orderRestService.save({id: order.id, state: state});
 		})
 	}
 	
