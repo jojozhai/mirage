@@ -16,8 +16,8 @@ import java.math.BigDecimal;
 import javax.persistence.Lob;
 import javax.persistence.MappedSuperclass;
 
-import com.ymt.pz365.data.jpa.domain.DomainImpl;
 import com.ymt.pz365.data.jpa.domain.Goods;
+import com.ymt.pz365.data.jpa.domain.SortableImpl;
 
 /**
  *
@@ -26,7 +26,7 @@ import com.ymt.pz365.data.jpa.domain.Goods;
  * @version 1.0.0
  */
 @MappedSuperclass
-public class AbstractGoods extends DomainImpl implements Goods {
+public class AbstractGoods extends SortableImpl implements Goods {
     
     /**
      * 名称

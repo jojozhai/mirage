@@ -35,6 +35,7 @@ public class LessonSpec extends PzSimpleSpecification<Lesson, LessonInfo> {
         addLikeCondition(queryWraper, "name");
         addEqualsCondition(queryWraper, "enable");
         addEqualsCondition(queryWraper, "top");
+        addEqualsCondition(queryWraper, "herald");
         addEqualsCondition(queryWraper, "teacherId", "teacher.id");
         
         if(getCondition().getHerald() != null) {
@@ -43,10 +44,10 @@ public class LessonSpec extends PzSimpleSpecification<Lesson, LessonInfo> {
                 addLessThanOrEqualConditionToColumn(queryWraper, "signStartTime", now);
                 addGreaterThanOrEqualConditionToColumn(queryWraper, "signEndTime", now);
                 addBetweenCondition(queryWraper, "startTime");
-            }else{
-                addLessThanOrEqualConditionToColumn(queryWraper, "endTime", now);
-                queryWraper.getPredicates().add(queryWraper.getCb().isNotNull(queryWraper.getRoot().get("video")));
-                queryWraper.getPredicates().add(queryWraper.getCb().notEqual(queryWraper.getRoot().get("video"), ""));
+//            }else{
+//                addLessThanOrEqualConditionToColumn(queryWraper, "endTime", now);
+//                queryWraper.getPredicates().add(queryWraper.getCb().isNotNull(queryWraper.getRoot().get("video")));
+//                queryWraper.getPredicates().add(queryWraper.getCb().notEqual(queryWraper.getRoot().get("video"), ""));
             }
         }
     }

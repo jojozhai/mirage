@@ -14,13 +14,17 @@ package com.ymt.mirage.clearing.service.impl;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ymt.mirage.clearing.domain.Clearing;
 import com.ymt.mirage.clearing.domain.ClearingTree;
 import com.ymt.mirage.clearing.domain.Profit;
+import com.ymt.mirage.clearing.event.ClearingTreeNodeCreatedEvent;
 import com.ymt.mirage.clearing.repository.ClearingTreeRepository;
 import com.ymt.mirage.clearing.service.ClearingService;
 import com.ymt.mirage.clearing.service.ProfitService;
@@ -39,6 +43,8 @@ import com.ymt.pz365.framework.core.exception.PzException;
 @Service("clearingService")
 @Transactional
 public class ClearingServiceImpl implements ClearingService {
+    
+    private Logger logger = LoggerFactory.getLogger(getClass());
     
     /**
      * 默认的根节点用户id
@@ -59,6 +65,9 @@ public class ClearingServiceImpl implements ClearingService {
     
     @Autowired
     private OrderGoodsService orderGoodsService;
+    
+    @Autowired
+    private ApplicationEventPublisher applicationEventPublisher;
 
     /* (non-Javadoc)
      * @see com.ymt.mirage.clearing.service.ClearingService#addUser(java.lang.String, java.lang.Long, java.lang.String, java.lang.Long)
@@ -66,9 +75,9 @@ public class ClearingServiceImpl implements ClearingService {
     @Override
     public void addUser(String identify, Long userId, Long sharerId) {
         
-        System.out.println("clearing add User identify:"+identify);
-        System.out.println("clearing add User userId:"+userId);
-        System.out.println("clearing add User sharerId:"+sharerId);
+        logger.info("clearing add User identify:"+identify);
+        logger.info("clearing add User userId:"+userId);
+        logger.info("clearing add User sharerId:"+sharerId);
         
         if(userId.equals(sharerId)) {
             return;
@@ -94,7 +103,9 @@ public class ClearingServiceImpl implements ClearingService {
                         throw new PzException("父用户id不存在:"+sharerId+", type:"+identify);
                     }
                 }
-                createClearingTreeNode(identify, userId, parent);
+                ClearingTree newNode =  createClearingTreeNode(identify, userId, parent);
+                
+                applicationEventPublisher.publishEvent(new ClearingTreeNodeCreatedEvent(newNode.getId(), parent.getId()));
                 
 //            }else{
 //                throw new PzException("用户'"+userId+"'已经存在于类型为'"+identify+"'的结算树中，父节点为:"+node.getParent().getName()+"("+node.getParent().getId()+")");
@@ -126,7 +137,7 @@ public class ClearingServiceImpl implements ClearingService {
     @Override
     public void clearing(Clearingable clearingable) {
         
-        String identify = clearingable.getIdentify();
+        String identify = Clearing.TARGET_ID;// clearingable.getIdentify();
         Long createrId = clearingable.getCreaterId();
         
         ClearingTree node = clearingTreeRepository.findByIdentifyAndUserId(identify, createrId);

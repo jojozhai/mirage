@@ -1,0 +1,78 @@
+<div class="smart-widget widget-dark-blue">
+	<div class="smart-widget-header">预告课程管理</div>
+	<div class="smart-widget-inner">
+		<div class="smart-widget-body">
+			<button ng-click="create()" class="btn btn-success btn-sm">
+				<i class="ion-plus m-right-xs"></i>新建预告课程
+			</button>
+			<button type="button" class="btn btn-success btn-sm" ng-click="isConditionCollapsed = !isConditionCollapsed">
+				<i class="fa fa-search m-right-xs"></i>查询
+			</button>
+		</div>
+		<div uib-collapse="isConditionCollapsed" style="padding-left: 20px;padding-right: 20px;">
+			<div class="panel">
+				<div class="panel-body">
+					<div style="float:right; margin-top: 7px;">
+						<a href="javascript:" ng-click="isConditionCollapsed = !isConditionCollapsed" class="widget-remove-option"><i class="fa fa-times"></i></a>
+					</div>
+					<div>
+					<form class="form-inline no-margin" novalidate>
+						<div class="form-group">
+								<input ng-model="condition.name" type="text" class="form-control input-sm" placeholder="名称">
+						</div>
+						<button ng-click="query(condition)" class="btn btn-sm btn-success"><i class="fa fa-search m-right-xs"></i>查询</button>
+						<button ng-click="cleanCondition()" class="btn btn-sm btn-warning"><i class="ion-close m-right-xs"></i>清空</button>
+					</form>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<div ng-show="pageInfo.totalElements > 0">
+			<div class="smart-widget-body">
+				<table class="table table-hover">
+					<thead>
+						<tr>
+							<th width="100">序号</th>
+							<th>名称</th>
+							<th width="100">主讲人</th>
+							<th width="150">时间</th>
+							<th width="200">地点</th>
+							<th width="200">操作</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat = "herald in heralds">
+							<td>{{$index+1}}</td>
+							<td>{{herald.name}}</td>
+							<td>{{herald.teacherName}}</td>
+							<td>{{herald.startTime | date:'yyyy-MM-dd HH:mm'}}</td>
+							<td>{{herald.address}}</td>
+							<td>
+								<button class="btn btn-warning btn-xs" ng-click="update(herald)">
+									<i class="ion-edit m-right-xs"></i>修改
+								</button>
+								<button class="btn btn-info btn-xs" ng-click="viewSingup(herald)">
+                                    <i class="ion-edit m-right-xs"></i>报名
+                                </button>
+                                <span datedit="{{herald.id}}" class="btn btn-warning btn-xs btn-edit" onclick="edit(this)" >
+                                    <i  class="ion-edit m-right-xs"></i>编辑
+                                </span>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<div style="margin-top: -30px; margin-left: 20px; margin-bottom: 20px;">
+				<uib-pagination total-items="pageInfo.totalElements" num-pages="pageInfo.totalPages" ng-model="pageInfo.page" max-size="pageInfo.maxSize" 
+					class="pagination-sm" boundary-links="true" force-ellipses="true" ng-change="query()" ng-disabled="pageInfo.totalElements <= 0" 
+					first-text="首页" last-text="末页" next-text="后页" previous-text="前页"></uib-pagination>
+			</div>
+		</div>
+		<div class="smart-widget-body" ng-hide="pageInfo.totalElements > 0">
+			<div class="alert alert-warning alert-dismissible" role="alert">
+		     	<i class="fa fa-exclamation-circle m-right-xs"></i> <strong>没有查询到任何数据,请修改查询条件并重试</strong>
+		    </div>
+		</div>
+	</div>
+</div>

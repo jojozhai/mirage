@@ -11,11 +11,26 @@ public class SwiperInfo {
 	
 	private Long id;
 	private String name;
+	private Integer index;
 	private Boolean enable;
 	private String image;
 	private String link;
 	private String type;
+	
+	
 	/**
+     * @return the index
+     */
+    public Integer getIndex() {
+        return index;
+    }
+    /**
+     * @param index the index to set
+     */
+    public void setIndex(Integer index) {
+        this.index = index;
+    }
+    /**
 	 * @return the id
 	 */
 	public Long getId() {

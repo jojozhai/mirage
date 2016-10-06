@@ -21,4 +21,6 @@ public interface UserRepository extends PzRepository<User> {
 
 	User findByWeixinOpenId(String openid);
 
+    User findByVipAndCity(boolean vip, String city);
+
 }

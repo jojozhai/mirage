@@ -1,0 +1,186 @@
+<div class="smart-widget widget-dark-blue margin-md">
+	<div class="smart-widget-header">预告课程信息</div>
+	<div class="smart-widget-inner">
+	<div class="smart-widget-body" >
+		<form name="heraldForm" class="form-horizontal no-margin" id="type-constraint" data-validate="parsley" novalidate>
+			<div class="form-group"  ng-class="heraldForm.name.$invalid && heraldForm.name.$dirty ? 'has-error': ''">
+				<label class="control-label col-lg-3"><span class="text_red">*</span>&nbsp;名称:</label>
+				<div class="col-lg-6">
+					<input name="name" ng-model="herald.name" type="text" class="form-control input-sm" placeholder="名称" required>
+					<label class="control-label" ng-show="heraldForm.name.$invalid && heraldForm.name.$dirty">名称不能为空</label>
+				</div>
+			</div>
+			<!-- <div class="form-group"  ng-class="heraldForm.desc.$invalid && heraldForm.desc.$dirty ? 'has-error': ''">
+                <label class="control-label col-lg-3"><span class="text_red">*</span>&nbsp;一句话介绍:</label>
+                <div class="col-lg-6">
+                    <input name="desc" ng-model="herald.desc" type="text" class="form-control input-sm" placeholder="一句话介绍" required>
+                    <label class="control-label" ng-show="heraldForm.desc.$invalid && heraldForm.desc.$dirty">一句话介绍不能为空</label>
+                </div>
+            </div> -->
+			<div class="form-group">
+				<label class="control-label col-lg-3">发布:</label>
+				<div class="col-lg-1">
+					<div class="custom-checkbox todo-checkbox">
+						<input id="selection" ng-model="herald.enable" ng-checked="herald.enable" type="checkbox">
+						<label for="selection" style="margin-top: 4px;"></label>
+					</div>
+				</div>
+				<label class="control-label col-lg-3">发布到首页:</label>
+                <div class="col-lg-1">
+                    <div class="custom-checkbox todo-checkbox">
+                        <input id="selection2" ng-model="herald.top" ng-checked="herald.top" type="checkbox">
+                        <label for="selection2" style="margin-top: 4px;"></label>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-lg-3">线上课:</label>
+                <div class="col-lg-1">
+                    <div class="custom-checkbox todo-checkbox">
+                        <input id="selection3" ng-model="herald.online" ng-checked="herald.online" type="checkbox">
+                        <label for="selection3" style="margin-top: 4px;"></label>
+                    </div>
+                </div>
+                <label class="control-label col-lg-3">线下课:</label>
+                <div class="col-lg-1">
+                    <div class="custom-checkbox todo-checkbox">
+                        <input id="selection4" ng-model="herald.offline" ng-checked="herald.offline" type="checkbox">
+                        <label for="selection4" style="margin-top: 4px;"></label>
+                    </div>
+                </div>
+			</div>
+			<div class="form-group">
+                <label class="control-label col-lg-3"><span class="text_red">*</span>&nbsp;主讲人:</label>
+                <div class="col-lg-9">
+                  <ui-select ng-model="herald.teacherInfo" theme="bootstrap">
+		            <ui-select-match placeholder="可以输入老师名称来查找">{{$select.selected.name}}</ui-select-match>
+		            <ui-select-choices repeat="item in teachers | filter: $select.search">
+		              <div ng-bind-html="item.name | highlight: $select.search"></div>
+		            </ui-select-choices>
+		          </ui-select>
+                </div>
+            </div>
+            <div class="form-group" ng-class="heraldForm.signStartTime.$invalid && heraldForm.signStartTime.$dirty ? 'has-error': ''">
+                <label class="control-label col-lg-3" style="padding-top: 40px;"><span class="text_red">*</span>&nbsp;报名开始时间:</label>
+                <div class="col-md-3">
+                    <p class="input-group" style="margin-bottom: 0px; padding-top: 35px;">
+                        <input type="text" uib-datepicker-popup name="signStartTime" ng-model="herald.signStartTime" class="form-control input-sm" is-open="popup1.opened"
+                            datepicker-options="dateOptions" placeholder="开始时间" clear-text="清空" close-text="关闭" current-text="今天" on-open-focus="false" required/>
+                        <span class="input-group-btn">
+                            <button type="button" class="btn btn-default input-sm" ng-click="open1()">
+                                <i class="glyphicon glyphicon-calendar"></i>
+                            </button>
+                        </span>
+                    </p>
+                    <label class="control-label has-error" ng-show="heraldForm.signStartTime.$error.date && heraldForm.signStartTime.$dirty">
+                        时间格式错误
+                    </label>
+                    <label class="control-label has-error" ng-show="heraldForm.signStartTime.$error.required && heraldForm.signStartTime.$dirty">
+                        报名开始时间不能为空
+                    </label>
+                </div>
+                <div class="col-md-3">
+                    <uib-timepicker class="input-sm" ng-model="herald.signStartTime" hour-step="1" minute-step="1" show-meridian="false"></uib-timepicker>
+                </div>
+            </div>
+            <div class="form-group" ng-class="heraldForm.signEndTime.$invalid && heraldForm.signEndTime.$dirty ? 'has-error': ''">
+                <label class="control-label col-lg-3" style="padding-top: 40px;"><span class="text_red">*</span>&nbsp;报名结束时间:</label>
+                <div class="col-md-3">
+                    <p class="input-group" style="margin-bottom: 0px; padding-top: 35px;">
+                        <input type="text" uib-datepicker-popup name="signEndTime" ng-model="herald.signEndTime" class="form-control input-sm" is-open="popup2.opened"
+                            datepicker-options="dateOptions" placeholder="结束时间" clear-text="清空" close-text="关闭" current-text="今天" on-open-focus="false" required/>
+                        <span class="input-group-btn">
+                            <button type="button" class="btn btn-default input-sm" ng-click="open2()">
+                                <i class="glyphicon glyphicon-calendar"></i>
+                            </button>
+                        </span>
+                    </p>
+                    <label class="control-label has-error" ng-show="heraldForm.signEndTime.$error.date && heraldForm.signEndTime.$dirty">
+                        时间格式错误
+                    </label>
+                    <label class="control-label has-error" ng-show="heraldForm.signEndTime.$error.required && heraldForm.signEndTime.$dirty">
+                        报名结束时间不能为空
+                    </label>
+                </div>
+                <div class="col-md-3">
+                    <uib-timepicker class="input-sm" ng-model="herald.signEndTime" hour-step="1" minute-step="1" show-meridian="false"></uib-timepicker>
+                </div>
+            </div>
+            <div class="form-group" ng-class="heraldForm.startTime.$invalid && heraldForm.startTime.$dirty ? 'has-error': ''">
+                <label class="control-label col-lg-3" style="padding-top: 40px;"><span class="text_red">*</span>&nbsp;课程开始时间:</label>
+                <div class="col-md-3">
+                    <p class="input-group" style="margin-bottom: 0px; padding-top: 35px;">
+                        <input type="text" uib-datepicker-popup name="startTime" ng-model="herald.startTime" class="form-control input-sm" is-open="popup3.opened"
+                            datepicker-options="dateOptions" placeholder="开始时间" clear-text="清空" close-text="关闭" current-text="今天" on-open-focus="false" required/>
+                        <span class="input-group-btn">
+                            <button type="button" class="btn btn-default input-sm" ng-click="open3()">
+                                <i class="glyphicon glyphicon-calendar"></i>
+                            </button>
+                        </span>
+                    </p>
+                    <label class="control-label has-error" ng-show="heraldForm.startTime.$error.date && heraldForm.startTime.$dirty">
+                        时间格式错误
+                    </label>
+                    <label class="control-label has-error" ng-show="heraldForm.startTime.$error.required && heraldForm.startTime.$dirty">
+                        课程开始时间不能为空
+                    </label>
+                </div>
+                <div class="col-md-3">
+                    <uib-timepicker class="input-sm" ng-model="herald.startTime" hour-step="1" minute-step="1" show-meridian="false"></uib-timepicker>
+                </div>
+            </div>
+            <div class="form-group" ng-class="heraldForm.endTime.$invalid && heraldForm.endTime.$dirty ? 'has-error': ''">
+                <label class="control-label col-lg-3" style="padding-top: 40px;"><span class="text_red">*</span>&nbsp;课程结束时间:</label>
+                <div class="col-md-3">
+                    <p class="input-group" style="margin-bottom: 0px; padding-top: 35px;">
+                        <input type="text" uib-datepicker-popup name="endTime" ng-model="herald.endTime" class="form-control input-sm" is-open="popup4.opened"
+                            datepicker-options="dateOptions" placeholder="结束时间" clear-text="清空" close-text="关闭" current-text="今天" on-open-focus="false" required/>
+                        <span class="input-group-btn">
+                            <button type="button" class="btn btn-default input-sm" ng-click="open4()">
+                                <i class="glyphicon glyphicon-calendar"></i>
+                            </button>
+                        </span>
+                    </p>
+                    <label class="control-label has-error" ng-show="heraldForm.endTime.$error.date && heraldForm.endTime.$dirty">
+                        时间格式错误
+                    </label>
+                    <label class="control-label has-error" ng-show="heraldForm.endTime.$error.required && heraldForm.endTime.$dirty">
+                        课程结束时间不能为空
+                    </label>
+                </div>
+                <div class="col-md-3">
+                    <uib-timepicker class="input-sm" ng-model="herald.endTime" hour-step="1" minute-step="1" show-meridian="false"></uib-timepicker>
+                </div>
+            </div>
+            <div class="form-group"  ng-class="heraldForm.address.$invalid && heraldForm.address.$dirty ? 'has-error': ''">
+                <label class="control-label col-lg-3">课程地点:</label>
+                <div class="col-lg-6">
+                    <input name="address" ng-model="herald.address" type="text" class="form-control input-sm" placeholder="课程地点">
+                    <label class="control-label" ng-show="heraldForm.address.$invalid && heraldForm.address.$dirty">课程地点不能为空</label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-lg-3">缩略图:</label>
+                <div class="col-lg-4">
+                    <div class="fileinput-button" style="border: 1px solid #abcdef; height: 90px; width: 160px;" >
+                        <img ng-src="{{herald.thumbnail}}" width="160px;", height="90px;">
+                        <input type="file" id="file1" name="file1" pz-uploader action="doUpload1(files)">
+                    </div>
+                </div>
+            </div>
+			<div class="form-group">
+				<label class="control-label col-lg-3"><span class="text_red">*</span>主题图:</label>
+				<div class="col-lg-4">
+					<div class="fileinput-button" style="border: 1px solid #abcdef; height: 180px; width: 320px;" >
+						<img ng-src="{{herald.image}}" width="320px;", height="180px;">
+						<input type="file" id="file2" name="file2" pz-uploader action="doUpload2(files)">
+					</div>
+				</div>
+			</div>
+			<div class="text-right m-top-md">
+				<button ng-click="save(herald)" class="btn btn-success btn-sm" ng-disabled="heraldForm.$invalid"><i class="fa fa-save m-right-xs"></i>保存</button>
+			</div>
+		</form>
+	</div>
+	</div>
+</div>

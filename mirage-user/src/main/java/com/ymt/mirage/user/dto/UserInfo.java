@@ -109,6 +109,10 @@ public class UserInfo {
 	 */
 	private BigDecimal money;
 	/**
+	 * 
+	 */
+	private BigDecimal moneyPlus;
+	/**
 	 * @return
 	 * @author zhailiang
 	 * @since 2016年6月22日
@@ -414,6 +418,18 @@ public class UserInfo {
      */
     public void setMoney(BigDecimal money) {
         this.money = money;
+    }
+    /**
+     * @return the moneyPlus
+     */
+    public BigDecimal getMoneyPlus() {
+        return moneyPlus;
+    }
+    /**
+     * @param moneyPlus the moneyPlus to set
+     */
+    public void setMoneyPlus(BigDecimal moneyPlus) {
+        this.moneyPlus = moneyPlus;
     }
 	
 }

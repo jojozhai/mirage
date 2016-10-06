@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -29,5 +30,10 @@ public class OrderAdminController {
 	public Page<OrderInfo> query(OrderInfo orderInfo, Pageable pageable) {
 		return orderService.query(orderInfo, pageable);
 	}
+	
+	@RequestMapping(value = "/order/{id}", method = RequestMethod.PUT)
+    public OrderInfo update(@RequestBody OrderInfo lessonInfo) throws Exception {
+        return orderService.update(lessonInfo);
+    }
 	
 }

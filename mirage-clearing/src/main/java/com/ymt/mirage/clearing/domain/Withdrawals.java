@@ -12,10 +12,14 @@
 package com.ymt.mirage.clearing.domain;
 
 import java.math.BigDecimal;
+import java.util.Date;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.ManyToOne;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import com.ymt.mirage.user.domain.User;
 import com.ymt.pz365.data.jpa.domain.DomainImpl;
@@ -41,8 +45,14 @@ public class Withdrawals extends DomainImpl {
     /**
      * 申请状态
      */
-    @Enumerated
+    @Enumerated(EnumType.STRING)
     private WithdrawalsState state;
+    /**
+     * 发放时间
+     */
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date sendTime;
+    
     /**
      * @return the user
      */
@@ -78,6 +88,18 @@ public class Withdrawals extends DomainImpl {
      */
     public void setState(WithdrawalsState state) {
         this.state = state;
+    }
+    /**
+     * @return the sendTime
+     */
+    public Date getSendTime() {
+        return sendTime;
+    }
+    /**
+     * @param sendTime the sendTime to set
+     */
+    public void setSendTime(Date sendTime) {
+        this.sendTime = sendTime;
     }
 
 }

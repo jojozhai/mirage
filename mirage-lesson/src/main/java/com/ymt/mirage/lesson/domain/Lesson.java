@@ -16,6 +16,7 @@ import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
@@ -50,6 +51,18 @@ public class Lesson extends DomainImpl implements Tagable {
      * 发布
      */
     private boolean enable;
+    /**
+     * 是否是预告
+     */
+    private boolean herald;
+    /**
+     * 在线
+     */
+    private boolean online;
+    /**
+     * 在线
+     */
+    private boolean offline;
     /**
      * 发布到首页
      */
@@ -100,6 +113,11 @@ public class Lesson extends DomainImpl implements Tagable {
      */
     @Lob
     private String content;
+    /**
+     * 推荐视频
+     */
+    @ElementCollection
+    private List<Video> videos;
     /**
      * 分类
      */
@@ -312,6 +330,54 @@ public class Lesson extends DomainImpl implements Tagable {
         return new DateTime(getSignStartTime()).isBeforeNow() &&
                 new DateTime(getSignEndTime()).isAfterNow() && 
                 isEnable();
+    }
+    /**
+     * @return the herald
+     */
+    public boolean isHerald() {
+        return herald;
+    }
+    /**
+     * @param herald the herald to set
+     */
+    public void setHerald(boolean herald) {
+        this.herald = herald;
+    }
+    /**
+     * @return the online
+     */
+    public boolean isOnline() {
+        return online;
+    }
+    /**
+     * @param online the online to set
+     */
+    public void setOnline(boolean online) {
+        this.online = online;
+    }
+    /**
+     * @return the videos
+     */
+    public List<Video> getVideos() {
+        return videos;
+    }
+    /**
+     * @param videos the videos to set
+     */
+    public void setVideos(List<Video> videos) {
+        this.videos = videos;
+    }
+    /**
+     * @return the offline
+     */
+    public boolean isOffline() {
+        return offline;
+    }
+    /**
+     * @param offline the offline to set
+     */
+    public void setOffline(boolean offline) {
+        this.offline = offline;
     }
     
 }

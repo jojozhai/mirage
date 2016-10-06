@@ -168,4 +168,12 @@ public class OrderServiceImpl implements OrderService {
         });
     }
 
+    @Override
+    public OrderInfo update(OrderInfo orderInfo) {
+        Order order = orderRepository.findOne(orderInfo.getId());
+        order.setState(orderInfo.getState());
+        orderRepository.save(order);
+        return orderInfo;
+    }
+
 }

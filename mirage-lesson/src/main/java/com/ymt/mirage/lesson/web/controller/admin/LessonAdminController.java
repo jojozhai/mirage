@@ -48,6 +48,11 @@ public class LessonAdminController {
 	public LessonInfo update(@RequestBody LessonInfo lessonInfo) throws Exception {
 		return lessonService.update(lessonInfo);
 	}
+	
+	@RequestMapping(value = "/lesson/{id}/content", method = RequestMethod.PUT)
+    public LessonInfo updateContent(@RequestBody LessonInfo lessonInfo) throws Exception {
+        return lessonService.updateContent(lessonInfo);
+    }
 
 	@RequestMapping(value = "/lesson/{id}", method = RequestMethod.DELETE)
 	public void delete(@PathVariable Long id) {
@@ -58,4 +63,5 @@ public class LessonAdminController {
     public List<LessonInfo> findAll() {
         return lessonService.findAll();
     }
+	
 }

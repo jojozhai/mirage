@@ -1,9 +1,9 @@
 <div class="smart-widget widget-dark-blue">
-	<div class="smart-widget-header">课程管理</div>
+	<div class="smart-widget-header">上线课程管理</div>
 	<div class="smart-widget-inner">
 		<div class="smart-widget-body">
 			<button ng-click="create()" class="btn btn-success btn-sm">
-				<i class="ion-plus m-right-xs"></i>新建课程
+				<i class="ion-plus m-right-xs"></i>新建上线课程
 			</button>
 			<button type="button" class="btn btn-success btn-sm" ng-click="isConditionCollapsed = !isConditionCollapsed">
 				<i class="fa fa-search m-right-xs"></i>查询
@@ -35,6 +35,7 @@
 						<tr>
 							<th width="100">序号</th>
 							<th>名称</th>
+							<th width="100">老师</th>
 							<th width="200">操作</th>
 						</tr>
 					</thead>
@@ -42,6 +43,7 @@
 						<tr ng-repeat = "lesson in lessons">
 							<td>{{$index+1}}</td>
 							<td>{{lesson.name}}</td>
+							<td>{{lesson.teacherName}}</td>
 							<td>
 								<button class="btn btn-warning btn-xs" ng-click="update(lesson)">
 									<i class="ion-edit m-right-xs"></i>修改

@@ -11,7 +11,10 @@
  */
 package com.ymt.mirage.lesson.service.impl;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,8 +23,12 @@ import com.ymt.mirage.lesson.domain.LessonUser;
 import com.ymt.mirage.lesson.dto.LessonUserInfo;
 import com.ymt.mirage.lesson.repository.LessonRepository;
 import com.ymt.mirage.lesson.repository.LessonUserRepository;
+import com.ymt.mirage.lesson.repository.spec.LessonUserSpec;
 import com.ymt.mirage.lesson.service.LessonUserService;
+import com.ymt.mirage.user.dto.UserInfo;
 import com.ymt.mirage.user.repository.UserRepository;
+import com.ymt.pz365.data.jpa.support.AbstractDomain2InfoConverter;
+import com.ymt.pz365.data.jpa.support.QueryResultConverter;
 import com.ymt.pz365.framework.core.exception.PzException;
 
 /**
@@ -65,6 +72,19 @@ public class LessonUserServiceImpl implements LessonUserService {
         }
         lessonUserRepository.save(lessonUser);
         
+    }
+
+    @Override
+    public Page<LessonUserInfo> query(LessonUserInfo lessonUserInfo, Pageable pageable) {
+        Page<LessonUser> pageData = lessonUserRepository.findAll(new LessonUserSpec(lessonUserInfo), pageable);
+        return QueryResultConverter.convert(pageData, pageable, new AbstractDomain2InfoConverter<LessonUser, LessonUserInfo>() {
+            @Override
+            protected void doConvert(LessonUser domain, LessonUserInfo info) throws Exception {
+                UserInfo userInfo = new UserInfo();
+                BeanUtils.copyProperties(domain.getUser(), userInfo);
+                info.setUserInfo(userInfo);
+            }
+        });
     }
 
 }

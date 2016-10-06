@@ -34,9 +34,8 @@
 					<thead>
 						<tr>
 							<th width="100">序号</th>
-							<th width="100">类型</th>
-							<th width="200">名称</th>
-							<th>链接</th>
+							<th >名称</th>
+							<th width="100">顺序号</th>
 							<th width="100">是否可用</th>
 							<th width="200">操作</th>
 						</tr>
@@ -44,9 +43,8 @@
 					<tbody>
 						<tr ng-repeat = "swiper in swipers">
 							<td>{{$index+1}}</td>
-							<td>{{swiper.type}}</td>
 							<td>{{swiper.name}}</td>
-							<td>{{swiper.link}}</td>
+							<td>{{swiper.index}}</td>
 							<td>{{swiper.enable | yesOrNo}}</td>
 							<td>
 								<button class="btn btn-warning btn-xs" ng-click="update(swiper)">

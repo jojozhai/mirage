@@ -29,4 +29,6 @@ public interface UserService extends UserDetailsService {
 
 	void update(MobileUpdateInfo info);
 
+    UserInfo update(UserInfo userInfo);
+
 }

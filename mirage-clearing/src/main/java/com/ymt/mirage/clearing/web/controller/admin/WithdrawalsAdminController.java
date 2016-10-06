@@ -3,6 +3,8 @@
  */
 package com.ymt.mirage.clearing.web.controller.admin;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.data.domain.Page;
@@ -43,7 +45,8 @@ public class WithdrawalsAdminController {
 	}
 
 	@RequestMapping(value = "/withdrawals/{id}", method = RequestMethod.PUT)
-	public WithdrawalsInfo update(@RequestBody WithdrawalsInfo withdrawalsInfo) throws Exception {
+	public WithdrawalsInfo update(@RequestBody WithdrawalsInfo withdrawalsInfo, HttpServletRequest request) throws Exception {
+	    withdrawalsInfo.setIp(request.getRemoteAddr());
 		return withdrawalsService.update(withdrawalsInfo);
 	}
 

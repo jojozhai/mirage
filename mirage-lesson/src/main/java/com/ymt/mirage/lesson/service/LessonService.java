@@ -25,10 +25,14 @@ public interface LessonService {
 	LessonInfo getInfo(Long id, Long currentUserId);
 
 	LessonInfo update(LessonInfo teacherInfo) throws Exception;
+	
+	LessonInfo updateContent(LessonInfo lessonInfo);
 
 	void delete(Long id);
 	
 	List<LessonInfo> findAll();
+
+    
 
     
 	

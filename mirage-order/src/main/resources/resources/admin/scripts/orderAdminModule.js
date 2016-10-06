@@ -32,6 +32,13 @@ angular.module('orderAdminModule',[]).config(function($stateProvider) {
 		$scope.save(order);
 	}
 	
+	$scope.updateState = function(order, state) {
+		commonService.showConfirm("您确认要修改订单状态?").result.then(function() {
+			order.state = state;
+			orderRestService.update({id: order.id, state: state});
+		})
+	}
+	
 	$scope.save = function(order){
 		$uibModal.open({
 			size: "lg",
@@ -43,7 +50,7 @@ angular.module('orderAdminModule',[]).config(function($stateProvider) {
 		}).result.then(function(form){
 			if(form.id){
 				new orderRestService(form).$save().then(function(){
-					commonService.showMessage("修改老师信息成功");
+					commonService.showMessage("修改订单信息成功");
 				},function(response){
 					for (var i = 0; i < $scope.orders.length; i++) {
 						if(form.id == $scope.orders[i].id) {
@@ -55,17 +62,17 @@ angular.module('orderAdminModule',[]).config(function($stateProvider) {
 			}else{
 				new orderRestService(form).$create().then(function(order){
 					$scope.orders.unshift(order);
-					commonService.showMessage("新建老师成功");
+					commonService.showMessage("新建订单成功");
 				});
 			}
 		});
 	}
 	
 	$scope.remove = function(order) {
-		commonService.showConfirm("您确认要删除此老师?").result.then(function() {
+		commonService.showConfirm("您确认要删除此订单?").result.then(function() {
 			orderRestService.remove({id:order.id});
 		}).then(function(){
-			commonService.showMessage("删除老师成功");
+			commonService.showMessage("删除订单成功");
 			$scope.orders.splice($scope.orders.indexOf(order), 1);
 			if($scope.orders.length == 0){
 				$scope.pageInfo.page = $scope.pageInfo.page - 1;

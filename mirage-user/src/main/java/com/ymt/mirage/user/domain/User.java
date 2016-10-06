@@ -144,6 +144,14 @@ public class User extends DomainImpl implements UserDetails {
 	 * 返利钱数
 	 */
 	private BigDecimal money;
+	/**
+     * 返利钱数
+     */
+    private BigDecimal moneyPlus;
+    /**
+     * 排序金额 
+     */
+    private BigDecimal moneySort;
 	
 	public boolean isRegisted() {
 	    return StringUtils.isNotBlank(getRealname()) && StringUtils.isNotBlank(getMobile());
@@ -592,6 +600,36 @@ public class User extends DomainImpl implements UserDetails {
      */
     public void setMoney(BigDecimal money) {
         this.money = money;
+        this.moneySort = this.money.add(getMoneyPlus());
+    }
+
+    /**
+     * @return the moneyPlus
+     */
+    public BigDecimal getMoneyPlus() {
+        return moneyPlus == null ? BigDecimal.ZERO : moneyPlus;
+    }
+
+    /**
+     * @param moneyPlus the moneyPlus to set
+     */
+    public void setMoneyPlus(BigDecimal moneyPlus) {
+        this.moneyPlus = moneyPlus;
+        this.moneySort = this.moneyPlus.add(getMoney());
+    }
+
+    /**
+     * @return the moneySort
+     */
+    public BigDecimal getMoneySort() {
+        return moneySort;
+    }
+
+    /**
+     * @param moneySort the moneySort to set
+     */
+    public void setMoneySort(BigDecimal moneySort) {
+        this.moneySort = moneySort;
     }
 
 }

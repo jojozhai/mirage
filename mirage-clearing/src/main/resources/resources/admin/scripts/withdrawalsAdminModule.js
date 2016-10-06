@@ -30,7 +30,9 @@ angular.module('withdrawalsAdminModule',[]).config(function($stateProvider) {
 	}
 	
 	$scope.update = function(withdrawals) {
-		$scope.save(withdrawals);
+		new withdrawalsRestService(withdrawals).$save().then(function(){
+			commonService.showMessage("提现发放成功");
+		});
 	}
 	
 	$scope.save = function(withdrawals){

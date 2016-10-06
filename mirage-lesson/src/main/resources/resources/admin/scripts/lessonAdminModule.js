@@ -11,6 +11,7 @@ angular.module('lessonAdminModule',[]).config(function($stateProvider) {
 }).service("lessonRestService", function($resource, commonService){
 	var config = commonService.getDefaultRestSetting();
 	config.findAll = {url:"lesson/all", method:"GET", isArray:true};
+	config.getRecommend = {url:"product/recommend", method:"GET", isArray:true};
 	return $resource("lesson/:id", {id:"@id"}, config);
 //控制器
 }).controller('lessonManageCtrl', function($scope, $uibModal, lessonRestService, commonService) {
@@ -19,6 +20,7 @@ angular.module('lessonAdminModule',[]).config(function($stateProvider) {
 	
 	$scope.query = function() {
 		var condition = commonService.buildPageCondition($scope.condition, $scope.pageInfo);
+		condition.herald = false;
 		lessonRestService.query(condition).$promise.then(function(data){
 			$scope.pageInfo.totalElements = data.totalElements;
 			$scope.lessons = data.content;
@@ -26,7 +28,7 @@ angular.module('lessonAdminModule',[]).config(function($stateProvider) {
 	}
 	
 	$scope.create = function() {
-		$scope.save({enable:true});
+		$scope.save({enable:true, top: false, herald: false, online: true, offline: true, videos:[]});
 	}
 	
 	$scope.update = function(lesson) {
@@ -44,7 +46,7 @@ angular.module('lessonAdminModule',[]).config(function($stateProvider) {
 		}).result.then(function(form){
 			if(form.id){
 				new lessonRestService(form).$save().then(function(){
-					commonService.showMessage("修改课程信息成功");
+					commonService.showMessage("修改上线课程信息成功");
 				},function(response){
 					for (var i = 0; i < $scope.lessons.length; i++) {
 						if(form.id == $scope.lessons[i].id) {
@@ -56,17 +58,17 @@ angular.module('lessonAdminModule',[]).config(function($stateProvider) {
 			}else{
 				new lessonRestService(form).$create().then(function(lesson){
 					$scope.lessons.unshift(lesson);
-					commonService.showMessage("新建课程成功");
+					commonService.showMessage("新建上线课程成功");
 				});
 			}
 		});
 	}
 	
 	$scope.remove = function(lesson) {
-		commonService.showConfirm("您确认要删除此课程?").result.then(function() {
+		commonService.showConfirm("您确认要删除此上线课程?").result.then(function() {
 			lessonRestService.remove({id:lesson.id});
 		}).then(function(){
-			commonService.showMessage("删除课程成功");
+			commonService.showMessage("删除上线课程成功");
 			$scope.lessons.splice($scope.lessons.indexOf(lesson), 1);
 			if($scope.lessons.length == 0){
 				$scope.pageInfo.page = $scope.pageInfo.page - 1;
@@ -121,7 +123,12 @@ angular.module('lessonAdminModule',[]).config(function($stateProvider) {
 	};
 	
 	if(lesson.id){
-		$scope.lesson = lessonRestService.get({id: lesson.id});
+		lessonRestService.get({id: lesson.id}).$promise.then(function(res){
+			lessonRestService.getRecommend({lessonId: lesson.id}).$promise.then(function(recs){
+				res.products = recs;
+				$scope.lesson = res;
+			})
+		});
 	}else{
 		$scope.lesson = lesson;
 	}
@@ -135,6 +142,7 @@ angular.module('lessonAdminModule',[]).config(function($stateProvider) {
 	$scope.setTags = tagRestService.getChildTags({parentId:2});
 	$scope.teachers = teacherRestService.findAll();
 	$scope.products = productRestService.findAll();
+	$scope.videos = lessonRestService.findAll();
 	
 	$scope.doUpload1 = function(files){
 		commonService.uploadImage(files, $scope, function(imageUrl){
@@ -146,6 +154,26 @@ angular.module('lessonAdminModule',[]).config(function($stateProvider) {
 		commonService.uploadImage(files, $scope, function(imageUrl){
 			$scope.lesson.image = imageUrl;
 		})		
+	}
+	
+	$scope.addVideo = function(newVideo){
+		if($scope.lesson.videos.indexOf(newVideo) == -1){
+			$scope.lesson.videos.push(newVideo);
+			$scope.newVideo = {};
+		}else{
+			commonService.showWarning("奖品已存在");
+		}
+	}
+	
+	$scope.addVideo2 = function(e){
+		var keycode = window.event?e.keyCode:e.which;
+        if(keycode==13){
+        	$scope.addVideo($scope.newVideo);
+        }
+	}
+	
+	$scope.removeVideo = function(video){
+		$scope.lesson.videos.splice($scope.lesson.videos.indexOf(video), 1);
 	}
 	
 });

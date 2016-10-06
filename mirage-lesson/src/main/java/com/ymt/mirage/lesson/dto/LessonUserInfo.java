@@ -11,6 +11,8 @@
  */
 package com.ymt.mirage.lesson.dto;
 
+import com.ymt.mirage.user.dto.UserInfo;
+
 /**
  *
  *
@@ -24,6 +26,10 @@ public class LessonUserInfo {
     private Long userId;
     
     private Long lessonId;
+    
+    private String nickname;
+    
+    private UserInfo userInfo;
     
     private Boolean online;
     
@@ -74,6 +80,30 @@ public class LessonUserInfo {
      */
     public void setOnline(Boolean online) {
         this.online = online;
+    }
+    /**
+     * @return the nickname
+     */
+    public String getNickname() {
+        return nickname;
+    }
+    /**
+     * @param nickname the nickname to set
+     */
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
+    }
+    /**
+     * @return the userInfo
+     */
+    public UserInfo getUserInfo() {
+        return userInfo;
+    }
+    /**
+     * @param userInfo the userInfo to set
+     */
+    public void setUserInfo(UserInfo userInfo) {
+        this.userInfo = userInfo;
     }
     
 }

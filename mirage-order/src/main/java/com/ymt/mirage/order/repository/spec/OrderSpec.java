@@ -30,7 +30,9 @@ public class OrderSpec extends PzSimpleSpecification<Order, OrderInfo> {
 
     @Override
     protected void addCondition(QueryWraper<Order> queryWraper) {
-        
+        addLikeCondition(queryWraper, "userRealname", "user.realname");
+        addLikeCondition(queryWraper, "userNickname", "user.nickname");
+        addLikeCondition(queryWraper, "userMobile", "user.mobile");
     }
 
 }

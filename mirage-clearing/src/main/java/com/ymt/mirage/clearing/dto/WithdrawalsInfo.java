@@ -12,6 +12,7 @@
 package com.ymt.mirage.clearing.dto;
 
 import java.math.BigDecimal;
+import java.util.Date;
 
 import com.ymt.mirage.clearing.domain.WithdrawalsState;
 
@@ -37,9 +38,17 @@ public class WithdrawalsInfo {
      */
     private BigDecimal amount;
     /**
+     * 可提现金额
+     */
+    private BigDecimal userMoney;
+    /**
      * 申请状态
      */
     private WithdrawalsState state;
+    /**
+     * 发放时间
+     */
+    private Date sendTime;
     /**
      * 
      */
@@ -115,6 +124,30 @@ public class WithdrawalsInfo {
      */
     public void setIp(String ip) {
         this.ip = ip;
+    }
+    /**
+     * @return the userMoney
+     */
+    public BigDecimal getUserMoney() {
+        return userMoney;
+    }
+    /**
+     * @param userMoney the userMoney to set
+     */
+    public void setUserMoney(BigDecimal userMoney) {
+        this.userMoney = userMoney;
+    }
+    /**
+     * @return the sendTime
+     */
+    public Date getSendTime() {
+        return sendTime;
+    }
+    /**
+     * @param sendTime the sendTime to set
+     */
+    public void setSendTime(Date sendTime) {
+        this.sendTime = sendTime;
     }
 
 }

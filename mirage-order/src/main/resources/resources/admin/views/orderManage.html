@@ -5,9 +5,9 @@
 			<!-- <button ng-click="create()" class="btn btn-success btn-sm">
 				<i class="ion-plus m-right-xs"></i>新建订单
 			</button> -->
-			<!-- <button type="button" class="btn btn-success btn-sm" ng-click="isConditionCollapsed = !isConditionCollapsed">
+			<button type="button" class="btn btn-success btn-sm" ng-click="isConditionCollapsed = !isConditionCollapsed">
 				<i class="fa fa-search m-right-xs"></i>查询
-			</button> -->
+			</button>
 		</div>
 		<div uib-collapse="isConditionCollapsed" style="padding-left: 20px;padding-right: 20px;">
 			<div class="panel">
@@ -18,7 +18,9 @@
 					<div>
 					<form class="form-inline no-margin" novalidate>
 						<div class="form-group">
-								<input ng-model="condition.name" type="text" class="form-control input-sm" placeholder="名称">
+								<input ng-model="condition.userRealname" type="text" class="form-control input-sm" placeholder="姓名">
+								<input ng-model="condition.userNickname" type="text" class="form-control input-sm" placeholder="昵称">
+								<input ng-model="condition.userMobile" type="text" class="form-control input-sm" placeholder="电话">
 						</div>
 						<button ng-click="query(condition)" class="btn btn-sm btn-success"><i class="fa fa-search m-right-xs"></i>查询</button>
 						<button ng-click="cleanCondition()" class="btn btn-sm btn-warning"><i class="ion-close m-right-xs"></i>清空</button>
@@ -40,7 +42,7 @@
 							<th width="100">客户昵称</th>
 							<th width="100">订单金额</th>
 							<th width="100">订单状态</th>
-							<th width="200">操作</th>
+							<th width="250">操作</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -53,9 +55,17 @@
 							<td>{{order.amount | currency}}</td>
 							<td>{{order.state | orderState}}</td>
 							<td>
-								<button class="btn btn-warning btn-xs" ng-click="update(order)">
-									<i class="ion-edit m-right-xs"></i>查看
-								</button>
+								
+								<button class="btn btn-info btn-xs" ng-click="updateState(order, 'WORKING')">
+                                    <i class="ion-edit m-right-xs"></i>接单
+                                </button>
+                                <button class="btn btn-success btn-xs" ng-click="updateState(order, 'COMPLETE')">
+                                    <i class="ion-edit m-right-xs"></i>完成
+                                </button>
+                                <button class="btn btn-danger btn-xs" ng-click="updateState(order, 'CANCEL')">
+                                    <i class="ion-edit m-right-xs"></i>取消
+                                </button>
+                                
 							</td>
 						</tr>
 					</tbody>

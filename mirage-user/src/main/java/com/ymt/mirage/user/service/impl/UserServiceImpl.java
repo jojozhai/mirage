@@ -176,4 +176,16 @@ public class UserServiceImpl implements WeixinUserService, UserService{
         }
     }
 
+    @Override
+    public UserInfo update(UserInfo userInfo) {
+        User user = userRepository.findOne(userInfo.getId());
+        user.setMoneyPlus(userInfo.getMoneyPlus());
+        
+        user.setVip(userInfo.isVip());
+        user.setCity(userInfo.getCity());
+        
+        userRepository.save(user);
+        return userInfo;
+    }
+
 }

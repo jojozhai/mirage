@@ -1,5 +1,5 @@
 <div class="smart-widget widget-dark-blue margin-md">
-	<div class="smart-widget-header">课程信息</div>
+	<div class="smart-widget-header">上线课程信息</div>
 	<div class="smart-widget-inner">
 	<div class="smart-widget-body" >
 		<form name="lessonForm" class="form-horizontal no-margin" id="type-constraint" data-validate="parsley" novalidate>
@@ -10,13 +10,13 @@
 					<label class="control-label" ng-show="lessonForm.name.$invalid && lessonForm.name.$dirty">名称不能为空</label>
 				</div>
 			</div>
-			<div class="form-group"  ng-class="lessonForm.desc.$invalid && lessonForm.desc.$dirty ? 'has-error': ''">
+			<!-- <div class="form-group"  ng-class="lessonForm.desc.$invalid && lessonForm.desc.$dirty ? 'has-error': ''">
                 <label class="control-label col-lg-3"><span class="text_red">*</span>&nbsp;一句话介绍:</label>
                 <div class="col-lg-6">
                     <input name="desc" ng-model="lesson.desc" type="text" class="form-control input-sm" placeholder="一句话介绍" required>
                     <label class="control-label" ng-show="lessonForm.desc.$invalid && lessonForm.desc.$dirty">一句话介绍不能为空</label>
                 </div>
-            </div>
+            </div> -->
 			<div class="form-group">
 				<label class="control-label col-lg-3">发布:</label>
 				<div class="col-lg-2">
@@ -25,13 +25,13 @@
 						<label for="selection" style="margin-top: 4px;"></label>
 					</div>
 				</div>
-				<label class="control-label col-lg-2">发布到首页:</label>
+				<!-- <label class="control-label col-lg-2">发布到首页:</label>
                 <div class="col-lg-2">
                     <div class="custom-checkbox todo-checkbox">
                         <input id="selection2" ng-model="lesson.top" ng-checked="lesson.top" type="checkbox">
                         <label for="selection2" style="margin-top: 4px;"></label>
                     </div>
-                </div>
+                </div> -->
 			</div>
 			<div class="form-group">
                 <label class="control-label col-lg-3"><span class="text_red">*</span>&nbsp;授课老师:</label>
@@ -56,7 +56,7 @@
                 </div>
             </div>
             <div class="form-group">
-                <label class="control-label col-lg-3"><span class="text_red">*</span>&nbsp;所属专辑:</label>
+                <label class="control-label col-lg-3">&nbsp;所属专辑:</label>
                 <div class="col-lg-9">
                     <ui-select multiple tagging ng-model="lesson.setTags" theme="bootstrap">
                         <ui-select-match placeholder="可以输入专辑名称来查找">{{$item.name}}</ui-select-match>
@@ -67,7 +67,7 @@
                 </div>
             </div>
             <div class="form-group">
-                <label class="control-label col-lg-3"><span class="text_red">*</span>&nbsp;推荐商品:</label>
+                <label class="control-label col-lg-3">推荐商品:</label>
                 <div class="col-lg-9">
                     <ui-select multiple tagging ng-model="lesson.products" theme="bootstrap">
                         <ui-select-match placeholder="可以输入商品名称来查找">{{$item.name}}</ui-select-match>
@@ -77,115 +77,52 @@
                     </ui-select>
                 </div>
             </div>
-            <div class="form-group" ng-class="lessonForm.signStartTime.$invalid && lessonForm.signStartTime.$dirty ? 'has-error': ''">
-                <label class="control-label col-lg-3" style="padding-top: 40px;"><span class="text_red">*</span>&nbsp;报名开始时间:</label>
-                <div class="col-md-3">
-                    <p class="input-group" style="margin-bottom: 0px; padding-top: 35px;">
-                        <input type="text" uib-datepicker-popup name="signStartTime" ng-model="lesson.signStartTime" class="form-control input-sm" is-open="popup1.opened"
-                            datepicker-options="dateOptions" placeholder="开始时间" clear-text="清空" close-text="关闭" current-text="今天" on-open-focus="false" required/>
-                        <span class="input-group-btn">
-                            <button type="button" class="btn btn-default input-sm" ng-click="open1()">
-                                <i class="glyphicon glyphicon-calendar"></i>
-                            </button>
-                        </span>
-                    </p>
-                    <label class="control-label has-error" ng-show="lessonForm.signStartTime.$error.date && lessonForm.signStartTime.$dirty">
-                        时间格式错误
-                    </label>
-                    <label class="control-label has-error" ng-show="lessonForm.signStartTime.$error.required && lessonForm.signStartTime.$dirty">
-                        报名开始时间不能为空
-                    </label>
-                </div>
-                <div class="col-md-3">
-                    <uib-timepicker class="input-sm" ng-model="lesson.signStartTime" hour-step="1" minute-step="1" show-meridian="false"></uib-timepicker>
-                </div>
-            </div>
-            <div class="form-group" ng-class="lessonForm.signEndTime.$invalid && lessonForm.signEndTime.$dirty ? 'has-error': ''">
-                <label class="control-label col-lg-3" style="padding-top: 40px;"><span class="text_red">*</span>&nbsp;报名结束时间:</label>
-                <div class="col-md-3">
-                    <p class="input-group" style="margin-bottom: 0px; padding-top: 35px;">
-                        <input type="text" uib-datepicker-popup name="signEndTime" ng-model="lesson.signEndTime" class="form-control input-sm" is-open="popup2.opened"
-                            datepicker-options="dateOptions" placeholder="结束时间" clear-text="清空" close-text="关闭" current-text="今天" on-open-focus="false" required/>
-                        <span class="input-group-btn">
-                            <button type="button" class="btn btn-default input-sm" ng-click="open2()">
-                                <i class="glyphicon glyphicon-calendar"></i>
-                            </button>
-                        </span>
-                    </p>
-                    <label class="control-label has-error" ng-show="lessonForm.signEndTime.$error.date && lessonForm.signEndTime.$dirty">
-                        时间格式错误
-                    </label>
-                    <label class="control-label has-error" ng-show="lessonForm.signEndTime.$error.required && lessonForm.signEndTime.$dirty">
-                        报名结束时间不能为空
-                    </label>
-                </div>
-                <div class="col-md-3">
-                    <uib-timepicker class="input-sm" ng-model="lesson.signEndTime" hour-step="1" minute-step="1" show-meridian="false"></uib-timepicker>
-                </div>
-            </div>
-            <div class="form-group" ng-class="lessonForm.startTime.$invalid && lessonForm.startTime.$dirty ? 'has-error': ''">
-                <label class="control-label col-lg-3" style="padding-top: 40px;"><span class="text_red">*</span>&nbsp;课程开始时间:</label>
-                <div class="col-md-3">
-                    <p class="input-group" style="margin-bottom: 0px; padding-top: 35px;">
-                        <input type="text" uib-datepicker-popup name="startTime" ng-model="lesson.startTime" class="form-control input-sm" is-open="popup3.opened"
-                            datepicker-options="dateOptions" placeholder="开始时间" clear-text="清空" close-text="关闭" current-text="今天" on-open-focus="false" required/>
-                        <span class="input-group-btn">
-                            <button type="button" class="btn btn-default input-sm" ng-click="open3()">
-                                <i class="glyphicon glyphicon-calendar"></i>
-                            </button>
-                        </span>
-                    </p>
-                    <label class="control-label has-error" ng-show="lessonForm.startTime.$error.date && lessonForm.startTime.$dirty">
-                        时间格式错误
-                    </label>
-                    <label class="control-label has-error" ng-show="lessonForm.startTime.$error.required && lessonForm.startTime.$dirty">
-                        课程开始时间不能为空
-                    </label>
-                </div>
-                <div class="col-md-3">
-                    <uib-timepicker class="input-sm" ng-model="lesson.startTime" hour-step="1" minute-step="1" show-meridian="false"></uib-timepicker>
-                </div>
-            </div>
-            <div class="form-group" ng-class="lessonForm.endTime.$invalid && lessonForm.endTime.$dirty ? 'has-error': ''">
-                <label class="control-label col-lg-3" style="padding-top: 40px;"><span class="text_red">*</span>&nbsp;课程结束时间:</label>
-                <div class="col-md-3">
-                    <p class="input-group" style="margin-bottom: 0px; padding-top: 35px;">
-                        <input type="text" uib-datepicker-popup name="endTime" ng-model="lesson.endTime" class="form-control input-sm" is-open="popup4.opened"
-                            datepicker-options="dateOptions" placeholder="结束时间" clear-text="清空" close-text="关闭" current-text="今天" on-open-focus="false" required/>
-                        <span class="input-group-btn">
-                            <button type="button" class="btn btn-default input-sm" ng-click="open4()">
-                                <i class="glyphicon glyphicon-calendar"></i>
-                            </button>
-                        </span>
-                    </p>
-                    <label class="control-label has-error" ng-show="lessonForm.endTime.$error.date && lessonForm.endTime.$dirty">
-                        时间格式错误
-                    </label>
-                    <label class="control-label has-error" ng-show="lessonForm.endTime.$error.required && lessonForm.endTime.$dirty">
-                        课程结束时间不能为空
-                    </label>
-                </div>
-                <div class="col-md-3">
-                    <uib-timepicker class="input-sm" ng-model="lesson.endTime" hour-step="1" minute-step="1" show-meridian="false"></uib-timepicker>
-                </div>
-            </div>
-            <div class="form-group"  ng-class="lessonForm.address.$invalid && lessonForm.address.$dirty ? 'has-error': ''">
-                <label class="control-label col-lg-3"><span class="text_red">*</span>&nbsp;课程地点:</label>
-                <div class="col-lg-6">
-                    <input name="address" ng-model="lesson.address" type="text" class="form-control input-sm" placeholder="课程地点" required>
-                    <label class="control-label" ng-show="lessonForm.address.$invalid && lessonForm.address.$dirty">课程地点不能为空</label>
-                </div>
-            </div>
             <div class="form-group" ng-class="lessonForm.video.$invalid && lessonForm.video.$dirty ? 'has-error': ''">
                 <label class="control-label col-lg-3">视频地址:</label>
                 <div class="col-lg-6">
-                    <input name="video" ng-model="lesson.video" type="url" class="form-control input-sm" placeholder="视频地址">
-                    <label class="control-label" ng-hide="lessonForm.video.$invalid && lessonForm.video.$dirty">填写了视频地址的课程才会出现在课程列表里</label>
+                    <input name="video" ng-model="lesson.video" type="url" class="form-control input-sm" placeholder="视频地址" required="required">
                     <label class="control-label" ng-show="lessonForm.video.$invalid && lessonForm.video.$dirty">请填写正常的url地址,如:http://www.baidu.com</label>
                 </div>
             </div>
             <div class="form-group">
-                <label class="control-label col-lg-3"><span class="text_red">*</span>缩略图:</label>
+                <label class="control-label col-lg-3">课程大纲:</label>
+                <div class="col-lg-8">
+                    <div class="row" ng-repeat="video in lesson.videos">
+                        <div class="col-lg-6">
+                            <input ng-model="video.name" type="text" class="form-control input-sm" readonly="readonly" disabled="disabled">
+                        </div>
+                        <div class="col-lg-6">
+                            <p class="input-group" style="margin-bottom: 3px;">
+                                <input ng-model="video.link" type="text" class="form-control input-sm" readonly="readonly" disabled="disabled">
+                                <span class="input-group-btn">
+                                    <button type="button" class="btn btn-danger input-sm" ng-click="removeVideo(video)">
+                                        <i class="fa fa-times"></i>
+                                    </button>
+                                </span>
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <input ng-model="newVideo.name" type="text" ng-keyup="addVideo2($event)" class="form-control input-sm" placeholder="视频名称">
+                        </div>
+                        <div class="col-lg-6">
+                            <p class="input-group" style="margin-bottom: 0px;">
+                                <input ng-model="newVideo.link" type="text" ng-keyup="addVideo2($event)" class="form-control input-sm" placeholder="视频链接">
+                                <span class="input-group-btn">
+                                    <button type="button" class="btn btn-info input-sm" ng-click="addVideo(newVideo)">
+                                        <i class="fa fa-plus"></i>
+                                    </button>
+                                </span>
+                            </p>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-lg-3">缩略图:</label>
                 <div class="col-lg-4">
                     <div class="fileinput-button" style="border: 1px solid #abcdef; height: 90px; width: 160px;" >
                         <img ng-src="{{lesson.thumbnail}}" width="160px;", height="90px;">

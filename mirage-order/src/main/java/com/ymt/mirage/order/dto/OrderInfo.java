@@ -41,6 +41,14 @@ public class OrderInfo {
      */
     private String userNickname;
     /**
+     * 用户昵称
+     */
+    private String userRealname;
+    /**
+     * 用户昵称
+     */
+    private String userMobile;
+    /**
      * 商品名称
      */
     private String goodsName;
@@ -213,6 +221,29 @@ public class OrderInfo {
     public void setCreatedTime(Date createdTime) {
         this.createdTime = createdTime;
     }
-    
+    /**
+     * @return the userRealname
+     */
+    public String getUserRealname() {
+        return userRealname;
+    }
+    /**
+     * @param userRealname the userRealname to set
+     */
+    public void setUserRealname(String userRealname) {
+        this.userRealname = userRealname;
+    }
+    /**
+     * @return the userMobile
+     */
+    public String getUserMobile() {
+        return userMobile;
+    }
+    /**
+     * @param userMobile the userMobile to set
+     */
+    public void setUserMobile(String userMobile) {
+        this.userMobile = userMobile;
+    }
 
 }

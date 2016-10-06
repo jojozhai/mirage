@@ -34,4 +34,6 @@ public interface OrderService {
 
     Page<OrderInfo> query(OrderInfo orderInfo, Pageable pageable);
 
+    OrderInfo update(OrderInfo lessonInfo);
+
 }

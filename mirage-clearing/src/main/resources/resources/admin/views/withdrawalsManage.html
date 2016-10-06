@@ -32,8 +32,9 @@
 					<thead>
 						<tr>
 							<th width="100">序号</th>
-							<th>姓名</th>
-							<th width="100">金额</th>
+							<th>申请人</th>
+							<th width="100">申请金额</th>
+							<th width="100">可用金额</th>
 							<th width="100">状态</th>
 							<th width="200">操作</th>
 						</tr>
@@ -42,8 +43,9 @@
 						<tr ng-repeat = "withdrawals in withdrawalss">
 							<td>{{$index+1}}</td>
 							<td>{{withdrawals.username}}</td>
-							<td>{{withdrawals.amount : currency}}</td>
-							<td>{{withdrawals.state : withdrawalsState}}</td>
+							<td>{{withdrawals.amount | currency}}</td>
+							<td>{{withdrawals.userMoney | currency}}</td>
+							<td>{{withdrawals.state | withdrawalsState}}</td>
 							<td>
 								<button class="btn btn-warning btn-xs" ng-click="update(withdrawals)">
 									<i class="ion-edit m-right-xs"></i>发放

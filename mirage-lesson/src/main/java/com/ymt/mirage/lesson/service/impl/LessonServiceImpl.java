@@ -203,4 +203,12 @@ public class LessonServiceImpl implements LessonService {
         return result;
     }
 
+    @Override
+    public LessonInfo updateContent(LessonInfo lessonInfo) {
+        Lesson lesson = lessonRepository.findOne(lessonInfo.getId());
+        lesson.setContent(lessonInfo.getContent());
+        lessonRepository.save(lesson);
+        return lessonInfo;
+    }
+
 }

@@ -14,6 +14,7 @@ package com.ymt.mirage.lesson.dto;
 import java.util.Date;
 import java.util.List;
 
+import com.ymt.mirage.lesson.domain.Video;
 import com.ymt.mirage.tag.dto.TagInfo;
 
 /**
@@ -46,6 +47,14 @@ public class LessonInfo {
      * 发布到首页
      */
     private Boolean top;
+    /**
+     * 线上线下
+     */
+    private Boolean online;
+    /**
+     * 线上线下
+     */
+    private Boolean offline;
     /**
      * 教师
      */
@@ -122,7 +131,10 @@ public class LessonInfo {
      * 专辑id
      */
     private Long setId;
-    
+    /**
+     * 推荐视频
+     */
+    private List<Video> videos;
     /**
      * @return the id
      */
@@ -473,4 +485,45 @@ public class LessonInfo {
         this.products = products;
     }
 
+    /**
+     * @return the online
+     */
+    public Boolean getOnline() {
+        return online;
+    }
+
+    /**
+     * @param online the online to set
+     */
+    public void setOnline(Boolean online) {
+        this.online = online;
+    }
+
+    /**
+     * @return the videos
+     */
+    public List<Video> getVideos() {
+        return videos;
+    }
+
+    /**
+     * @param videos the videos to set
+     */
+    public void setVideos(List<Video> videos) {
+        this.videos = videos;
+    }
+
+    /**
+     * @return the offline
+     */
+    public Boolean getOffline() {
+        return offline;
+    }
+
+    /**
+     * @param offline the offline to set
+     */
+    public void setOffline(Boolean offline) {
+        this.offline = offline;
+    }
 }

@@ -6,9 +6,11 @@ package com.ymt.mirage.user.web.controller.weixin;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Profile;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -25,6 +27,7 @@ import com.ymt.pz365.framework.core.context.Property;
  * @since 2016年5月3日
  */
 @RestController
+@Profile({"weixin", "app"})
 public class UserWeixinController {
 	
 	@Autowired

@@ -12,6 +12,7 @@
 package com.ymt.mirage.clearing.service.impl;
 
 import java.math.BigDecimal;
+import java.util.Date;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +31,7 @@ import com.ymt.mirage.user.domain.User;
 import com.ymt.mirage.user.repository.UserRepository;
 import com.ymt.pz365.data.jpa.support.AbstractDomain2InfoConverter;
 import com.ymt.pz365.data.jpa.support.QueryResultConverter;
+import com.ymt.pz365.framework.core.exception.PzException;
 import com.ymt.pz365.framework.weixin.service.WeixinService;
 
 /**
@@ -57,16 +59,31 @@ public class WithdrawalsServiceImpl implements WithdrawalsService {
         return QueryResultConverter.convert(pageData, pageable, new AbstractDomain2InfoConverter<Withdrawals, WithdrawalsInfo>() {
             @Override
             protected void doConvert(Withdrawals domain, WithdrawalsInfo info) throws Exception {
-                info.setUserId(domain.getUser().getId());
-                info.setUsername(domain.getUser().getNickname());
+                if(domain.getUser() != null) {
+                    info.setUserId(domain.getUser().getId());
+                    info.setUsername(domain.getUser().getNickname());
+                    info.setUserMoney(domain.getUser().getMoney());
+                }
             }
         });
     }
 
     @Override
     public WithdrawalsInfo create(WithdrawalsInfo withdrawalsInfo) {
+        
+        if(withdrawalsInfo.getAmount().compareTo(new BigDecimal(50)) != 1) {
+            throw new PzException("超过50元才可申请提现哦!");
+        }
+        
+        User user = userRepository.findOne(withdrawalsInfo.getUserId());
+        if(withdrawalsInfo.getAmount().compareTo(user.getMoney()) != 1) {
+            throw new PzException("余额不足!");
+        }
+        
         Withdrawals withdrawals = new Withdrawals();
         BeanUtils.copyProperties(withdrawalsInfo, withdrawals);
+        withdrawals.setState(WithdrawalsState.INIT);
+        withdrawals.setUser(userRepository.getOne(withdrawalsInfo.getUserId()));
         withdrawalsInfo.setId(withdrawalsRepository.save(withdrawals).getId());
         return withdrawalsInfo;
     }
@@ -78,16 +95,31 @@ public class WithdrawalsServiceImpl implements WithdrawalsService {
         BeanUtils.copyProperties(withdrawals, info);
         return info;
     }
+    
+    public static void main(String[] args) {
+        System.out.println(new BigDecimal(100).compareTo(new BigDecimal(50)));
+    }
 
     @Override
     public WithdrawalsInfo update(WithdrawalsInfo withdrawalsInfo) throws Exception {
+        
+//        if(withdrawalsInfo.getAmount().compareTo(new BigDecimal(50)) != 1) {
+//            throw new PzException("超过50元才可申请提现哦!");
+//        }
+        
         Withdrawals withdrawals = withdrawalsRepository.findOne(withdrawalsInfo.getId());
-//        BeanUtils.copyProperties(withdrawalsInfo, withdrawals);
-        withdrawals.setState(WithdrawalsState.FINISH);
-        withdrawalsRepository.save(withdrawals);
         User user = userRepository.findOne(withdrawalsInfo.getUserId());
+        if(user.getMoney().compareTo(withdrawals.getAmount()) != 1) {
+            throw new PzException("余额不足!");
+        }
+        
         BigDecimal amount = withdrawals.getAmount().multiply(new BigDecimal(100));
         weixinService.sendRedpack(withdrawals.getId(), withdrawalsInfo.getIp(), user.getWeixinOpenId(), amount.intValue());
+        
+//      BeanUtils.copyProperties(withdrawalsInfo, withdrawals);
+        withdrawals.setState(WithdrawalsState.FINISH); 
+        withdrawals.setSendTime(new Date());
+        withdrawalsRepository.save(withdrawals);
         return withdrawalsInfo;
     }
 
