@@ -98,4 +98,10 @@ angular.module('teacherAdminModule',[]).config(function($stateProvider) {
 		})		
 	}
 	
+	$scope.doUpload2 = function(files){
+		commonService.uploadImage(files, $scope, function(imageUrl){
+			$scope.teacher.desc = imageUrl;
+		})		
+	}
+	
 });

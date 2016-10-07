@@ -25,6 +25,8 @@ public class OrderViewInfo {
     
     private OrderState state;
     
+    private Long productId;
+    
     private String productName;
     
     private String teacherName;
@@ -131,6 +133,20 @@ public class OrderViewInfo {
      */
     public void setSaleCount(int saleCount) {
         this.saleCount = saleCount;
+    }
+
+    /**
+     * @return the productId
+     */
+    public Long getProductId() {
+        return productId;
+    }
+
+    /**
+     * @param productId the productId to set
+     */
+    public void setProductId(Long productId) {
+        this.productId = productId;
     }
     
 }

@@ -30,7 +30,7 @@ angular.module('heraldAdminModule',[]).config(function($stateProvider) {
 	}
 	
 	$scope.create = function() {
-		$scope.save({enable:true, top: false, herald: true, online: true, offline: true});
+		$scope.save({enable:true, top: false, herald: true, online: true, offline: true, shareSign: false});
 	}
 	
 	$scope.update = function(herald) {

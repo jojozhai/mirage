@@ -33,6 +33,14 @@ public class AbstractGoods extends SortableImpl implements Goods {
      */
     private String name;
     /**
+     * 分享标题
+     */
+    private String shareTitle;
+    /**
+     * 描述
+     */
+    private String shareTip;
+    /**
      * 关键商品
      */
     private boolean key;
@@ -44,6 +52,10 @@ public class AbstractGoods extends SortableImpl implements Goods {
      * 价格
      */
     private BigDecimal price;
+    /**
+     * 价格描述
+     */
+    private String priceDesc;
     /**
      * 简介
      */
@@ -173,6 +185,42 @@ public class AbstractGoods extends SortableImpl implements Goods {
      */
     public void setKey(boolean key) {
         this.key = key;
+    }
+    /**
+     * @return the priceDesc
+     */
+    public String getPriceDesc() {
+        return priceDesc;
+    }
+    /**
+     * @param priceDesc the priceDesc to set
+     */
+    public void setPriceDesc(String priceDesc) {
+        this.priceDesc = priceDesc;
+    }
+    /**
+     * @return the shareTitle
+     */
+    public String getShareTitle() {
+        return shareTitle;
+    }
+    /**
+     * @param shareTitle the shareTitle to set
+     */
+    public void setShareTitle(String shareTitle) {
+        this.shareTitle = shareTitle;
+    }
+    /**
+     * @return the shareTip
+     */
+    public String getShareTip() {
+        return shareTip;
+    }
+    /**
+     * @param shareTip the shareTip to set
+     */
+    public void setShareTip(String shareTip) {
+        this.shareTip = shareTip;
     }
 
 }

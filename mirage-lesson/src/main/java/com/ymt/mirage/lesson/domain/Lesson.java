@@ -48,6 +48,22 @@ public class Lesson extends DomainImpl implements Tagable {
      */
     private String desc;
     /**
+     * 分享标题
+     */
+    private String shareTitle;
+    /**
+     * 描述
+     */
+    private String shareTip;
+    /**
+     * 分享报名
+     */
+    private boolean shareSign;
+    /**
+     * 分享报名提示
+     */
+    private String shareSignTip;
+    /**
      * 发布
      */
     private boolean enable;
@@ -378,6 +394,54 @@ public class Lesson extends DomainImpl implements Tagable {
      */
     public void setOffline(boolean offline) {
         this.offline = offline;
+    }
+    /**
+     * @return the shareTitle
+     */
+    public String getShareTitle() {
+        return shareTitle;
+    }
+    /**
+     * @param shareTitle the shareTitle to set
+     */
+    public void setShareTitle(String shareTitle) {
+        this.shareTitle = shareTitle;
+    }
+    /**
+     * @return the shareTip
+     */
+    public String getShareTip() {
+        return shareTip;
+    }
+    /**
+     * @param shareTip the shareTip to set
+     */
+    public void setShareTip(String shareTip) {
+        this.shareTip = shareTip;
+    }
+    /**
+     * @return the shareSign
+     */
+    public boolean isShareSign() {
+        return shareSign;
+    }
+    /**
+     * @param shareSign the shareSign to set
+     */
+    public void setShareSign(boolean shareSign) {
+        this.shareSign = shareSign;
+    }
+    /**
+     * @return the shareSignTip
+     */
+    public String getShareSignTip() {
+        return shareSignTip;
+    }
+    /**
+     * @param shareSignTip the shareSignTip to set
+     */
+    public void setShareSignTip(String shareSignTip) {
+        this.shareSignTip = shareSignTip;
     }
     
 }

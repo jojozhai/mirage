@@ -28,7 +28,7 @@ angular.module('lessonAdminModule',[]).config(function($stateProvider) {
 	}
 	
 	$scope.create = function() {
-		$scope.save({enable:true, top: false, herald: false, online: true, offline: true, videos:[]});
+		$scope.save({enable:true, top: false, herald: false, online: true, offline: true, videos:[], shareSign: false});
 	}
 	
 	$scope.update = function(lesson) {

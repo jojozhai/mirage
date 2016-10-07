@@ -39,6 +39,22 @@ public class LessonInfo {
      */
     private SignUpState signUpState;
     /**
+     * 分享标题
+     */
+    private String shareTitle;
+    /**
+     * 描述
+     */
+    private String shareTip;
+    /**
+     * 分享报名
+     */
+    private Boolean shareSign;
+    /**
+     * 分享报名提示
+     */
+    private String shareSignTip;
+    /**
      * 发布
      */
     private Boolean enable;
@@ -544,4 +560,61 @@ public class LessonInfo {
     public void setTeacherImage(String teacherImage) {
         this.teacherImage = teacherImage;
     }
+
+    /**
+     * @return the shareTitle
+     */
+    public String getShareTitle() {
+        return shareTitle;
+    }
+
+    /**
+     * @param shareTitle the shareTitle to set
+     */
+    public void setShareTitle(String shareTitle) {
+        this.shareTitle = shareTitle;
+    }
+
+    /**
+     * @return the shareTip
+     */
+    public String getShareTip() {
+        return shareTip;
+    }
+
+    /**
+     * @param shareTip the shareTip to set
+     */
+    public void setShareTip(String shareTip) {
+        this.shareTip = shareTip;
+    }
+
+    /**
+     * @return the shareSign
+     */
+    public Boolean getShareSign() {
+        return shareSign;
+    }
+
+    /**
+     * @param shareSign the shareSign to set
+     */
+    public void setShareSign(Boolean shareSign) {
+        this.shareSign = shareSign;
+    }
+
+    /**
+     * @return the shareSignTip
+     */
+    public String getShareSignTip() {
+        return shareSignTip;
+    }
+
+    /**
+     * @param shareSignTip the shareSignTip to set
+     */
+    public void setShareSignTip(String shareSignTip) {
+        this.shareSignTip = shareSignTip;
+    }
+    
 }

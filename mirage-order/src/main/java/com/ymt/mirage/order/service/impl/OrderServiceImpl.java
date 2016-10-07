@@ -40,6 +40,7 @@ import com.ymt.pz365.data.jpa.domain.Goods;
 import com.ymt.pz365.data.jpa.spi.order.OrderGoodsService;
 import com.ymt.pz365.data.jpa.support.AbstractDomain2InfoConverter;
 import com.ymt.pz365.data.jpa.support.QueryResultConverter;
+import com.ymt.pz365.framework.core.exception.PzException;
 import com.ymt.pz365.framework.weixin.pay.JsapiPaymentInfo;
 import com.ymt.pz365.framework.weixin.pay.UnifiedorderInfo;
 import com.ymt.pz365.framework.weixin.service.WeixinService;
@@ -143,16 +144,17 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public Page<OrderViewInfo> query(Long currentUserId, Boolean finish, Pageable pageable) {
         
-        OrderState[] states = new OrderState[]{OrderState.CANCEL, OrderState.FINISH};
+        OrderState[] finishStates = new OrderState[]{OrderState.CANCEL, OrderState.COMPLETE, OrderState.FINISH};
+        OrderState[] unfinishStates = new OrderState[]{OrderState.PAYED, OrderState.WORKING};
         Page<Order> orderPage;
         
         if(finish == null) {
             orderPage = orderRepository.findByUserId(currentUserId, pageable);
         }else{
             if(finish) {
-                orderPage = orderRepository.findByUserIdAndStateIn(currentUserId, states, pageable);
+                orderPage = orderRepository.findByUserIdAndStateIn(currentUserId, finishStates, pageable);
             }else{
-                orderPage = orderRepository.findByUserIdAndStateNotIn(currentUserId, states, pageable);
+                orderPage = orderRepository.findByUserIdAndStateIn(currentUserId, unfinishStates, pageable);
             }
         }
         
@@ -165,6 +167,10 @@ public class OrderServiceImpl implements OrderService {
         OrderStateChangeEvent orderStateChangeEvent = new OrderStateChangeEvent(id);
         
         Order order = orderRepository.findOne(id);
+        
+        if(!order.getState().equals(OrderState.WORKING)) {
+            throw new PzException("订单状态不正确,只有工作中的订单才可确认完成,当前订单状态:"+order.getState());
+        }
         
         orderStateChangeEvent.setFromState(order.getState());
         orderStateChangeEvent.setToState(OrderState.FINISH);
@@ -193,6 +199,16 @@ public class OrderServiceImpl implements OrderService {
         OrderStateChangeEvent orderStateChangeEvent = new OrderStateChangeEvent(orderInfo.getId());
         
         Order order = orderRepository.findOne(orderInfo.getId());
+        
+        if(orderInfo.getState().equals(OrderState.WORKING)) {
+            if(!order.getState().equals(OrderState.PAYED)){
+                throw new PzException("订单状态不正确,只有已支付的订单才可接单,当前订单状态:"+order.getState());
+            }
+        }else if(orderInfo.getState().equals(OrderState.COMPLETE)) {
+            if(!order.getState().equals(OrderState.WORKING)){
+                throw new PzException("订单状态不正确,只有工作中的订单才可完成,当前订单状态:"+order.getState());
+            }
+        }
         
         orderStateChangeEvent.setFromState(order.getState());
         orderStateChangeEvent.setToState(orderInfo.getState());

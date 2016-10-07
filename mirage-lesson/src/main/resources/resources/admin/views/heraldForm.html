@@ -50,6 +50,33 @@
                 </div>
 			</div>
 			<div class="form-group">
+                <label class="control-label col-lg-3">分享报名:</label>
+                <div class="col-lg-1">
+                    <div class="custom-checkbox todo-checkbox">
+                        <input id="selection5" ng-model="herald.shareSign" ng-checked="herald.shareSign" type="checkbox">
+                        <label for="selection5" style="margin-top: 4px;"></label>
+                    </div>
+                </div>
+                <label class="control-label col-lg-2">报名提示:</label>
+                <div class="col-lg-6">
+                    <input name="shareSignTip" ng-model="herald.shareSignTip" type="text" class="form-control input-sm" placeholder="报名提示">
+                </div>
+            </div>
+			<div class="form-group"  ng-class="heraldForm.shareTitle.$invalid && heraldForm.shareTitle.$dirty ? 'has-error': ''">
+                <label class="control-label col-lg-3"><span class="text_red">*</span>&nbsp;分享标题:</label>
+                <div class="col-lg-9">
+                    <input name="shareTitle" ng-model="herald.shareTitle" type="text" class="form-control input-sm" placeholder="分享标题" required>
+                    <label class="control-label" ng-show="heraldForm.shareTitle.$invalid && heraldForm.shareTitle.$dirty">分享标题不能为空</label>
+                </div>
+            </div>
+            <div class="form-group"  ng-class="heraldForm.shareTip.$invalid && heraldForm.shareTip.$dirty ? 'has-error': ''">
+                <label class="control-label col-lg-3"><span class="text_red">*</span>&nbsp;分享描述:</label>
+                <div class="col-lg-9">
+                    <input name="shareTip" ng-model="herald.shareTip" type="text" class="form-control input-sm" placeholder="分享描述" required>
+                    <label class="control-label" ng-show="heraldForm.shareTip.$invalid && heraldForm.shareTip.$dirty">分享描述不能为空</label>
+                </div>
+            </div>
+			<div class="form-group">
                 <label class="control-label col-lg-3"><span class="text_red">*</span>&nbsp;主讲人:</label>
                 <div class="col-lg-9">
                   <ui-select ng-model="herald.teacherInfo" theme="bootstrap">

@@ -76,7 +76,7 @@ public class WithdrawalsServiceImpl implements WithdrawalsService {
         }
         
         User user = userRepository.findOne(withdrawalsInfo.getUserId());
-        if(withdrawalsInfo.getAmount().compareTo(user.getMoney()) != 1) {
+        if(withdrawalsInfo.getAmount().compareTo(user.getMoney()) == 1) {
             throw new PzException("余额不足!");
         }
         
@@ -103,9 +103,9 @@ public class WithdrawalsServiceImpl implements WithdrawalsService {
     @Override
     public WithdrawalsInfo update(WithdrawalsInfo withdrawalsInfo) throws Exception {
         
-//        if(withdrawalsInfo.getAmount().compareTo(new BigDecimal(50)) != 1) {
-//            throw new PzException("超过50元才可申请提现哦!");
-//        }
+        if(withdrawalsInfo.getAmount().compareTo(new BigDecimal(50)) != 1) {
+            throw new PzException("超过50元才可申请提现哦!");
+        }
         
         Withdrawals withdrawals = withdrawalsRepository.findOne(withdrawalsInfo.getId());
         User user = userRepository.findOne(withdrawalsInfo.getUserId());
@@ -120,6 +120,10 @@ public class WithdrawalsServiceImpl implements WithdrawalsService {
         withdrawals.setState(WithdrawalsState.FINISH); 
         withdrawals.setSendTime(new Date());
         withdrawalsRepository.save(withdrawals);
+        
+        user.setMoney(user.getMoney().subtract(withdrawals.getAmount()));
+        userRepository.save(user);
+        
         return withdrawalsInfo;
     }
 
