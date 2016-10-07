@@ -53,9 +53,12 @@
 								<button class="btn btn-danger btn-xs" ng-click="remove(article)">
 									<i class="ion-trash-a m-right-xs"></i>删除
 								</button>
-								<span datedit="{{article.id}}" class="btn btn-warning btn-xs btn-edit" onclick="edit(this)" >
+								<!-- <span datedit="{{article.id}}" class="btn btn-warning btn-xs btn-edit" onclick="edit(this)" >
 									<i  class="ion-edit m-right-xs"></i>编辑
-								</span>
+								</span> -->
+								<span class="btn btn-warning btn-xs btn-edit" ng-click="editContent(article)" >
+                                    <i  class="ion-edit m-right-xs"></i>编辑
+                                </span>
 							</td>
 						</tr>
 					</tbody>

@@ -32,6 +32,7 @@ import com.ymt.mirage.clearing.service.RebateConfigService;
 import com.ymt.mirage.user.domain.User;
 import com.ymt.mirage.user.repository.UserRepository;
 import com.ymt.pz365.data.jpa.domain.Clearingable;
+import com.ymt.pz365.data.jpa.domain.Goods;
 import com.ymt.pz365.data.jpa.spi.order.OrderGoodsService;
 import com.ymt.pz365.framework.core.exception.PzException;
 
@@ -78,7 +79,7 @@ public class ClearingServiceImpl implements ClearingService {
      */
     @Override
     public void addUser(String identify, Long userId, Long sharerId) {
-        addUser(identify, userId, sharerId);
+        addUser(identify, userId, sharerId, false);
     }
     
     @Override
@@ -91,7 +92,8 @@ public class ClearingServiceImpl implements ClearingService {
             return;
         }
         
-        if(orderGoodsService.getGoodsInfo(new Long(identify)).isKey() || buy){
+        Goods goods = orderGoodsService.getGoodsInfo(new Long(identify));
+        if(goods.isKey() || buy){
             
             identify = Clearing.TARGET_ID;
             
@@ -108,7 +110,11 @@ public class ClearingServiceImpl implements ClearingService {
                     if(DEFAULT_ROOT_USER_ID == sharerId) {
                         parent = createClearingTreeNode(identify, DEFAULT_ROOT_USER_ID, null);
                     }else{
-                        throw new PzException("父用户id不存在:"+sharerId+", type:"+identify);
+                        if(buy && !goods.isKey()) {
+                            return;
+                        }else{
+                            throw new PzException("父用户id不存在:"+sharerId+", type:"+identify);
+                        }
                     }
                 }
                 

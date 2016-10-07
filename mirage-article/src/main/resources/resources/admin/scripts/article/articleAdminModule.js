@@ -1,6 +1,6 @@
 'use strict';
 //平台管理模块的配置
-angular.module('articleAdminModule',[]).config(function($stateProvider) {
+angular.module('articleAdminModule',['umeditorModule']).config(function($stateProvider) {
 	//路由配置
 	$stateProvider.state('index.articleManage', {
 		url: "/articleManage",
@@ -39,6 +39,24 @@ angular.module('articleAdminModule',[]).config(function($stateProvider) {
 	$scope.update = function(article) {
 		$scope.save(article);
 	}	
+	
+	$scope.editContent = function(article) {
+		$uibModal.open({
+			size: "lg",
+			templateUrl : 'admin/views/umeditor.html',
+			controller: 'umeditorCtrl',
+			resolve: {
+		        domain : function() {return article;},
+		        params : function() {
+		        	return {
+		        		target: 'article',
+		        		targetId: article.id,
+		        		targetProp: 'content'
+		        	}
+		        }
+			}
+		})
+	}
 	
 	$scope.save = function(article){
 		$uibModal.open({

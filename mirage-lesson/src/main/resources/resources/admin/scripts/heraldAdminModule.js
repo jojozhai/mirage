@@ -1,6 +1,6 @@
 'use strict';
 //平台管理模块的配置
-angular.module('heraldAdminModule',[]).config(function($stateProvider) {
+angular.module('heraldAdminModule',['umeditorModule']).config(function($stateProvider) {
 	//路由配置
 	$stateProvider.state('index.heraldManage', {
 		url: "/heraldManage",
@@ -43,11 +43,29 @@ angular.module('heraldAdminModule',[]).config(function($stateProvider) {
 			templateUrl : 'admin/views/heraldSignup.html',
 			controller: 'heraldSignupCtrl',
 			resolve: {
-		        herald : function() {return herald;},
+		        herald : function() {return herald;}
 			}
 		}).result.then(function(form){
 			
 		});
+	}
+	
+	$scope.editContent = function(herald) {
+		$uibModal.open({
+			size: "lg",
+			templateUrl : 'admin/views/umeditor.html',
+			controller: 'umeditorCtrl',
+			resolve: {
+		        domain : function() {return herald;},
+		        params : function() {
+		        	return {
+		        		target: 'lesson',
+		        		targetId: herald.id,
+		        		targetProp: 'content'
+		        	}
+		        }
+			}
+		})
 	}
 	
 	$scope.save = function(herald){

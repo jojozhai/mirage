@@ -119,5 +119,6 @@
 		<module>../mirage-lesson</module>
 		<module>../mirage-clearing</module>
 		<module>../mirage-goods</module>
+		<module>../mirage-umeditor</module>
 	</modules>
 </project>
