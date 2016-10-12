@@ -30,6 +30,10 @@ public class Teacher extends DomainImpl {
      */
     private String name;
     /**
+     * 
+     */
+    private String mobile;
+    /**
      * 简介
      */
     @Lob
@@ -151,6 +155,20 @@ public class Teacher extends DomainImpl {
      */
     public void setSaleCountPlus(int saleCountPlus) {
         this.saleCountPlus = saleCountPlus;
+    }
+
+    /**
+     * @return the mobile
+     */
+    public String getMobile() {
+        return mobile;
+    }
+
+    /**
+     * @param mobile the mobile to set
+     */
+    public void setMobile(String mobile) {
+        this.mobile = mobile;
     }
 
 }

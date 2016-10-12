@@ -49,19 +49,37 @@ public class CommentServiceImpl implements CommentService {
 	private ObjectMapper mapper = new ObjectMapper();
 	
 	@Override
-	public Page<CommentInfo> query(CommentInfo commentInfo, Pageable pageable) {
-		Page<Comment> pageData = commentRepository.findAll(new CommentSpec(commentInfo), pageable);
-		return QueryResultConverter.convert(pageData, CommentInfo.class, pageable);
+	public Page<CommentInfo> query(final CommentInfo commentInfo, Pageable pageable) {
+	    if(commentInfo.isWithReply()){
+	        return queryWithReply(commentInfo, pageable);
+	    }else{
+	        Page<Comment> pageData = commentRepository.findAll(new CommentSpec(commentInfo), pageable);
+	        final boolean hasUser = commentInfo.getUserId() != null;
+	        final Long userId = commentInfo.getUserId();
+	        return QueryResultConverter.convert(pageData, pageable, new AbstractDomain2InfoConverter<Comment, CommentInfo>() {
+                @Override
+                protected void doConvert(Comment domain, CommentInfo info) throws Exception {
+                    if(hasUser) {
+                        info.setPraised(socialService.getPraise("comment", domain.getId(), userId));
+                    }
+                }
+            });
+	    }
 	}
 	
     @Override
     public Page<CommentInfo> queryWithReply(CommentInfo commentInfo, Pageable pageable) {
         Page<Comment> pageData = commentRepository.findByTargetAndTargetIdAndReplyToIdIsNullAndDisable(commentInfo.getTarget(), commentInfo.getTargetId(), false, pageable);
+        final boolean hasUser = commentInfo.getUserId() != null;
+        final Long userId = commentInfo.getUserId();
         return QueryResultConverter.convert(pageData, pageable, new AbstractDomain2InfoConverter<Comment, CommentInfo>() {
             @Override
             protected void doConvert(Comment domain, CommentInfo info) throws Exception {
                 List<Comment> replys = commentRepository.findByCommentIdAndDisable(domain.getId(), false, new Sort(Direction.DESC, "createdTime"));
                 info.setReplys(QueryResultConverter.convert(replys, CommentInfo.class));
+                if(hasUser) {
+                    info.setPraised(socialService.getPraise("comment", domain.getId(), userId));
+                }
             }
         });
     }

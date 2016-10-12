@@ -43,10 +43,10 @@ public class LessonTagSpec extends PzSimpleSpecification<LessonTag, LessonInfo> 
                 addLessThanOrEqualConditionToColumn(queryWraper, "target.signStartTime", now);
                 addGreaterThanOrEqualConditionToColumn(queryWraper, "target.signEndTime", now);
                 addBetweenCondition(queryWraper, "target.startTime");
-            }else{
-                addLessThanOrEqualConditionToColumn(queryWraper, "target.endTime", now);
-                queryWraper.getPredicates().add(queryWraper.getCb().isNotNull(getPath(queryWraper.getRoot(),"target.video")));
-                queryWraper.getPredicates().add(queryWraper.getCb().notEqual(getPath(queryWraper.getRoot(),"target.video"), ""));
+//            }else{
+//                addLessThanOrEqualConditionToColumn(queryWraper, "target.endTime", now);
+//                queryWraper.getPredicates().add(queryWraper.getCb().isNotNull(getPath(queryWraper.getRoot(),"target.video")));
+//                queryWraper.getPredicates().add(queryWraper.getCb().notEqual(getPath(queryWraper.getRoot(),"target.video"), ""));
             }
         }
     }

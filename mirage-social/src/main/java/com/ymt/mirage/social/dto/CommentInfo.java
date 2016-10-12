@@ -65,6 +65,19 @@ public class CommentInfo {
      * 赞的总数
      */
     private int praiseCount;
+    /**
+     * 是否赞过
+     */
+    private boolean praised;
+    /**
+     * 
+     */
+    private Long userId;
+    /**
+     * 
+     */
+    private boolean withReply;
+    
 	/**
 	 * @return the target
 	 */
@@ -220,6 +233,42 @@ public class CommentInfo {
      */
     public void setCreaterDesc(String createrDesc) {
         this.createrDesc = createrDesc;
+    }
+    /**
+     * @return the withReply
+     */
+    public boolean isWithReply() {
+        return withReply;
+    }
+    /**
+     * @param withReply the withReply to set
+     */
+    public void setWithReply(boolean withReply) {
+        this.withReply = withReply;
+    }
+    /**
+     * @return the praised
+     */
+    public boolean isPraised() {
+        return praised;
+    }
+    /**
+     * @param praised the praised to set
+     */
+    public void setPraised(boolean praised) {
+        this.praised = praised;
+    }
+    /**
+     * @return the userId
+     */
+    public Long getUserId() {
+        return userId;
+    }
+    /**
+     * @param userId the userId to set
+     */
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
 }

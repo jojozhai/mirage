@@ -23,11 +23,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.ymt.mirage.clearing.domain.Clearing;
 import com.ymt.mirage.clearing.domain.ClearingTree;
+import com.ymt.mirage.clearing.event.ClearingEvent;
 import com.ymt.mirage.clearing.event.ClearingTreeNodeCreatedEvent;
 import com.ymt.mirage.clearing.repository.ClearingRepository;
 import com.ymt.mirage.clearing.repository.ClearingTreeRepository;
 import com.ymt.mirage.clearing.service.ClearingService;
-import com.ymt.mirage.clearing.service.ProfitService;
 import com.ymt.mirage.clearing.service.RebateConfigService;
 import com.ymt.mirage.user.domain.User;
 import com.ymt.mirage.user.repository.UserRepository;
@@ -56,8 +56,8 @@ public class ClearingServiceImpl implements ClearingService {
     @Autowired
     private RebateConfigService rebateConfigService;
     
-    @Autowired
-    private ProfitService profitService;
+//    @Autowired
+//    private ProfitService profitService;
     
     @Autowired
     private ClearingTreeRepository clearingTreeRepository;
@@ -110,10 +110,18 @@ public class ClearingServiceImpl implements ClearingService {
                     if(DEFAULT_ROOT_USER_ID == sharerId) {
                         parent = createClearingTreeNode(identify, DEFAULT_ROOT_USER_ID, null);
                     }else{
-                        if(buy && !goods.isKey()) {
-                            return;
+                        if(buy){
+                            if(goods.isKey()){
+                                parent = clearingTreeRepository.findByIdentifyAndUserId(identify, DEFAULT_ROOT_USER_ID);
+                            }else{
+                                return;
+                            }
                         }else{
-                            throw new PzException("父用户id不存在:"+sharerId+", type:"+identify);
+                            if(goods.isKey()){
+                                throw new PzException("父用户id不存在:"+sharerId+", type:"+identify);
+                            }else{
+                                return;
+                            }
                         }
                     }
                 }
@@ -211,6 +219,13 @@ public class ClearingServiceImpl implements ClearingService {
         clearingRepository.save(clearing);
         
         user.setMoney(newAvailableAmount);
+        
+        ClearingEvent event = new ClearingEvent(clearingable);
+        event.setContributorId(clearingable.getCreaterId());
+        event.setBeneficiaryId(node.getUser().getId());
+        event.setOrderId(clearingable.getId());
+        event.setProfit(profitAmount);
+        applicationEventPublisher.publishEvent(event);
         
         if(node.getParent() != null) {
             clearing(clearingable, node.getParent(), level + 1);

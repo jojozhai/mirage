@@ -155,6 +155,12 @@ angular.module('commentAdminModule',[]).config(function($stateProvider) {
 			return "资讯";
 		}else if(text == 'activity'){
 			return "线下活动";
+		}else if(text == 'product'){
+			return "商品";
+		}else if(text == 'lesson'){
+			return "课程";
+		}else{
+			return text;
 		}
     }
 });

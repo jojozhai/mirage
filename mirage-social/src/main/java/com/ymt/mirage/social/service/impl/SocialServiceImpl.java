@@ -212,7 +212,7 @@ public class SocialServiceImpl implements SocialService {
         
         Praise praise = praiseRepository.findByCreaterIdAndTargetId(currentUserId, praiseInfo.getTargetId());
         if(praise == null) {
-            if(add) {
+//            if(add) {
                 praise = new Praise();
                 praise.setCreaterId(user.getId());
                 praise.setTargetId(praiseInfo.getTargetId());
@@ -222,17 +222,17 @@ public class SocialServiceImpl implements SocialService {
                 praiseable.setPraiseCount(praiseable.getPraiseCount() + 1);
                 
                 return true;
-            }
+//            }
         }else {
-            if(!add) {
+//            if(!add) {
                 praiseRepository.delete(praise);
                 praiseable.setPraiseCount(praiseable.getPraiseCount() - 1);
                 
                 return true;
-            }
+//            }
         }
         
-        return false;
+//        return false;
     }
 
     @Override

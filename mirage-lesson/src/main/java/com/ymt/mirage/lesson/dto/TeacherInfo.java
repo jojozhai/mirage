@@ -24,6 +24,10 @@ public class TeacherInfo {
      */
     private Long id;
     /**
+     * 电话
+     */
+    private String mobile;
+    /**
      * 姓名
      */
     private String name;
@@ -147,6 +151,18 @@ public class TeacherInfo {
      */
     public void setSaleCountPlus(int saleCountPlus) {
         this.saleCountPlus = saleCountPlus;
+    }
+    /**
+     * @return the mobile
+     */
+    public String getMobile() {
+        return mobile;
+    }
+    /**
+     * @param mobile the mobile to set
+     */
+    public void setMobile(String mobile) {
+        this.mobile = mobile;
     }
     
 }

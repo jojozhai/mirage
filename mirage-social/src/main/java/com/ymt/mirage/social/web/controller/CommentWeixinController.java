@@ -45,6 +45,7 @@ public class CommentWeixinController {
 	
 	@RequestMapping(value = "/comment", method = RequestMethod.GET)
 	public Page<CommentInfo> query(CommentInfo commentInfo, Pageable pageable) throws Exception {
+	    commentInfo.setUserId(CurrentUserHolder.getCurrentUserId());
 		return commentService.query(commentInfo, pageable);
 	}
 	

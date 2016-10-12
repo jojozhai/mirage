@@ -35,6 +35,7 @@
 						<tr>
 							<th width="100">序号</th>
 							<th width="100">姓名</th>
+							<th width="100">电话</th>
 							<th>头衔</th>
 							<th width="200">操作</th>
 						</tr>
@@ -43,6 +44,7 @@
 						<tr ng-repeat = "teacher in teachers">
 							<td>{{$index+1}}</td>
 							<td>{{teacher.name}}</td>
+							<td>{{teacher.mobile}}</td>
 							<td>{{teacher.title}}</td>
 							<td>
 								<button class="btn btn-warning btn-xs" ng-click="update(teacher)">
