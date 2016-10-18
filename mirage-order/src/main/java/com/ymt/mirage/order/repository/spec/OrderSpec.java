@@ -33,6 +33,7 @@ public class OrderSpec extends PzSimpleSpecification<Order, OrderInfo> {
         addLikeCondition(queryWraper, "userRealname", "user.realname");
         addLikeCondition(queryWraper, "userNickname", "user.nickname");
         addLikeCondition(queryWraper, "userMobile", "user.mobile");
+        addEqualsCondition(queryWraper, "state");
     }
 
 }

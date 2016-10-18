@@ -15,6 +15,7 @@ import java.math.BigDecimal;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.data.domain.Page;
@@ -35,6 +36,7 @@ import com.ymt.mirage.order.repository.OrderRepository;
 import com.ymt.mirage.order.repository.spec.OrderSpec;
 import com.ymt.mirage.order.service.OrderService;
 import com.ymt.mirage.user.domain.User;
+import com.ymt.mirage.user.dto.UserInfo;
 import com.ymt.mirage.user.repository.UserRepository;
 import com.ymt.pz365.data.jpa.domain.Goods;
 import com.ymt.pz365.data.jpa.spi.order.OrderGoodsService;
@@ -187,7 +189,9 @@ public class OrderServiceImpl implements OrderService {
         return QueryResultConverter.convert(pageData, pageable, new AbstractDomain2InfoConverter<Order, OrderInfo>() {
             @Override
             protected void doConvert(Order domain, OrderInfo info) throws Exception {
-                info.setUserNickname(domain.getUser().getNickname());
+                UserInfo userInfo = new UserInfo();
+                BeanUtils.copyProperties(domain.getUser(), userInfo);
+                info.setUserInfo(userInfo);
                 info.setGoodsName(orderGoodsService.getGoodsInfo(domain.getProducts().get(0).getGoodsId()).getName());
             }
         });

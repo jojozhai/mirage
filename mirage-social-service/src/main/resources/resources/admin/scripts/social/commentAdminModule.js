@@ -11,6 +11,7 @@ angular.module('commentAdminModule',[]).config(function($stateProvider) {
 }).service("commentRestService", function($resource, commonService){
 	var config = commonService.getDefaultRestSetting();
 	config.removeAll = {url:"comment/batch", method:"POST"};
+	config.getReply = {url:"comment/:id/reply", method:"GET"};
 	return $resource("comment/:id", {id:"@id"}, config);
 //控制器
 }).controller('commentManageCtrl', function($scope, $uibModal, commentRestService, commonService) {

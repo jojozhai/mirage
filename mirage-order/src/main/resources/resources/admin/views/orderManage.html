@@ -21,6 +21,9 @@
 								<input ng-model="condition.userRealname" type="text" class="form-control input-sm" placeholder="姓名">
 								<input ng-model="condition.userNickname" type="text" class="form-control input-sm" placeholder="昵称">
 								<input ng-model="condition.userMobile" type="text" class="form-control input-sm" placeholder="电话">
+                                <select ng-model="condition.state" ng-options="state.value as state.name for state in states" class="form-control input-sm">
+                                    <option></option>
+                                </select>
 						</div>
 						<button ng-click="query(condition)" class="btn btn-sm btn-success"><i class="fa fa-search m-right-xs"></i>查询</button>
 						<button ng-click="cleanCondition()" class="btn btn-sm btn-warning"><i class="ion-close m-right-xs"></i>清空</button>
@@ -35,13 +38,15 @@
 				<table class="table table-hover">
 					<thead>
 						<tr>
-							<th width="100">序号</th>
-							<th width="100">id</th>
+							<th width="50">序号</th>
+							<th width="50">id</th>
 							<th width="100">下单时间</th>
 							<th>商品名称</th>
-							<th width="100">客户昵称</th>
-							<th width="100">订单金额</th>
-							<th width="100">订单状态</th>
+							<th width="80">客户昵称</th>
+							<th width="80">客户电话</th>
+							<th width="80">客户微信</th>
+							<th width="80">订单金额</th>
+							<th width="80">订单状态</th>
 							<th width="250">操作</th>
 						</tr>
 					</thead>
@@ -51,7 +56,9 @@
 							<td>{{order.id}}</td>
 							<td>{{order.createdTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
 							<td>{{order.goodsName}}</td>
-							<td>{{order.userNickname}}</td>
+							<td>{{order.userInfo.nickname}}</td>
+							<td>{{order.userInfo.mobile}}</td>
+							<td>{{order.userInfo.weixin}}</td>
 							<td>{{order.amount | currency}}</td>
 							<td>{{order.state | orderState}}</td>
 							<td>
@@ -74,7 +81,7 @@
 			<div style="margin-top: -30px; margin-left: 20px; margin-bottom: 20px;">
 				<uib-pagination total-items="pageInfo.totalElements" num-pages="pageInfo.totalPages" ng-model="pageInfo.page" max-size="pageInfo.maxSize" 
 					class="pagination-sm" boundary-links="true" force-ellipses="true" ng-change="query()" ng-disabled="pageInfo.totalElements <= 0" 
-					first-text="首页" last-text="末页" next-text="后页" previous-text="前页"></uib-pagination>
+					first-text="首页" last-text="末页" next-text="后页" previous-text="前页" boundary-link-numbers="true"></uib-pagination>
 			</div>
 		</div>
 		<div class="smart-widget-body" ng-hide="pageInfo.totalElements > 0">

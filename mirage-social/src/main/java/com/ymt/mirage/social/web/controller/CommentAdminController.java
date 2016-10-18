@@ -29,7 +29,7 @@ public class CommentAdminController {
 	private CommentService commentService;
 
 	@RequestMapping(value = "/comment", method = RequestMethod.POST)
-	public CommentInfo create(@RequestBody CommentInfo commentInfo) {
+	public CommentInfo create(@RequestBody CommentInfo commentInfo) throws Exception {
 		return commentService.create(commentInfo);
 	}
 
@@ -42,6 +42,11 @@ public class CommentAdminController {
 	public CommentInfo getInfo(@PathVariable Long id) throws Exception {
 		return commentService.getInfo(id);
 	}
+	
+	@RequestMapping(value = "/comment/{id}/reply", method = RequestMethod.GET)
+    public CommentInfo getReply(@PathVariable Long id) throws Exception {
+        return commentService.getReply(id);
+    }
 
 	@RequestMapping(value = "/comment/{id}", method = RequestMethod.PUT)
 	public CommentInfo update(@RequestBody CommentInfo commentInfo) {

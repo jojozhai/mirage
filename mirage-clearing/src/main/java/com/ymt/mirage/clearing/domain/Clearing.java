@@ -18,6 +18,7 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.ManyToOne;
 
+import com.vdurmont.emoji.EmojiParser;
 import com.ymt.mirage.user.domain.User;
 import com.ymt.pz365.data.jpa.domain.ClearingLog;
 import com.ymt.pz365.data.jpa.domain.ClearingType;
@@ -219,13 +220,13 @@ public class Clearing extends DomainImpl implements ClearingLog {
      * @return the details
      */
     public String getDetails() {
-        return details;
+        return EmojiParser.parseToUnicode(details);
     }
     /**
      * @param details the details to set
      */
     public void setDetails(String details) {
-        this.details = details;
+        this.details = EmojiParser.parseToAliases(details);
     }
     /**
      * @return the targetName
@@ -239,17 +240,18 @@ public class Clearing extends DomainImpl implements ClearingLog {
     public void setTargetName(String targetName) {
         this.targetName = targetName;
     }
+    
     /**
      * @return the contributorName
      */
     public String getContributorName() {
-        return contributorName;
+        return EmojiParser.parseToUnicode(contributorName);
     }
     /**
      * @param contributorName the contributorName to set
      */
     public void setContributorName(String contributorName) {
-        this.contributorName = contributorName;
+        this.contributorName = EmojiParser.parseToAliases(contributorName);
     }
     /**
      * @return the active

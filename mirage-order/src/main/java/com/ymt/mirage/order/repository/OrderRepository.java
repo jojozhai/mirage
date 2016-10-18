@@ -38,4 +38,6 @@ public interface OrderRepository extends PzRepository<Order>{
 
     List<Order> findByState(OrderState complete);
 
+    List<Order> findByStateAndIdGreaterThan(OrderState complete, long flag);
+
 }

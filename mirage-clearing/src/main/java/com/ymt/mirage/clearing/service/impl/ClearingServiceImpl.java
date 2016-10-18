@@ -13,6 +13,8 @@ package com.ymt.mirage.clearing.service.impl;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -73,6 +75,8 @@ public class ClearingServiceImpl implements ClearingService {
     
     @Autowired
     private ApplicationEventPublisher applicationEventPublisher;
+    
+    private Set<Long> ids = new HashSet<>();
 
     /* (non-Javadoc)
      * @see com.ymt.mirage.clearing.service.ClearingService#addUser(java.lang.String, java.lang.Long, java.lang.String, java.lang.Long)
@@ -101,38 +105,51 @@ public class ClearingServiceImpl implements ClearingService {
             
             if(node == null) {
                 
-                if(sharerId == null) {
-                    sharerId = DEFAULT_ROOT_USER_ID;
-                }
-                
-                ClearingTree parent = clearingTreeRepository.findByIdentifyAndUserId(identify, sharerId);
-                if(parent == null) {
-                    if(DEFAULT_ROOT_USER_ID == sharerId) {
-                        parent = createClearingTreeNode(identify, DEFAULT_ROOT_USER_ID, null);
-                    }else{
-                        if(buy){
-                            if(goods.isKey()){
-                                parent = clearingTreeRepository.findByIdentifyAndUserId(identify, DEFAULT_ROOT_USER_ID);
+                if(ids.contains(userId)) {
+                    return;
+                }else{
+                    
+                    try {
+                        
+                        ids.add(userId);
+                        
+                        if(sharerId == null) {
+                            sharerId = DEFAULT_ROOT_USER_ID;
+                        }
+                        
+                        ClearingTree parent = clearingTreeRepository.findByIdentifyAndUserId(identify, sharerId);
+                        if(parent == null) {
+                            if(DEFAULT_ROOT_USER_ID == sharerId) {
+                                parent = createClearingTreeNode(identify, DEFAULT_ROOT_USER_ID, null);
                             }else{
-                                return;
-                            }
-                        }else{
-                            if(goods.isKey()){
-                                throw new PzException("父用户id不存在:"+sharerId+", type:"+identify);
-                            }else{
-                                return;
+                                if(buy){
+                                    if(goods.isKey()){
+                                        parent = clearingTreeRepository.findByIdentifyAndUserId(identify, DEFAULT_ROOT_USER_ID);
+                                    }else{
+                                        return;
+                                    }
+                                }else{
+                                    if(goods.isKey()){
+                                        throw new PzException("父用户id不存在:"+sharerId+", type:"+identify);
+                                    }else{
+                                        return;
+                                    }
+                                }
                             }
                         }
+                        
+                        logger.info("add new clearing tree node");
+                        ClearingTree newNode =  createClearingTreeNode(identify, userId, parent);
+                        
+                        applicationEventPublisher.publishEvent(new ClearingTreeNodeCreatedEvent(newNode.getId(), parent.getId()));
+                        
+                    } catch (Exception e) {
+                        throw e;
+                    } finally {
+                        ids.remove(userId);
                     }
                 }
                 
-                logger.info("add new clearing tree node");
-                ClearingTree newNode =  createClearingTreeNode(identify, userId, parent);
-                
-                applicationEventPublisher.publishEvent(new ClearingTreeNodeCreatedEvent(newNode.getId(), parent.getId()));
-                
-//            }else{
-//                throw new PzException("用户'"+userId+"'已经存在于类型为'"+identify+"'的结算树中，父节点为:"+node.getParent().getName()+"("+node.getParent().getId()+")");
             }
         }
         

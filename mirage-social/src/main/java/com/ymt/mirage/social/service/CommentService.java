@@ -21,7 +21,7 @@ public interface CommentService {
 	
 	Page<CommentInfo> query(CommentInfo commentInfo, Pageable pageable);
 	
-	CommentInfo create(CommentInfo commentInfo);
+	CommentInfo create(CommentInfo commentInfo) throws Exception;
 
 	CommentInfo getInfo(Long id);
 
@@ -38,5 +38,7 @@ public interface CommentService {
     Comment[] getComments(Long id, String target);
 
     List<Boolean> getCommentPraise(CommentInfo commentInfo, Pageable pageable, Long currentUserId);
+
+    CommentInfo getReply(Long id);
 
 }

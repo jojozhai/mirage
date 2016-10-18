@@ -36,11 +36,11 @@ public enum OrderState {
      */
     CANCEL,
     /**
-     * 订单完成
+     * 工作完成
      */
     COMPLETE,
     /**
-     * 结算完成
+     * 订单完成
      */
     FINISH
 

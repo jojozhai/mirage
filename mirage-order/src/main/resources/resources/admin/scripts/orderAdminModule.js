@@ -13,6 +13,8 @@ angular.module('orderAdminModule',[]).config(function($stateProvider) {
 	return $resource("order/:id", {id:"@id"}, config);
 //控制器
 }).controller('orderManageCtrl', function($scope, $uibModal, orderRestService, commonService) {
+	
+	$scope.states = [{value:"INIT", name:"未支付"},{value:"PAYED", name:"已支付"},{value:"WORKING", name:"工作中"},{value:"FINISH", name:"订单完成"},{value:"CANCEL", name:"订单取消"},{value:"COMPLETE", name:"工作完成"}]
 
 	$scope.pageInfo = commonService.getDefaultPageSetting();
 	

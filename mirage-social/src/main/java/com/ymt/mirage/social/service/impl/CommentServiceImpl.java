@@ -6,6 +6,7 @@ package com.ymt.mirage.social.service.impl;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +27,8 @@ import com.ymt.mirage.social.repository.PraiseRepository;
 import com.ymt.mirage.social.repository.spec.CommentSpec;
 import com.ymt.mirage.social.service.CommentService;
 import com.ymt.mirage.social.service.SocialService;
+import com.ymt.mirage.user.domain.User;
+import com.ymt.mirage.user.repository.UserRepository;
 import com.ymt.pz365.data.jpa.support.AbstractDomain2InfoConverter;
 import com.ymt.pz365.data.jpa.support.QueryResultConverter;
 
@@ -45,6 +48,9 @@ public class CommentServiceImpl implements CommentService {
 	
 	@Autowired
 	private SocialService socialService;
+	
+	@Autowired
+	private UserRepository userRepository;
 	
 	private ObjectMapper mapper = new ObjectMapper();
 	
@@ -97,10 +103,14 @@ public class CommentServiceImpl implements CommentService {
 
 
 	@Override
-	public CommentInfo create(CommentInfo commentInfo) {
-		Comment comment = new Comment();
-		BeanUtils.copyProperties(commentInfo, comment);
-		commentInfo.setId(commentRepository.save(comment).getId());
+	public CommentInfo create(CommentInfo commentInfo) throws Exception {
+	    User user = userRepository.findByUsername("1");
+	    
+	    socialService.comment(commentInfo, user.getId());
+	    
+//		Comment comment = new Comment();
+//		BeanUtils.copyProperties(commentInfo, comment);
+//		commentInfo.setId(commentRepository.save(comment).getId());
 		return commentInfo;
 	}
 
@@ -115,7 +125,7 @@ public class CommentServiceImpl implements CommentService {
 	@Override
 	public CommentInfo update(CommentInfo commentInfo) {
 		Comment comment = commentRepository.findOne(commentInfo.getId());
-		BeanUtils.copyProperties(commentInfo, comment);
+		comment.setContent(commentInfo.getContent());
 		commentRepository.save(comment);
 		return commentInfo;
 	}
@@ -149,6 +159,15 @@ public class CommentServiceImpl implements CommentService {
     public Comment[] getComments(Long id, String target) {
         List<Comment> comments = commentRepository.findByTargetAndTargetIdAndDisable(target, id, false);
         return comments.toArray(new Comment[comments.size()]);
+    }
+
+    @Override
+    public CommentInfo getReply(Long id) {
+        List<Comment> replys = commentRepository.findByCommentIdAndDisable(id, false, new Sort(Direction.DESC, "createdTime"));
+        if(CollectionUtils.isNotEmpty(replys)){
+            return getInfo(replys.get(0).getId());
+        }
+        return null;
     }
 
     

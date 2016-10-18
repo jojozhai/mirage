@@ -18,7 +18,7 @@ import com.ymt.mirage.tag.repository.TagRelationRepository;
 @Repository
 public interface ArticleTagRepository extends TagRelationRepository<ArticleTag> {
 
-    @Query("from ArticleTag at where (at.tag.id = ?1 and at.target.top = true) or (at.tag.id = ?1 and at.target.business = false)")
+    @Query("from ArticleTag at where at.target.enable = true and ((at.tag.id = ?1 and at.target.top = true) or (at.tag.id = ?1 and at.target.business = false))")
     Page<ArticleTag> findByTagIdWithTop(Long tagId, Pageable pageable);
 
 }

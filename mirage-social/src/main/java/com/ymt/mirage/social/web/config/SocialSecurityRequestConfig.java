@@ -26,7 +26,7 @@ public class SocialSecurityRequestConfig extends SecurityRequestConfigAdapter {
     
     @Override
     public String[] getPostRequests() {
-        return new String[]{"/praise"};
+        return new String[]{"/praise", "/comment"};
     }
     
     @Override
