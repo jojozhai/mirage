@@ -77,6 +77,14 @@ public class UserInfo {
 	 */
 	private int point;
 	/**
+	 * 豆子
+	 */
+	private int beans;
+	/**
+	 * 未读消息数
+	 */
+	private int unreadMessages;
+	/**
 	 * 等级
 	 */
 	private String level;
@@ -112,6 +120,10 @@ public class UserInfo {
 	 * 
 	 */
 	private BigDecimal moneyPlus;
+	/**
+	 * 职业
+	 */
+	private String job;
 	/**
 	 * @return
 	 * @author zhailiang
@@ -430,6 +442,42 @@ public class UserInfo {
      */
     public void setMoneyPlus(BigDecimal moneyPlus) {
         this.moneyPlus = moneyPlus;
+    }
+    /**
+     * @return the job
+     */
+    public String getJob() {
+        return job;
+    }
+    /**
+     * @param job the job to set
+     */
+    public void setJob(String job) {
+        this.job = job;
+    }
+    /**
+     * @return the beans
+     */
+    public int getBeans() {
+        return beans;
+    }
+    /**
+     * @param beans the beans to set
+     */
+    public void setBeans(int beans) {
+        this.beans = beans;
+    }
+    /**
+     * @return the unreadMessages
+     */
+    public int getUnreadMessages() {
+        return unreadMessages;
+    }
+    /**
+     * @param unreadMessages the unreadMessages to set
+     */
+    public void setUnreadMessages(int unreadMessages) {
+        this.unreadMessages = unreadMessages;
     }
 	
 }

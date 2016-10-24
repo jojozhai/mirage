@@ -104,6 +104,10 @@ public class User extends DomainImpl implements UserDetails {
 	 */
 	private int point;
 	/**
+	 * 豆子
+	 */
+	private int beans;
+	/**
 	 * 等级
 	 */
 	private String level;
@@ -630,6 +634,20 @@ public class User extends DomainImpl implements UserDetails {
      */
     public void setMoneySort(BigDecimal moneySort) {
         this.moneySort = moneySort;
+    }
+
+    /**
+     * @return the beans
+     */
+    public int getBeans() {
+        return beans;
+    }
+
+    /**
+     * @param beans the beans to set
+     */
+    public void setBeans(int beans) {
+        this.beans = beans;
     }
 
 }

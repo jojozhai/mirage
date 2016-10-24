@@ -20,9 +20,11 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.ymt.mirage.user.domain.Message;
 import com.ymt.mirage.user.domain.User;
 import com.ymt.mirage.user.dto.MobileUpdateInfo;
 import com.ymt.mirage.user.dto.UserInfo;
+import com.ymt.mirage.user.repository.MessageRepository;
 import com.ymt.mirage.user.repository.UserRepository;
 import com.ymt.mirage.user.repository.impl.UserSpec;
 import com.ymt.mirage.user.service.UserService;
@@ -48,6 +50,9 @@ public class UserServiceImpl implements WeixinUserService, UserService{
 	
 	@Autowired
 	private PasswordEncoder passwordEncoder;
+	
+	@Autowired
+	private MessageRepository messageRepository;
 	
 	@Override
 	public UserDetails getUser(WeixinAccessToken accessToken) {
@@ -135,6 +140,8 @@ public class UserServiceImpl implements WeixinUserService, UserService{
 		UserInfo info = new UserInfo();
 		org.springframework.beans.BeanUtils.copyProperties(user, info);
 		info.setVipValid(user.isVipValidation());
+		List<Message> unreadMessages = messageRepository.findByUserIdAndRead(userId, false);
+		info.setUnreadMessages(unreadMessages.size());
 		return info;
 	}
 
