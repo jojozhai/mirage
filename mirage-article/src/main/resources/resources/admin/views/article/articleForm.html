@@ -13,7 +13,7 @@
 			<div class="form-group">
 				<label class="control-label col-lg-3">所属分类:</label>
 				<div class="col-lg-9">
-					<ui-select multiple tagging ng-model="article.tagInfos" theme="bootstrap">
+					<ui-select multiple tagging ng-model="article.tagInfos" theme="bootstrap" required>
 			            <ui-select-match placeholder="可以输入分类名称来查找">{{$item.name}}</ui-select-match>
 			            <ui-select-choices repeat="tag in tags | filter: $select.search">
 			            	<div ng-bind-html="tag.name | highlight: $select.search"></div>

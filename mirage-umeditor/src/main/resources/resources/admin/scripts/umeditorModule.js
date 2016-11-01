@@ -28,7 +28,7 @@ angular.module('umeditorModule',[]).config(function($stateProvider) {
 		        	scope.params.value = UM.getEditor('myEditor').getContent();
 		        	umeditorRestService.setValue(scope.params).$promise.then(function(){
 		        		commonService.showMessage("保存成功");
-		        	})
+		        	});
 		        },
 		        queryCommandState: function (cmdName) {
 		            return 0;
@@ -41,7 +41,7 @@ angular.module('umeditorModule',[]).config(function($stateProvider) {
 		
 		umeditorRestService.getValue(scope.params).$promise.then(function(result){
 			um.setContent(result.content, false);
-		})
+		});
 		
 	}
 }});

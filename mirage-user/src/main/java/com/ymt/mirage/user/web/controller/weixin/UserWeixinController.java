@@ -3,6 +3,7 @@
  */
 package com.ymt.mirage.user.web.controller.weixin;
 
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,7 @@ import com.ymt.mirage.user.dto.MobileUpdateInfo;
 import com.ymt.mirage.user.dto.UserInfo;
 import com.ymt.mirage.user.service.UserService;
 import com.ymt.pz365.framework.core.context.Property;
+import com.ymt.pz365.framework.core.web.support.SuccessResponse;
 
 /**
  * @author zhailiang
@@ -47,11 +49,26 @@ public class UserWeixinController {
 		return userService.query(info, pageable);
 	}
 	
+	@RequestMapping(value = "/user", method = RequestMethod.POST)
+    public SuccessResponse create(UserInfo info) throws UnsupportedEncodingException {
+        return userService.create(info);
+    }
+	
+	@RequestMapping(value = "/user/login", method = RequestMethod.POST)
+    public SuccessResponse login(UserInfo info) throws UnsupportedEncodingException {
+        return userService.login(info);
+    }
+	
 	@RequestMapping(value = "/user/mobile", method = RequestMethod.PUT)
 	public void update(@RequestBody MobileUpdateInfo info) throws Exception {
 		info.setUserId(CurrentUserHolder.getCurrentUserId());
 		userService.update(info);
 	}
+	
+	@RequestMapping(value = "/user/password", method = RequestMethod.PUT)
+    public void updatePassword(String oldPassword, String newPassword) throws Exception {
+        userService.updatePassword(CurrentUserHolder.getCurrentUserId(), oldPassword, newPassword);
+    }
 	
 	@RequestMapping(value = "/user/property", method = RequestMethod.PUT)
 	public void update(@RequestBody Property property) throws Exception {

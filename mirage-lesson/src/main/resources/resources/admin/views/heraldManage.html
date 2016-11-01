@@ -34,6 +34,7 @@
 					<thead>
 						<tr>
 							<th width="100">序号</th>
+							<th width="50">ID</th>
 							<th>名称</th>
 							<th width="100">主讲人</th>
 							<th width="150">时间</th>
@@ -44,6 +45,7 @@
 					<tbody>
 						<tr ng-repeat = "herald in heralds">
 							<td>{{$index+1}}</td>
+							<td>{{herald.id}}</td>
 							<td>{{herald.name}}</td>
 							<td>{{herald.teacherName}}</td>
 							<td>{{herald.startTime | date:'yyyy-MM-dd HH:mm'}}</td>

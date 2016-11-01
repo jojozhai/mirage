@@ -3,6 +3,7 @@
  */
 package com.ymt.mirage.user.service.impl;
 
+import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -32,6 +33,7 @@ import com.ymt.pz365.data.jpa.support.AbstractDomain2InfoConverter;
 import com.ymt.pz365.data.jpa.support.QueryResultConverter;
 import com.ymt.pz365.framework.core.context.Property;
 import com.ymt.pz365.framework.core.exception.PzException;
+import com.ymt.pz365.framework.core.web.support.SuccessResponse;
 import com.ymt.pz365.framework.weixin.service.WeixinUserService;
 import com.ymt.pz365.framework.weixin.support.WeixinAccessToken;
 import com.ymt.pz365.framework.weixin.support.WeixinIdAware;
@@ -129,7 +131,18 @@ public class UserServiceImpl implements WeixinUserService, UserService{
 		    if(NumberUtils.isNumber(property.getValue())){
 		        user.setPoint(user.getPoint() + new Integer(property.getValue()));
 		    }
-		}else{
+		}else if(StringUtils.equals("beans", property.getName())) {
+            if(NumberUtils.isNumber(property.getValue())){
+                user.setBeans(user.getBeans() + new Integer(property.getValue()));
+            }
+        }else if(StringUtils.equals("birthday", property.getName())) {
+            Date date = new SimpleDateFormat("yyyy-MM-dd").parse(property.getValue());
+            user.setBirthday(date);
+            userRepository.save(user);
+        }else if(StringUtils.equals("password", property.getName())) {
+            user.setPassword(passwordEncoder.encode(property.getValue()));
+            userRepository.save(user);
+        }else{
 		    BeanUtils.setProperty(user, property.getName(), property.getValue());
 		}
 	}
@@ -147,16 +160,8 @@ public class UserServiceImpl implements WeixinUserService, UserService{
 
 	@Override
 	public void update(Long id, List<Property> propertys) throws Exception {
-		User user = userRepository.findOne(id);
 		for (Property property : propertys) {
-			if(StringUtils.equals("birthday", property.getName())){
-				String value = StringUtils.replace(StringUtils.remove(StringUtils.remove(property.getValue(), "Z"), ".000"), "T", " ");
-				Date date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(value);
-				user.setBirthday(date);
-				userRepository.save(user);
-			}else{
-				BeanUtils.setProperty(user, property.getName(), property.getValue());
-			}
+			update(id, property);
 		}
 	}
 
@@ -193,6 +198,39 @@ public class UserServiceImpl implements WeixinUserService, UserService{
         
         userRepository.save(user);
         return userInfo;
+    }
+    
+
+    @Override
+    public SuccessResponse create(UserInfo info) throws UnsupportedEncodingException {
+        User user = new User();
+        user.setUsername(info.getUsername());
+        user.setPassword(info.getPassword());
+        user.setSex(info.getSex());
+        user.setCity(info.getCity());
+        userRepository.save(user);
+        return new SuccessResponse(user.getToken());
+    }
+
+    @Override
+    public SuccessResponse login(UserInfo info) throws UnsupportedEncodingException {
+        User user = userRepository.findByUsername(info.getUsername());
+        if(user != null){
+            if(passwordEncoder.matches(info.getPassword(), user.getPassword())){
+                return new SuccessResponse(user.getToken());
+            }
+        }
+        
+        throw new PzException("用户名或密码错误");
+    }
+
+    @Override
+    public void updatePassword(Long currentUserId, String oldPassword, String newPassword) {
+        User user = userRepository.findOne(currentUserId);
+        if(passwordEncoder.matches(oldPassword, user.getPassword())){
+            user.setPassword(passwordEncoder.encode(newPassword));
+        }
+        throw new PzException("旧密码错误");
     }
 
 }

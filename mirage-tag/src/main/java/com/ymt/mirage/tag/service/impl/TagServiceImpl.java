@@ -214,10 +214,10 @@ public class TagServiceImpl implements TagService {
     @SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
     public void addTag(Tagable domain, List<TagInfo> tags, Class<?> clazz) throws Exception  {
+        String clazzName = clazz.getSimpleName();
+        TagRelationRepository repository = (TagRelationRepository) applicationContext.getBean(StringUtils.uncapitalize(clazzName)+"Repository");
+        repository.delete(repository.findByTargetId(domain.getId()));
 	    if(CollectionUtils.isNotEmpty(tags)){
-	        String clazzName = clazz.getSimpleName();
-            TagRelationRepository repository = (TagRelationRepository) applicationContext.getBean(StringUtils.uncapitalize(clazzName)+"Repository");
-            repository.delete(repository.findByTargetId(domain.getId()));
             for (TagInfo tagInfo : tags) {
                 TagRelation taged = (TagRelation) clazz.newInstance();
                 taged.setTarget(domain);

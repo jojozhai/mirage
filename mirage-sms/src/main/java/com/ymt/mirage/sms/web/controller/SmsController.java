@@ -17,7 +17,7 @@ import com.ymt.mirage.sms.service.SmsService;
  * @since 2016年6月8日
  */
 @RestController
-@Profile("weixin")
+@Profile({"weixin", "app"})
 public class SmsController {
 	
 	@Autowired
