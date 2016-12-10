@@ -27,7 +27,7 @@ angular.module('tagAdminModule',[]).config(function($stateProvider) {
 	$scope.expandedNodes = [];
 	
 	$scope.create = function() {
-		$scope.save({parentId: $stateParams.id, hot: 0}); 
+		$scope.save({parentId: $stateParams.id, hot: 0, hotplus: 0}); 
 	}
 	
 	$scope.update = function(tag) {

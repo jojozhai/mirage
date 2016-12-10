@@ -54,15 +54,19 @@
 								<button class="btn btn-warning btn-xs" ng-click="update(herald)">
 									<i class="ion-edit m-right-xs"></i>修改
 								</button>
+								<span class="btn btn-warning btn-xs btn-edit" ng-click="editContent(herald)" >
+                                    <i  class="ion-edit m-right-xs"></i>编辑
+                                </span>
 								<button class="btn btn-info btn-xs" ng-click="viewSingup(herald)">
                                     <i class="ion-edit m-right-xs"></i>报名
+                                </button>
+                                <button class="btn btn-info btn-xs" ng-click="exportXls(herald)">
+                                    <i class="ion-edit m-right-xs"></i>导出
                                 </button>
                                 <!-- <span datedit="{{herald.id}}" class="btn btn-warning btn-xs btn-edit" onclick="edit(this)" >
                                     <i  class="ion-edit m-right-xs"></i>编辑
                                 </span> -->
-                                <span class="btn btn-warning btn-xs btn-edit" ng-click="editContent(herald)" >
-                                    <i  class="ion-edit m-right-xs"></i>编辑
-                                </span>
+                                
 							</td>
 						</tr>
 					</tbody>

@@ -11,6 +11,8 @@
  */
 package com.ymt.mirage.order.service;
 
+import java.io.File;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -35,5 +37,7 @@ public interface OrderService {
     Page<OrderInfo> query(OrderInfo orderInfo, Pageable pageable);
 
     OrderInfo update(OrderInfo lessonInfo);
+
+    void export(OrderInfo orderInfo, File file);
 
 }

@@ -3,7 +3,12 @@
  */
 package com.ymt.mirage.lesson.web.controller.admin;
 
+import java.io.File;
 import java.util.List;
+import java.util.UUID;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
@@ -17,6 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ymt.mirage.lesson.dto.LessonInfo;
 import com.ymt.mirage.lesson.service.LessonService;
+import com.ymt.pz365.framework.web.controller.DownloadController;
 
 /**
  * @author zhailiang
@@ -24,7 +30,7 @@ import com.ymt.mirage.lesson.service.LessonService;
  */
 @RestController
 @Profile("admin")
-public class LessonAdminController {
+public class LessonAdminController extends DownloadController {
 	
 	@Autowired
 	private LessonService lessonService;
@@ -43,6 +49,17 @@ public class LessonAdminController {
 	public LessonInfo getInfo(@PathVariable Long id) {
 		return lessonService.getInfo(id);
 	}
+	
+	@RequestMapping(value = "/lesson/{id}/export", method = RequestMethod.GET)
+    public void export(@PathVariable Long id, HttpServletRequest request, HttpServletResponse response) {
+	    File folder = new File(request.getServletContext().getRealPath("")+"/xls");
+	    if(!folder.exists()) {
+	        folder.mkdirs();
+	    }
+	    File file = new File(folder, UUID.randomUUID().toString()+".xls");
+	    String name = lessonService.export(id, file);
+        downloadFile(request, response, file.getAbsolutePath(), name+"报名信息.xls");
+    }
 
 	@RequestMapping(value = "/lesson/{id}", method = RequestMethod.PUT)
 	public LessonInfo update(@RequestBody LessonInfo lessonInfo) throws Exception {
@@ -63,5 +80,7 @@ public class LessonAdminController {
     public List<LessonInfo> findAll() {
         return lessonService.findAll();
     }
+	
+	
 	
 }

@@ -47,6 +47,11 @@ public class ClearingWeixinController {
         clearingService.addUser(goodsId.toString(), CurrentUserHolder.getCurrentUserId(), sharerId);
     }
     
+    @RequestMapping(value = "/clearing/user2", method = RequestMethod.POST)
+    public void addUser(@RequestParam Long sharerId) {
+        clearingService.addUser2(CurrentUserHolder.getCurrentUserId(), sharerId);
+    }
+    
     @RequestMapping(value = "/withdrawals", method = RequestMethod.POST)
     public void getInfo(@RequestBody WithdrawalsInfo withdrawalsInfo, HttpServletRequest request) {
         withdrawalsInfo.setIp(request.getRemoteAddr());

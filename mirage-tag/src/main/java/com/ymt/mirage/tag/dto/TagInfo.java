@@ -24,6 +24,8 @@ public class TagInfo {
 	
 	private int hot;
 	
+	private int hotplus;
+	
 	private String image;
 	/**
 	 * 子节点
@@ -124,6 +126,18 @@ public class TagInfo {
      */
     public void setHot(int hot) {
         this.hot = hot;
+    }
+    /**
+     * @return the hotplus
+     */
+    public int getHotplus() {
+        return hotplus;
+    }
+    /**
+     * @param hotplus the hotplus to set
+     */
+    public void setHotplus(int hotplus) {
+        this.hotplus = hotplus;
     }
 
 }

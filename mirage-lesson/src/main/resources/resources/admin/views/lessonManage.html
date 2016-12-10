@@ -18,7 +18,8 @@
 					<div>
 					<form class="form-inline no-margin" novalidate>
 						<div class="form-group">
-								<input ng-model="condition.name" type="text" class="form-control input-sm" placeholder="名称">
+							<input ng-model="condition.name" type="text" class="form-control input-sm" placeholder="课程名称">
+                            <input ng-model="condition.teacherName" type="text" class="form-control input-sm" placeholder="教师名称">
 						</div>
 						<button ng-click="query(condition)" class="btn btn-sm btn-success"><i class="fa fa-search m-right-xs"></i>查询</button>
 						<button ng-click="cleanCondition()" class="btn btn-sm btn-warning"><i class="ion-close m-right-xs"></i>清空</button>

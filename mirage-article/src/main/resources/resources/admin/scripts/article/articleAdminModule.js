@@ -41,21 +41,24 @@ angular.module('articleAdminModule',['umeditorModule']).config(function($statePr
 	}	
 	
 	$scope.editContent = function(article) {
-		$uibModal.open({
-			size: "lg",
-			templateUrl : 'admin/views/umeditor.html',
-			controller: 'umeditorCtrl',
-			resolve: {
-		        domain : function() {return article;},
-		        params : function() {
-		        	return {
-		        		target: 'article',
-		        		targetId: article.id,
-		        		targetProp: 'content'
-		        	}
-		        }
-			}
-		})
+		
+		window.open('index.html#/umeditor?target=article&targetId='+article.id+"&targetProp=content");
+		
+//		$uibModal.open({
+//			size: "lg",
+//			templateUrl : 'admin/views/umeditor.html',
+//			controller: 'umeditorCtrl',
+//			resolve: {
+//		        domain : function() {return article;},
+//		        params : function() {
+//		        	return {
+//		        		target: 'article',
+//		        		targetId: article.id,
+//		        		targetProp: 'content'
+//		        	}
+//		        }
+//			}
+//		})
 	}
 	
 	$scope.save = function(article){

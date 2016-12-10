@@ -39,10 +39,12 @@
 							<th>昵称</th>
 							<th width="100">姓名</th>
 							<th width="50">性别</th>
-							<th width="50">VIP</th>
 							<th width="100">手机号</th>
-							<th width="100">微信号</th>
-							<th width="100">省份</th>
+							<th width="70">省份</th>
+							<th width="70">城市</th>
+							<th width="70">车型</th>
+							<th width="100">生日</th>
+							<th width="200">兴趣</th>
 							<th width="50">积分</th>
 						</tr>
 					</thead>
@@ -52,10 +54,12 @@
 							<td>{{user.nickname}}</td>
 							<td>{{user.realname}}</td>
 							<td>{{user.sex | sex}}</td>
-							<td>{{user.vipValid | yesOrNo}}</td>
 							<td>{{user.mobile}}</td>
-							<td>{{user.weixin}}</td>
 							<td>{{user.province}}</td>
+							<td>{{user.city}}</td>
+							<td>{{user.car}}</td>
+							<td>{{user.birthday | date:'yyyy-MM'}}</td>
+							<td>{{user.tags}}</td>
 							<td>{{user.point}}</td>
 						</tr>
 					</tbody>

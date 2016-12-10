@@ -26,6 +26,6 @@ public class ClearingSecurityRequestConfig extends SecurityRequestConfigAdapter 
 
     @Override
     public String[] getPostRequests() {
-        return new String[]{"/clearing", "/withdrawale"};
+        return new String[]{"/clearing", "/clearing/user", "/clearing/user2", "/withdrawale"};
     }
 }

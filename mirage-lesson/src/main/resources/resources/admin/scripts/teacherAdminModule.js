@@ -26,7 +26,7 @@ angular.module('teacherAdminModule',[]).config(function($stateProvider) {
 	}
 	
 	$scope.create = function() {
-		$scope.save({saleCount: 0, saleCountPlus: 100});
+		$scope.save({saleCount: 0, saleCountPlus: 0});
 	}
 	
 	$scope.update = function(teacher) {

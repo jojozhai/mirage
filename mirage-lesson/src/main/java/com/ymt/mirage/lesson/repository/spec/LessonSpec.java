@@ -37,8 +37,9 @@ public class LessonSpec extends PzSimpleSpecification<Lesson, LessonInfo> {
         addEqualsCondition(queryWraper, "top");
         addEqualsCondition(queryWraper, "herald");
         addEqualsCondition(queryWraper, "teacherId", "teacher.id");
+        addLikeCondition(queryWraper, "teacherName", "teacher.name");
         
-        if(getCondition().getHerald() != null) {
+        if(getCondition().getHerald() != null && !getCondition().isFromAdmin()) {
             Date now = new Date();
             if(getCondition().getHerald()){
                 addLessThanOrEqualConditionToColumn(queryWraper, "signStartTime", now);

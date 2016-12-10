@@ -19,12 +19,24 @@
             </div> -->
 			<div class="form-group">
 				<label class="control-label col-lg-3">发布:</label>
-				<div class="col-lg-2">
+				<div class="col-lg-1">
 					<div class="custom-checkbox todo-checkbox">
-						<input id="selection" ng-model="lesson.enable" ng-checked="lesson.enable" type="checkbox">
-						<label for="selection" style="margin-top: 4px;"></label>
+						<input id="selection72" ng-model="lesson.enable" ng-checked="lesson.enable" type="checkbox">
+						<label for="selection72" style="margin-top: 4px;"></label>
 					</div>
 				</div>
+				<label class="control-label col-lg-2">置顶:</label>
+                <div class="col-lg-1">
+                    <div class="custom-checkbox todo-checkbox">
+                        <input id="selection71" ng-model="lesson.top" ng-checked="lesson.top" type="checkbox">
+                        <label for="selection71" style="margin-top: 4px;"></label>
+                    </div>
+                </div>
+                <label class="control-label col-lg-2"><span class="text_red">*</span>置顶顺序:</label>
+                <div class="col-lg-2">
+                    <input name="topIndex" ng-model="lesson.topIndex" type="number" class="form-control input-sm" placeholder="置顶顺序" required>
+                    <label class="control-label" ng-show="lessonForm.topIndex.$invalid && lessonForm.topIndex.$dirty">置顶顺序不能为空</label>
+                </div>
 				<!-- <label class="control-label col-lg-2">发布到首页:</label>
                 <div class="col-lg-2">
                     <div class="custom-checkbox todo-checkbox">

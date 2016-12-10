@@ -15,6 +15,8 @@ import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
+
 import com.ymt.mirage.order.domain.OrderState;
 import com.ymt.mirage.user.dto.UserInfo;
 
@@ -28,6 +30,15 @@ public class OrderInfo {
     
     private Long id;
     private Date createdTime;
+    private Date createdTimeTo;
+    /**
+     * 
+     */
+    private String name;
+    /**
+     * 
+     */
+    private String exportDate;
     /**
      * 订单号
      */
@@ -60,6 +71,7 @@ public class OrderInfo {
      * 订单金额
      */
     private BigDecimal amount;
+    private BigDecimal amountTo;
     /**
      * 订单状态
      */
@@ -76,7 +88,10 @@ public class OrderInfo {
      * 用户信息
      */
     private UserInfo userInfo;
-    
+
+    public boolean isEmptyForExport() {
+        return StringUtils.isBlank(getExportDate()) && amount == null && amountTo == null && state == null;
+    }
     /**
      * @return the id
      */
@@ -244,6 +259,54 @@ public class OrderInfo {
      */
     public void setUserMobile(String userMobile) {
         this.userMobile = userMobile;
+    }
+    /**
+     * @return the createdTimeTo
+     */
+    public Date getCreatedTimeTo() {
+        return createdTimeTo;
+    }
+    /**
+     * @param createdTimeTo the createdTimeTo to set
+     */
+    public void setCreatedTimeTo(Date createdTimeTo) {
+        this.createdTimeTo = createdTimeTo;
+    }
+    /**
+     * @return the amountTo
+     */
+    public BigDecimal getAmountTo() {
+        return amountTo;
+    }
+    /**
+     * @param amountTo the amountTo to set
+     */
+    public void setAmountTo(BigDecimal amountTo) {
+        this.amountTo = amountTo;
+    }
+    /**
+     * @return the exportDate
+     */
+    public String getExportDate() {
+        return exportDate;
+    }
+    /**
+     * @param exportDate the exportDate to set
+     */
+    public void setExportDate(String exportDate) {
+        this.exportDate = exportDate;
+    }
+    /**
+     * @return the name
+     */
+    public String getName() {
+        return name;
+    }
+    /**
+     * @param name the name to set
+     */
+    public void setName(String name) {
+        this.name = name;
     }
 
 }

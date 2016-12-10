@@ -11,6 +11,9 @@
  */
 package com.ymt.mirage.lesson.service.impl;
 
+import java.util.List;
+
+import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -62,6 +65,13 @@ public class LessonUserServiceImpl implements LessonUserService {
         LessonUser lessonUser = lessonUserRepository.findByLessonIdAndUserId(info.getLessonId(), info.getUserId());
         if(lessonUser != null) {
             throw new PzException("您已经报过名了");
+        }
+        
+        List<LessonUser> users = lessonUserRepository.findByLessonId(info.getLessonId());
+        if(lesson.getSignLimit() > 0 && CollectionUtils.isNotEmpty(users)) {
+            if(users.size() >= lesson.getSignLimit()) {
+                throw new PzException("报名人数已满");
+            }
         }
         
         lessonUser = new LessonUser();

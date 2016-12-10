@@ -35,7 +35,7 @@
 							<th width="100">姓名</th>
 							<th width="100">微信</th>
 							<th width="150">电话</th>
-							<th width="100">线上</th>
+							<th width="100">线上/线下</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -45,7 +45,7 @@
 							<td>{{user.userInfo.realname}}</td>
 							<td>{{user.userInfo.weixin}}</td>
 							<td>{{user.userInfo.mobile}}</td>
-							<td>{{user.online | yesOrNo}}</td>
+							<td>{{user.online?'线上':'线下'}}</td>
 						</tr>
 					</tbody>
 				</table>

@@ -11,6 +11,8 @@
  */
 package com.ymt.mirage.lesson.repository;
 
+import java.util.List;
+
 import org.springframework.stereotype.Repository;
 
 import com.ymt.mirage.lesson.domain.LessonUser;
@@ -26,5 +28,7 @@ import com.ymt.pz365.data.jpa.repository.PzRepository;
 public interface LessonUserRepository extends PzRepository<LessonUser> {
 
     LessonUser findByLessonIdAndUserId(Long lessonId, Long userId);
+
+    List<LessonUser> findByLessonId(Long lessonId);
 
 }

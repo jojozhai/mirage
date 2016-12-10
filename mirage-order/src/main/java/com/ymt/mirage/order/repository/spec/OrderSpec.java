@@ -11,6 +11,11 @@
  */
 package com.ymt.mirage.order.repository.spec;
 
+import java.util.Date;
+
+import org.apache.commons.lang.StringUtils;
+import org.joda.time.DateTime;
+
 import com.ymt.mirage.order.domain.Order;
 import com.ymt.mirage.order.dto.OrderInfo;
 import com.ymt.pz365.data.jpa.repository.spec.PzSimpleSpecification;
@@ -30,10 +35,22 @@ public class OrderSpec extends PzSimpleSpecification<Order, OrderInfo> {
 
     @Override
     protected void addCondition(QueryWraper<Order> queryWraper) {
+        
+        addLikeCondition(queryWraper, "name");
         addLikeCondition(queryWraper, "userRealname", "user.realname");
         addLikeCondition(queryWraper, "userNickname", "user.nickname");
         addLikeCondition(queryWraper, "userMobile", "user.mobile");
         addEqualsCondition(queryWraper, "state");
+        
+        
+        addBetweenCondition(queryWraper, "amount");
+        
+        if(StringUtils.isNotBlank(getCondition().getExportDate())) {
+            Date endDate = new Date();
+            Date startDate = new DateTime().plusDays(0 - new Integer(getCondition().getExportDate())).toDate();
+            addBetweenConditionToColumn(queryWraper, "createdTime", startDate, endDate);
+        }
+        
     }
 
 }

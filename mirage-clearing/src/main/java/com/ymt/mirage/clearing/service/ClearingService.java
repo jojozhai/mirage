@@ -33,6 +33,8 @@ public interface ClearingService {
      */
     void addUser(String identify, Long userId, Long parentUserId);
     void addUser(String identify, Long userId, Long parentUserId, boolean buy);
+    
+    void addUser2(Long userId, Long parentUserId);
     /**
      * 结算 根据可结算物的信息，将相应的利润分配给与此结算物相关的结算树的节点中。
      * @param userId 针对哪个用户来结算
@@ -41,6 +43,7 @@ public interface ClearingService {
      * @since 2016年9月5日
      */
     void clearing(Clearingable clearingable);
+    
     
     
 }

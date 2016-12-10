@@ -9,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.core.task.TaskExecutor;
 import org.springframework.stereotype.Component;
 
@@ -20,6 +21,7 @@ import com.ymt.mirage.poster.service.UserPosterService;
 import com.ymt.mirage.poster.support.PosterGenerater;
 import com.ymt.mirage.user.domain.User;
 import com.ymt.mirage.user.repository.UserRepository;
+import com.ymt.pz365.framework.core.context.ScanQrcodeEvent;
 import com.ymt.pz365.framework.weixin.service.WeixinService;
 import com.ymt.pz365.framework.weixin.service.WeixinUserService;
 import com.ymt.pz365.framework.weixin.spi.message.WeixinMessageProcessor;
@@ -54,6 +56,9 @@ public class PosterWeixinMessageProcessor implements WeixinMessageProcessor {
 	@Autowired
 	private WeixinUserService userService;
 	
+	@Autowired
+	private ApplicationEventPublisher applicationEventPublisher;
+	
 	private Logger logger = LoggerFactory.getLogger(getClass());
 
 	/* (non-Javadoc)
@@ -85,6 +90,9 @@ public class PosterWeixinMessageProcessor implements WeixinMessageProcessor {
 		
 		UserPoster senderUserPoster = getSenderUserPoster(message);
 		if(senderUserPoster != null) {
+		    
+		    applicationEventPublisher.publishEvent(new ScanQrcodeEvent(senderUserPoster.getUser().getId(), user.getId()));
+		    
 			if(message.isNewUserScanQrcodeEvent() || 
 					(message.isOldUserScanQrcodeEvent() && !senderUserPoster.getPoster().isOnlyNewUserAddPoint())){
 				userPosterService.addSenderPoint(senderUserPoster.getId(), user.getId());

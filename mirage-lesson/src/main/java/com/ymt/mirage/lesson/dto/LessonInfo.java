@@ -58,11 +58,14 @@ public class LessonInfo {
      * 发布
      */
     private Boolean enable;
-
     /**
-     * 发布到首页
+     * 置顶
      */
     private Boolean top;
+    /**
+     * 置顶顺序
+     */
+    private Integer topIndex;
     /**
      * 线上线下
      */
@@ -155,6 +158,15 @@ public class LessonInfo {
      * 推荐视频
      */
     private List<Video> videos;
+    /**
+     * 查询请求是否来自后台内管，解决过期课程消失问题。
+     */
+    private boolean fromAdmin;
+    /**
+     * 报名人数限制
+     */
+    private Integer signLimit;
+    
     /**
      * @return the id
      */
@@ -615,6 +627,48 @@ public class LessonInfo {
      */
     public void setShareSignTip(String shareSignTip) {
         this.shareSignTip = shareSignTip;
+    }
+
+    /**
+     * @return the topIndex
+     */
+    public Integer getTopIndex() {
+        return topIndex;
+    }
+
+    /**
+     * @param topIndex the topIndex to set
+     */
+    public void setTopIndex(Integer topIndex) {
+        this.topIndex = topIndex;
+    }
+
+    /**
+     * @return the fromAdmin
+     */
+    public boolean isFromAdmin() {
+        return fromAdmin;
+    }
+
+    /**
+     * @param fromAdmin the fromAdmin to set
+     */
+    public void setFromAdmin(boolean fromAdmin) {
+        this.fromAdmin = fromAdmin;
+    }
+
+    /**
+     * @return the signLimit
+     */
+    public Integer getSignLimit() {
+        return signLimit;
+    }
+
+    /**
+     * @param signLimit the signLimit to set
+     */
+    public void setSignLimit(Integer signLimit) {
+        this.signLimit = signLimit;
     }
     
 }

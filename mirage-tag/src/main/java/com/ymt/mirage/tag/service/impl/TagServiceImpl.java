@@ -119,7 +119,7 @@ public class TagServiceImpl implements TagService {
 	@Override
 	public Long move(Long id, boolean up) {
 		Tag tag = tagRepository.findOne(id);
-		int index = tag.getIndex();
+		int index = tag.getSort();
 		List<Tag> childs = tag.getParent().getChilds();
 		for (int i = 0; i < childs.size(); i++) {
 			Tag current = childs.get(i);
@@ -127,15 +127,15 @@ public class TagServiceImpl implements TagService {
 				if(up){
 					if(i != 0) {
 						Tag pre = childs.get(i - 1);
-						tag.setIndex(pre.getIndex());
-						pre.setIndex(index);
+						tag.setSort(pre.getSort());
+						pre.setSort(index);
 						tagRepository.save(pre);
 					}
 				}else{
 					if(i != childs.size()-1) {
 						Tag next = childs.get(i + 1);
-						tag.setIndex(next.getIndex());
-						next.setIndex(index);
+						tag.setSort(next.getSort());
+						next.setSort(index);
 						tagRepository.save(next);
 					}
 				}

@@ -87,6 +87,40 @@ public class ClearingServiceImpl implements ClearingService {
     }
     
     @Override
+    public void addUser2(Long userId, Long sharerId) {
+        
+        if(ids.contains(userId)) {
+            return;
+        }else{
+            
+            try {
+                
+                ids.add(userId);
+                
+                String identify = Clearing.TARGET_ID;
+                
+                ClearingTree node = clearingTreeRepository.findByIdentifyAndUserId(identify, userId);
+                
+                if(node == null) {
+                    ClearingTree parent = clearingTreeRepository.findByIdentifyAndUserId(identify, sharerId);
+                    
+                    if(parent != null) {
+                        
+                        logger.info("add new clearing tree node");
+                        ClearingTree newNode =  createClearingTreeNode(identify, userId, parent);
+                        
+                        applicationEventPublisher.publishEvent(new ClearingTreeNodeCreatedEvent(newNode.getId(), parent.getId()));
+                    }
+                }
+                
+            } finally {
+                ids.remove(userId);
+            }
+        }
+        
+    }
+    
+    @Override
     public void addUser(String identify, Long userId, Long sharerId, boolean buy) {
         logger.info("clearing add User identify:"+identify);
         logger.info("clearing add User userId:"+userId);
@@ -249,4 +283,6 @@ public class ClearingServiceImpl implements ClearingService {
         }
             
     }
+
+    
 }

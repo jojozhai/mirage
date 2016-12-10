@@ -11,6 +11,7 @@
  */
 package com.ymt.mirage.order.service.impl;
 
+import java.io.File;
 import java.math.BigDecimal;
 import java.util.List;
 
@@ -35,6 +36,7 @@ import com.ymt.mirage.order.repository.OrderGoodsRepository;
 import com.ymt.mirage.order.repository.OrderRepository;
 import com.ymt.mirage.order.repository.spec.OrderSpec;
 import com.ymt.mirage.order.service.OrderService;
+import com.ymt.mirage.order.spi.xls.ExcelWriter;
 import com.ymt.mirage.user.domain.User;
 import com.ymt.mirage.user.dto.UserInfo;
 import com.ymt.mirage.user.repository.UserRepository;
@@ -73,6 +75,9 @@ public class OrderServiceImpl implements OrderService {
     private WeixinService weixinService;
     
     @Autowired
+    private ExcelWriter<Order> orderExcelWriter;
+    
+    @Autowired
     private ApplicationEventPublisher applicationEventPublisher;
 
     /* (non-Javadoc)
@@ -99,6 +104,9 @@ public class OrderServiceImpl implements OrderService {
         BigDecimal amount = BigDecimal.ZERO;
         for (CartInfo cartInfo : orderInfo.getCartInfos()) {
             Goods goods = orderGoodsService.getGoodsInfo(cartInfo.getProductId());
+            
+            order.setName(goods.getName());
+            
             OrderGoods orderGoods = new OrderGoods();
             orderGoods.setOrder(order);
             orderGoods.setCount(new BigDecimal(cartInfo.getCount()));
@@ -223,6 +231,15 @@ public class OrderServiceImpl implements OrderService {
         applicationEventPublisher.publishEvent(orderStateChangeEvent);
         
         return orderInfo;
+    }
+
+    @Override
+    public void export(OrderInfo orderInfo, File file) {
+        if(orderInfo.isEmptyForExport()){
+            throw new PzException("请至少指定一组查询条件");
+        }
+        List<Order> data = orderRepository.findAll(new OrderSpec(orderInfo));
+        orderExcelWriter.write(data, file);
     }
 
 }

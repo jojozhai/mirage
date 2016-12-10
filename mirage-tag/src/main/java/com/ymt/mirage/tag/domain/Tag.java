@@ -31,6 +31,8 @@ public class Tag extends TreeImpl<Tag> {
     
     private int hot;
     
+    private int hotplus;
+    
 	public TagInfo toTree() {
 		TagInfo result = new TagInfo();
 		BeanUtils.copyProperties(this, result);
@@ -96,6 +98,20 @@ public class Tag extends TreeImpl<Tag> {
      */
     public void setHot(int hot) {
         this.hot = hot;
+    }
+
+    /**
+     * @return the hotplus
+     */
+    public int getHotplus() {
+        return hotplus;
+    }
+
+    /**
+     * @param hotplus the hotplus to set
+     */
+    public void setHotplus(int hotplus) {
+        this.hotplus = hotplus;
     }
 
 

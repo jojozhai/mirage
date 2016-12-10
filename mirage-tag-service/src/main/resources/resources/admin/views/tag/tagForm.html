@@ -22,6 +22,11 @@
                     <input name="hot" ng-model="tag.hot" type="number" class="form-control input-sm" placeholder="热度" required>
                     <label class="control-label" ng-show="tagForm.hot.$invalid && tagForm.hot.$dirty">热度不能为空</label>
                 </div>
+                <label class="control-label col-lg-2">热度加成:</label>
+                <div class="col-lg-2">
+                    <input name="hotplus" ng-model="tag.hotplus" type="number" class="form-control input-sm" placeholder="热度加成" required>
+                    <label class="control-label" ng-show="tagForm.hotplus.$invalid && tagForm.hotplus.$dirty">热度加成不能为空</label>
+                </div>
             </div>
 			<div class="form-group">
 				<label class="control-label col-lg-3">分类背景图片:</label>

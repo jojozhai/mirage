@@ -49,6 +49,13 @@
                     </div>
                 </div>
 			</div>
+			<div class="form-group"  ng-class="heraldForm.signLimit.$invalid && heraldForm.signLimit.$dirty ? 'has-error': ''">
+                <label class="control-label col-lg-3"><span class="text_red">*</span>&nbsp;报名人数限制:</label>
+                <div class="col-lg-2">
+                    <input name="signLimit" ng-model="herald.signLimit" type="text" class="form-control input-sm" placeholder="报名人数限制" required>
+                    <label class="control-label" ng-show="heraldForm.signLimit.$invalid && heraldForm.signLimit.$dirty">报名人数限制</label>
+                </div>
+            </div>
 			<div class="form-group">
                 <label class="control-label col-lg-3">分享报名:</label>
                 <div class="col-lg-1">

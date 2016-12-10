@@ -10,6 +10,7 @@ angular.module('orderAdminModule',[]).config(function($stateProvider) {
 //服务配置
 }).service("orderRestService", function($resource, commonService){
 	var config = commonService.getDefaultRestSetting();
+	config.doExport = {url:"order/export", method:"GET"};
 	return $resource("order/:id", {id:"@id"}, config);
 //控制器
 }).controller('orderManageCtrl', function($scope, $uibModal, orderRestService, commonService) {
@@ -25,6 +26,15 @@ angular.module('orderAdminModule',[]).config(function($stateProvider) {
 			$scope.orders = data.content;
 		});
 	}
+	
+	$scope.exportOrder = function(){
+		$uibModal.open({
+			size: "lg",
+			templateUrl : 'admin/views/orderExport.html',
+			controller: 'orderExportCtrl',
+			resolve: {}
+		})
+	} 
 	
 	$scope.create = function() {
 		$scope.save({});
@@ -108,6 +118,51 @@ angular.module('orderAdminModule',[]).config(function($stateProvider) {
 		})		
 	}
 	
+}).controller('orderExportCtrl',function ($scope, $uibModalInstance, commonService, orderRestService) {
+	
+	$scope.order = {};
+	
+	$scope.states = [{value:"INIT", name:"未支付"},{value:"PAYED", name:"已支付"},{value:"WORKING", name:"工作中"},{value:"FINISH", name:"订单完成"},{value:"CANCEL", name:"订单取消"},{value:"COMPLETE", name:"工作完成"}]
+
+	$scope.popup1 = {
+		opened : false
+	};
+	
+	$scope.popup2 = {
+		opened : false
+	};
+	
+	$scope.open1 = function() {
+		$scope.popup1.opened = true;
+	};
+	
+	$scope.open2 = function() {
+		$scope.popup2.opened = true;
+	};
+	
+	$scope.dateOptions = {
+		startingDay : 1
+	};
+	
+	$scope.doExport = function(order) {
+		var url = 'order/export';
+		if(order.exportDate){
+			url = url + '?exportDate='+order.exportDate
+		}else{
+			url = url + '?exportDate=';
+		}
+		if(order.state){
+			url = url + '&state='+order.state;
+		}
+		if(order.amount){
+			url = url + '&amount='+order.amount;
+		}
+		if(order.amountTo){
+			url = url + '&amountTo='+order.amountTo;
+		}
+		window.open(url);
+	}
+
 }).filter('orderState', function(){
 	return function (text) {
 		if(text == 'INIT'){

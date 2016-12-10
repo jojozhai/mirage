@@ -2,12 +2,12 @@
 	<div class="smart-widget-header">订单管理</div>
 	<div class="smart-widget-inner">
 		<div class="smart-widget-body">
-			<!-- <button ng-click="create()" class="btn btn-success btn-sm">
-				<i class="ion-plus m-right-xs"></i>新建订单
-			</button> -->
 			<button type="button" class="btn btn-success btn-sm" ng-click="isConditionCollapsed = !isConditionCollapsed">
 				<i class="fa fa-search m-right-xs"></i>查询
 			</button>
+			<button ng-click="exportOrder()" class="btn btn-success btn-sm">
+                <i class="ion-plus m-right-xs"></i>导出
+            </button>
 		</div>
 		<div uib-collapse="isConditionCollapsed" style="padding-left: 20px;padding-right: 20px;">
 			<div class="panel">

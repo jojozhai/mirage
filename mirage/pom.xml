@@ -15,7 +15,7 @@
 		<repository>
 			<id>nexus</id>
 			<name>Idea Nexus Repository</name>
-			<url>http://115.182.42.23/nexus/content/groups/public</url>
+			<url>http://mvn.pinzhi365.com/nexus/content/groups/public</url>
 		</repository>
 		<repository>
 			<id>mvn-repo</id>
@@ -27,12 +27,12 @@
 		<repository>
 			<id>nexus</id>
 			<name>nexus releases repository</name>
-			<url>http://115.182.42.23/nexus/content/repositories/releases</url>
+			<url>http://mvn.pinzhi365.com/nexus/content/repositories/releases</url>
 		</repository>
 		<snapshotRepository>
 			<id>nexus-snapshots</id>
 			<name>nexus snapshots Repository</name>
-			<url>http://115.182.42.23/nexus/content/repositories/snapshots</url>
+			<url>http://mvn.pinzhi365.com/nexus/content/repositories/snapshots</url>
 		</snapshotRepository>
 	</distributionManagement>
 

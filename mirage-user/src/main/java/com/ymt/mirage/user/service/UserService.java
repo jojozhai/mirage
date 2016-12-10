@@ -11,6 +11,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
 import com.ymt.mirage.user.dto.MobileUpdateInfo;
+import com.ymt.mirage.user.dto.ResetPasswordInfo;
 import com.ymt.mirage.user.dto.UserInfo;
 import com.ymt.pz365.framework.core.context.Property;
 import com.ymt.pz365.framework.core.web.support.SuccessResponse;
@@ -38,5 +39,7 @@ public interface UserService extends UserDetailsService {
     SuccessResponse login(UserInfo info) throws UnsupportedEncodingException;
 
     void updatePassword(Long currentUserId, String oldPassword, String newPassword);
+
+    void resetPassword(ResetPasswordInfo resetPasswordInfo);
 
 }

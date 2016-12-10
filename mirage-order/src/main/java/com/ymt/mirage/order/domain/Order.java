@@ -44,6 +44,10 @@ import com.ymt.pz365.data.jpa.domain.DomainImpl;
 public class Order extends DomainImpl implements Clearingable {
     
     /**
+     * 名称
+     */
+    private String name;
+    /**
      * 订单号
      */
     private String number;
@@ -201,6 +205,12 @@ public class Order extends DomainImpl implements Clearingable {
      */
     public void setCompleteTime(Date completeTime) {
         this.completeTime = completeTime;
+    }
+    /**
+     * @param name the name to set
+     */
+    public void setName(String name) {
+        this.name = name;
     }
 
 }

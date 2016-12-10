@@ -3,6 +3,7 @@
  */
 package com.ymt.mirage.lesson.service;
 
+import java.io.File;
 import java.util.List;
 
 import org.springframework.data.domain.Page;
@@ -31,6 +32,8 @@ public interface LessonService {
 	void delete(Long id);
 	
 	List<LessonInfo> findAll();
+
+    String export(Long id, File file);
 
     
 

@@ -3,7 +3,6 @@
  */
 package com.ymt.mirage.user.domain;
 
-import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
 import java.util.Collection;
 import java.util.Date;
@@ -12,7 +11,6 @@ import javax.persistence.Entity;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.DateTime;
 import org.springframework.security.core.GrantedAuthority;
@@ -384,6 +382,21 @@ public class User extends DomainImpl implements UserDetails {
 	public String getSex() {
 		return sex;
 	}
+	
+	public String getSexDesc() {
+	    if(StringUtils.isBlank(getSex())) {
+	        return "未知";
+	    }
+	    if(StringUtils.equals(getSex(), "1")){
+	        return "男";
+	    }else if(StringUtils.equals(getSex(), "2")){
+	        return "女";
+	    }else if(StringUtils.equals(getSex(), "0")){
+	        return "未知";
+	    }else{
+	        return getSex();
+	    }
+    }
 
 	/**
 	 * @param sex the sex to set
@@ -650,11 +663,6 @@ public class User extends DomainImpl implements UserDetails {
      */
     public void setBeans(int beans) {
         this.beans = beans;
-    }
-
-    public String getToken() throws UnsupportedEncodingException {
-        String userAndPass = getUsername()+":"+getPassword();
-        return "Basic "+Base64.encodeBase64String(userAndPass.getBytes("UTF-8"));
     }
 
 }

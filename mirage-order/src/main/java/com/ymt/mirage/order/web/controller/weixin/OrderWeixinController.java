@@ -11,8 +11,17 @@
  */
 package com.ymt.mirage.order.web.controller.weixin;
 
-import javax.servlet.http.HttpServletRequest;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.util.UUID;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.data.domain.Page;
@@ -27,6 +36,7 @@ import com.ymt.mirage.order.dto.OrderInfo;
 import com.ymt.mirage.order.dto.OrderViewInfo;
 import com.ymt.mirage.order.service.OrderService;
 import com.ymt.mirage.user.web.controller.weixin.CurrentUserHolder;
+import com.ymt.pz365.framework.web.support.FileExtraUtils;
 import com.ymt.pz365.framework.weixin.pay.JsapiPaymentInfo;
 
 /**

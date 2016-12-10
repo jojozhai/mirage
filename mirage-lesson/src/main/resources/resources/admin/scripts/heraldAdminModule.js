@@ -23,6 +23,7 @@ angular.module('heraldAdminModule',['umeditorModule']).config(function($statePro
 	$scope.query = function() {
 		var condition = commonService.buildPageCondition($scope.condition, $scope.pageInfo);
 		condition.herald = true;
+		condition.fromAdmin = true;
 		heraldRestService.query(condition).$promise.then(function(data){
 			$scope.pageInfo.totalElements = data.totalElements;
 			$scope.heralds = data.content;
@@ -30,7 +31,7 @@ angular.module('heraldAdminModule',['umeditorModule']).config(function($statePro
 	}
 	
 	$scope.create = function() {
-		$scope.save({enable:true, top: false, herald: true, online: true, offline: true, shareSign: false});
+		$scope.save({enable:true, top: false, topIndex:0, signLimit:0, herald: true, online: true, offline: true, shareSign: false});
 	}
 	
 	$scope.update = function(herald) {
@@ -109,6 +110,10 @@ angular.module('heraldAdminModule',['umeditorModule']).config(function($statePro
 			}
 		});
 	} 
+	
+	$scope.exportXls = function(herald){
+		window.open('lesson/'+herald.id+'/export');
+	}
 	
 	$scope.cleanCondition = function() {
 		$scope.condition = {};

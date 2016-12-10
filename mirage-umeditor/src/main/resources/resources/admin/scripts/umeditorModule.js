@@ -2,7 +2,7 @@
 //平台管理模块的配置
 angular.module('umeditorModule',[]).config(function($stateProvider) {
 	//路由配置
-	$stateProvider.state('index.umeditor', {
+	$stateProvider.state('umeditor', {
 		url: "/umeditor?target&targetId&targetProp",
 		controller: "umeditorCtrl",
 		templateUrl: "admin/views/umeditor.html"
@@ -14,9 +14,12 @@ angular.module('umeditorModule',[]).config(function($stateProvider) {
 	config.setValue = {url:"domain/property", method:"PUT"};
 	return $resource("domain/:id", {id:"@id"}, config);
 //控制器
-}).controller('umeditorCtrl', function($scope, domain, params, umeditorRestService, commonService) {
+}).controller('umeditorCtrl', function($scope, $stateParams, umeditorRestService, commonService) {
 
-	$scope.params = params;
+	$scope.params = {};
+	$scope.params.target = $stateParams.target;
+	$scope.params.targetId = $stateParams.targetId;
+	$scope.params.targetProp = $stateParams.targetProp;
 	
 }).directive('mirageUmeditor', function(commonService, umeditorRestService) {return {
 	restrict : 'A',

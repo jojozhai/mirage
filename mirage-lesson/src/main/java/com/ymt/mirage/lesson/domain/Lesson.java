@@ -80,9 +80,17 @@ public class Lesson extends DomainImpl implements Tagable {
      */
     private boolean offline;
     /**
-     * 发布到首页
+     * 置顶
      */
     private boolean top;
+    /**
+     * 置顶顺序
+     */
+    private int topIndex;
+    /**
+     * 报名人数限制
+     */
+    private int signLimit;
     /**
      * 教师
      */
@@ -442,6 +450,30 @@ public class Lesson extends DomainImpl implements Tagable {
      */
     public void setShareSignTip(String shareSignTip) {
         this.shareSignTip = shareSignTip;
+    }
+    /**
+     * @return the topIndex
+     */
+    public int getTopIndex() {
+        return topIndex;
+    }
+    /**
+     * @param topIndex the topIndex to set
+     */
+    public void setTopIndex(int topIndex) {
+        this.topIndex = topIndex;
+    }
+    /**
+     * @return the signLimit
+     */
+    public int getSignLimit() {
+        return signLimit;
+    }
+    /**
+     * @param signLimit the signLimit to set
+     */
+    public void setSignLimit(int signLimit) {
+        this.signLimit = signLimit;
     }
     
 }

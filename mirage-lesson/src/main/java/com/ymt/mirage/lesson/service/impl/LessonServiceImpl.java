@@ -11,6 +11,7 @@
  */
 package com.ymt.mirage.lesson.service.impl;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,6 +27,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.ymt.mirage.lesson.domain.Lesson;
 import com.ymt.mirage.lesson.domain.LessonSet;
 import com.ymt.mirage.lesson.domain.LessonTag;
+import com.ymt.mirage.lesson.domain.LessonUser;
 import com.ymt.mirage.lesson.dto.LessonInfo;
 import com.ymt.mirage.lesson.dto.SignUpState;
 import com.ymt.mirage.lesson.event.LessonInfoChangedEvent;
@@ -39,7 +41,10 @@ import com.ymt.mirage.lesson.repository.spec.LessonSpec;
 import com.ymt.mirage.lesson.repository.spec.LessonTagSpec;
 import com.ymt.mirage.lesson.service.LessonService;
 import com.ymt.mirage.lesson.service.TeacherService;
+import com.ymt.mirage.lesson.spi.xls.ExcelWriter;
+import com.ymt.mirage.tag.domain.Tag;
 import com.ymt.mirage.tag.dto.TagInfo;
+import com.ymt.mirage.tag.repository.TagRepository;
 import com.ymt.mirage.tag.service.TagService;
 import com.ymt.pz365.data.jpa.support.AbstractDomain2InfoConverter;
 import com.ymt.pz365.data.jpa.support.QueryResultConverter;
@@ -70,10 +75,16 @@ public class LessonServiceImpl implements LessonService {
     private TeacherRepository teacherRepository;
     
     @Autowired
+    private TagRepository tagRepository;
+    
+    @Autowired
     private TagService tagService;
     
     @Autowired
     private TeacherService teacherService;
+    
+    @Autowired
+    private ExcelWriter<LessonUser> lessonUserExcelWriter;
     
     @Autowired
     private ApplicationEventPublisher applicationEventPublisher;
@@ -93,6 +104,8 @@ public class LessonServiceImpl implements LessonService {
             });
         }else if(lessonInfo.getSetId() != null) {
             Page<LessonSet> pageData = lessonSetRepository.findAll(new LessonSetSpec(lessonInfo), pageable);
+            Tag tag = tagRepository.findOne(lessonInfo.getSetId());
+            tag.setHot(tag.getHot() + 1);
             return QueryResultConverter.convert(pageData, pageable, new AbstractDomain2InfoConverter<LessonSet, LessonInfo>() {
                 @Override
                 protected void doConvert(LessonSet domain, LessonInfo info) throws Exception {
@@ -212,6 +225,14 @@ public class LessonServiceImpl implements LessonService {
         lesson.setContent(lessonInfo.getContent());
         lessonRepository.save(lesson);
         return lessonInfo;
+    }
+
+    @Override
+    public String export(Long id, File file) {
+        Lesson lesson = lessonRepository.findOne(id);
+        List<LessonUser> data = lessonUserRepository.findByLessonId(id);
+        lessonUserExcelWriter.write(data, file);
+        return lesson.getName();
     }
 
 }

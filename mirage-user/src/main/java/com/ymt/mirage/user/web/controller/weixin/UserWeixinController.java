@@ -6,6 +6,8 @@ package com.ymt.mirage.user.web.controller.weixin;
 import java.io.UnsupportedEncodingException;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.data.domain.Page;
@@ -18,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ymt.mirage.user.domain.User;
 import com.ymt.mirage.user.dto.MobileUpdateInfo;
+import com.ymt.mirage.user.dto.ResetPasswordInfo;
 import com.ymt.mirage.user.dto.UserInfo;
 import com.ymt.mirage.user.service.UserService;
 import com.ymt.pz365.framework.core.context.Property;
@@ -28,11 +31,13 @@ import com.ymt.pz365.framework.core.web.support.SuccessResponse;
  * @since 2016年5月3日
  */
 @RestController
-@Profile({"weixin", "app"})
+@Profile({"!admin"})
 public class UserWeixinController {
 	
 	@Autowired
 	private UserService userService;
+	
+	private Logger logger = LoggerFactory.getLogger(getClass());
 	
 	@RequestMapping(value = "/user/current", method = RequestMethod.GET)
 	public UserInfo getCurrentUser(){
@@ -50,12 +55,12 @@ public class UserWeixinController {
 	}
 	
 	@RequestMapping(value = "/user", method = RequestMethod.POST)
-    public SuccessResponse create(UserInfo info) throws UnsupportedEncodingException {
+    public SuccessResponse create(@RequestBody UserInfo info) throws UnsupportedEncodingException {
         return userService.create(info);
     }
 	
 	@RequestMapping(value = "/user/login", method = RequestMethod.POST)
-    public SuccessResponse login(UserInfo info) throws UnsupportedEncodingException {
+    public SuccessResponse login(@RequestBody UserInfo info) throws UnsupportedEncodingException {
         return userService.login(info);
     }
 	
@@ -65,8 +70,15 @@ public class UserWeixinController {
 		userService.update(info);
 	}
 	
+	@RequestMapping(value = "/user/password/reset", method = RequestMethod.PUT)
+    public void resetPassword(@RequestBody ResetPasswordInfo resetPasswordInfo) throws Exception {
+        userService.resetPassword(resetPasswordInfo);
+    }
+	
 	@RequestMapping(value = "/user/password", method = RequestMethod.PUT)
     public void updatePassword(String oldPassword, String newPassword) throws Exception {
+	    logger.info("new password:"+newPassword);
+	    logger.info("old password:"+oldPassword);
         userService.updatePassword(CurrentUserHolder.getCurrentUserId(), oldPassword, newPassword);
     }
 	
