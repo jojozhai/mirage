@@ -42,6 +42,7 @@ public class OrderSpec extends PzSimpleSpecification<Order, OrderInfo> {
         addLikeCondition(queryWraper, "userMobile", "user.mobile");
         addEqualsCondition(queryWraper, "state");
         
+        addInConditionToColumn(queryWraper, "state", getCondition().getStates());
         
         addBetweenCondition(queryWraper, "amount");
         

@@ -13,6 +13,7 @@ package com.ymt.mirage.order.service.impl;
 
 import java.io.File;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
@@ -238,6 +239,12 @@ public class OrderServiceImpl implements OrderService {
         if(orderInfo.isEmptyForExport()){
             throw new PzException("请至少指定一组查询条件");
         }
+        List<OrderState> states = new ArrayList<>();
+        states.add(OrderState.PAYED);
+        states.add(OrderState.COMPLETE);
+        states.add(OrderState.FINISH);
+        states.add(OrderState.WORKING);
+        orderInfo.setStates(states);
         List<Order> data = orderRepository.findAll(new OrderSpec(orderInfo));
         orderExcelWriter.write(data, file);
     }

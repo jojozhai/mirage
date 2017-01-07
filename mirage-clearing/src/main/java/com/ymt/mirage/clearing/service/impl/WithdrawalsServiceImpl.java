@@ -14,6 +14,8 @@ package com.ymt.mirage.clearing.service.impl;
 import java.math.BigDecimal;
 import java.util.Date;
 
+import org.apache.commons.lang.StringUtils;
+import org.joda.time.DateTime;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -32,7 +34,9 @@ import com.ymt.mirage.user.repository.UserRepository;
 import com.ymt.pz365.data.jpa.support.AbstractDomain2InfoConverter;
 import com.ymt.pz365.data.jpa.support.QueryResultConverter;
 import com.ymt.pz365.framework.core.exception.PzException;
+import com.ymt.pz365.framework.param.service.ParamService;
 import com.ymt.pz365.framework.weixin.service.WeixinService;
+import com.ymt.pz365.framework.weixin.support.message.TemplateMessage;
 
 /**
  *
@@ -53,6 +57,9 @@ public class WithdrawalsServiceImpl implements WithdrawalsService {
     @Autowired
     private WeixinService weixinService;
     
+    @Autowired
+    private ParamService paramService;
+    
     @Override
     public Page<WithdrawalsInfo> query(WithdrawalsInfo withdrawalsInfo, Pageable pageable) {
         Page<Withdrawals> pageData = withdrawalsRepository.findAll(new WithdrawalsSpec(withdrawalsInfo), pageable);
@@ -66,6 +73,10 @@ public class WithdrawalsServiceImpl implements WithdrawalsService {
                 }
             }
         });
+    }
+    
+    public static void main(String[] args) {
+        System.out.println(new BigDecimal(81.560001).compareTo(new BigDecimal(81.56)));
     }
 
     @Override
@@ -85,6 +96,21 @@ public class WithdrawalsServiceImpl implements WithdrawalsService {
         withdrawals.setState(WithdrawalsState.INIT);
         withdrawals.setUser(userRepository.getOne(withdrawalsInfo.getUserId()));
         withdrawalsInfo.setId(withdrawalsRepository.save(withdrawals).getId());
+        
+        String[] waiterOpenIds = StringUtils.splitByWholeSeparatorPreserveAllTokens(paramService.getParam("bwkWaiterOpenId", "").getValue(), ",");
+        for (String openId : waiterOpenIds) {
+            TemplateMessage templateMessage = new TemplateMessage(openId, "90BhDG-fA84CYwoQaZvUEf1ax9s_QABIhnZ23dTHPkQ");
+            templateMessage.addValue("money", withdrawalsInfo.getAmount().toString());
+            templateMessage.addValue("timet", new DateTime().toString("yyyy-MM-dd HH:mm:ss"));
+            
+            String content = paramService.getParam("templateContentForWithdrawals", "%s 申请体现金额：%s 元，请及时审核，在后台确认发放。").getValue();
+            templateMessage.addValue("remark", String.format(content, user.getNickname(), withdrawalsInfo.getAmount()));
+            try {
+                weixinService.pushTemplateMessage(templateMessage);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
         return withdrawalsInfo;
     }
 
@@ -94,10 +120,6 @@ public class WithdrawalsServiceImpl implements WithdrawalsService {
         WithdrawalsInfo info = new WithdrawalsInfo();
         BeanUtils.copyProperties(withdrawals, info);
         return info;
-    }
-    
-    public static void main(String[] args) {
-        System.out.println(new BigDecimal(100).compareTo(new BigDecimal(50)));
     }
 
     @Override

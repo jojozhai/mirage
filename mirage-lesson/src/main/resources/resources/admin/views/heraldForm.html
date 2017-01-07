@@ -49,6 +49,13 @@
                     </div>
                 </div>
 			</div>
+			<div class="form-group"  ng-class="heraldForm.tip.$invalid && heraldForm.tip.$dirty ? 'has-error': ''">
+                <label class="control-label col-lg-3"><span class="text_red">*</span>&nbsp;温馨提示:</label>
+                <div class="col-lg-6">
+                    <input name="tip" ng-model="herald.tip" type="text" class="form-control input-sm" placeholder="温馨提示" required>
+                    <label class="control-label" ng-show="heraldForm.tip.$invalid && heraldForm.tip.$dirty">温馨提示不能为空</label>
+                </div>
+            </div>
 			<div class="form-group"  ng-class="heraldForm.signLimit.$invalid && heraldForm.signLimit.$dirty ? 'has-error': ''">
                 <label class="control-label col-lg-3"><span class="text_red">*</span>&nbsp;报名人数限制:</label>
                 <div class="col-lg-2">

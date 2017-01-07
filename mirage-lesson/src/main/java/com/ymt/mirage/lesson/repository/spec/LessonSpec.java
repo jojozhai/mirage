@@ -11,7 +11,13 @@
  */
 package com.ymt.mirage.lesson.repository.spec;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+
+import javax.persistence.criteria.Predicate;
+
+import org.apache.commons.lang.StringUtils;
 
 import com.ymt.mirage.lesson.domain.Lesson;
 import com.ymt.mirage.lesson.dto.LessonInfo;
@@ -32,12 +38,21 @@ public class LessonSpec extends PzSimpleSpecification<Lesson, LessonInfo> {
 
     @Override
     protected void addCondition(QueryWraper<Lesson> queryWraper) {
+        addEqualsCondition(queryWraper, "sid", "id");
         addLikeCondition(queryWraper, "name");
         addEqualsCondition(queryWraper, "enable");
         addEqualsCondition(queryWraper, "top");
         addEqualsCondition(queryWraper, "herald");
         addEqualsCondition(queryWraper, "teacherId", "teacher.id");
         addLikeCondition(queryWraper, "teacherName", "teacher.name");
+        
+        if(StringUtils.isNotBlank(getCondition().getKeyword())) {
+            String value = getCondition().getKeyword();
+            List<Predicate> orCondition = new ArrayList<>();
+            orCondition.add(createLikeCondition(queryWraper, "name", value));
+            orCondition.add(createLikeCondition(queryWraper, "teacher.name", value));
+            queryWraper.getPredicates().add(queryWraper.getCb().or(orCondition.toArray(new Predicate[orCondition.size()])));
+        }
         
         if(getCondition().getHerald() != null && !getCondition().isFromAdmin()) {
             Date now = new Date();

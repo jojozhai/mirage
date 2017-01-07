@@ -40,8 +40,9 @@ public class LessonUserExcelWriter extends AbstractExcelWriter<LessonUser> {
         sheet.addCell(new Label(3, rowIndex, data.getUser().getJob(), normalCellFormat));
         sheet.addCell(new Label(4, rowIndex, data.getUser().getMobile(), normalCellFormat));
         sheet.addCell(new Label(5, rowIndex, data.getUser().getWeixin(), normalCellFormat));
+        sheet.addCell(new Label(7, rowIndex, data.getUser().getProvince(), normalCellFormat));
         sheet.addCell(new Label(6, rowIndex, data.getUser().getCity(), normalCellFormat));
-        sheet.addCell(new Label(7, rowIndex, data.isOnline()?"线上":"线下", normalCellFormat));
+        sheet.addCell(new Label(8, rowIndex, data.isOnline()?"线上":"线下", normalCellFormat));
         
     }
     
@@ -54,6 +55,7 @@ public class LessonUserExcelWriter extends AbstractExcelWriter<LessonUser> {
         headers.add("职业");
         headers.add("手机号");
         headers.add("微信号");
+        headers.add("省份");
         headers.add("城市");
         headers.add("线上");
         return headers;

@@ -143,6 +143,10 @@ public class Lesson extends DomainImpl implements Tagable {
     @ElementCollection
     private List<Video> videos;
     /**
+     * 温馨提示
+     */
+    private String tip;
+    /**
      * 分类
      */
     @OneToMany(mappedBy = "target", cascade = CascadeType.REMOVE)
@@ -474,6 +478,18 @@ public class Lesson extends DomainImpl implements Tagable {
      */
     public void setSignLimit(int signLimit) {
         this.signLimit = signLimit;
+    }
+    /**
+     * @return the tip
+     */
+    public String getTip() {
+        return tip;
+    }
+    /**
+     * @param tip the tip to set
+     */
+    public void setTip(String tip) {
+        this.tip = tip;
     }
     
 }

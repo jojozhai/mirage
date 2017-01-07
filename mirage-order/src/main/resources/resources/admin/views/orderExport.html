@@ -23,14 +23,20 @@
 					<input name="amountTo" ng-model="order.amountTo" type="number" class="form-control input-sm" placeholder="金额">
 				</div>
 			</div>
-			<div class="form-group"  ng-class="orderForm.state.$invalid && orderForm.state.$dirty ? 'has-error': ''">
+			<div class="form-group">
+                <label class="control-label col-lg-3">&nbsp;商品名字:</label>
+                <div class="col-lg-3">
+                    <input name="name" ng-model="order.name" type="text" class="form-control input-sm" placeholder="商品名字">
+                </div>
+            </div>
+			<!-- <div class="form-group"  ng-class="orderForm.state.$invalid && orderForm.state.$dirty ? 'has-error': ''">
                 <label class="control-label col-lg-3">状态:</label>
                 <div class="col-lg-3">
                     <select ng-model="order.state" ng-options="state.value as state.name for state in states" class="form-control input-sm">
 	                    <option></option>
 	                </select>
                 </div>
-            </div>
+            </div> -->
             
 			<div class="text-right m-top-md">
 				<button ng-click="doExport(order)" class="btn btn-success btn-sm" ng-disabled="orderForm.$invalid"><i class="fa fa-save m-right-xs"></i>导出</button>

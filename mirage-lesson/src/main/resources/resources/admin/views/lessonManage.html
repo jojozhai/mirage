@@ -18,6 +18,7 @@
 					<div>
 					<form class="form-inline no-margin" novalidate>
 						<div class="form-group">
+						  <input ng-model="condition.sid" type="text" class="form-control input-sm" placeholder="课程id">
 							<input ng-model="condition.name" type="text" class="form-control input-sm" placeholder="课程名称">
                             <input ng-model="condition.teacherName" type="text" class="form-control input-sm" placeholder="教师名称">
 						</div>
@@ -35,6 +36,7 @@
 					<thead>
 						<tr>
 							<th width="100">序号</th>
+							<th width="100">id</th>
 							<th>名称</th>
 							<th width="100">老师</th>
 							<th width="200">操作</th>
@@ -43,6 +45,7 @@
 					<tbody>
 						<tr ng-repeat = "lesson in lessons">
 							<td>{{$index+1}}</td>
+							<td>{{lesson.id}}</td>
 							<td>{{lesson.name}}</td>
 							<td>{{lesson.teacherName}}</td>
 							<td>

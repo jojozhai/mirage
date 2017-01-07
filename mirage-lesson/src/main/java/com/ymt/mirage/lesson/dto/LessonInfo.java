@@ -26,10 +26,15 @@ import com.ymt.mirage.tag.dto.TagInfo;
 public class LessonInfo {
     
     private Long id;
+    private Long sid;
     /**
      * 课程名称
      */
     private String name;
+    /**
+     * 关键字
+     */
+    private String keyword;
     /**
      * 一句话简介
      */
@@ -166,6 +171,10 @@ public class LessonInfo {
      * 报名人数限制
      */
     private Integer signLimit;
+    /**
+     * 温馨提示
+     */
+    private String tip;
     
     /**
      * @return the id
@@ -669,6 +678,48 @@ public class LessonInfo {
      */
     public void setSignLimit(Integer signLimit) {
         this.signLimit = signLimit;
+    }
+
+    /**
+     * @return the sid
+     */
+    public Long getSid() {
+        return sid;
+    }
+
+    /**
+     * @param sid the sid to set
+     */
+    public void setSid(Long sid) {
+        this.sid = sid;
+    }
+
+    /**
+     * @return the tip
+     */
+    public String getTip() {
+        return tip;
+    }
+
+    /**
+     * @param tip the tip to set
+     */
+    public void setTip(String tip) {
+        this.tip = tip;
+    }
+
+    /**
+     * @return the keywork
+     */
+    public String getKeyword() {
+        return keyword;
+    }
+
+    /**
+     * @param keywork the keywork to set
+     */
+    public void setKeyword(String keywork) {
+        this.keyword = keywork;
     }
     
 }

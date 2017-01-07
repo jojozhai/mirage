@@ -21,7 +21,7 @@ import com.ymt.mirage.poster.service.UserPosterService;
 import com.ymt.mirage.poster.support.PosterGenerater;
 import com.ymt.mirage.user.domain.User;
 import com.ymt.mirage.user.repository.UserRepository;
-import com.ymt.pz365.framework.core.context.ScanQrcodeEvent;
+import com.ymt.pz365.framework.core.event.ScanQrcodeEvent;
 import com.ymt.pz365.framework.weixin.service.WeixinService;
 import com.ymt.pz365.framework.weixin.service.WeixinUserService;
 import com.ymt.pz365.framework.weixin.spi.message.WeixinMessageProcessor;

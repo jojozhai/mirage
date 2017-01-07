@@ -76,6 +76,7 @@ public class OrderInfo {
      * 订单状态
      */
     private OrderState state;
+    private List<OrderState> states;
     /**
      * 商品信息
      */
@@ -307,6 +308,18 @@ public class OrderInfo {
      */
     public void setName(String name) {
         this.name = name;
+    }
+    /**
+     * @return the states
+     */
+    public List<OrderState> getStates() {
+        return states;
+    }
+    /**
+     * @param states the states to set
+     */
+    public void setStates(List<OrderState> states) {
+        this.states = states;
     }
 
 }

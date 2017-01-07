@@ -4,6 +4,7 @@
 package com.ymt.mirage.article.service.impl;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.BeanUtils;
@@ -107,6 +108,7 @@ public class ArticleServiceImpl implements ArticleService {
 		BeanUtils.copyProperties(articleInfo, article);
 		if(articleInfo.getEnable()) {
             article.setEnabled(true);
+            article.setCreatedTime(new Date());
         }
 		articleRepository.save(article);
 		tagService.addTag(article, articleInfo.getTagInfos());

@@ -16,7 +16,7 @@ import org.springframework.context.ApplicationListener;
 import org.springframework.stereotype.Component;
 
 import com.ymt.mirage.clearing.service.ClearingService;
-import com.ymt.pz365.framework.core.context.ScanQrcodeEvent;
+import com.ymt.pz365.framework.core.event.ScanQrcodeEvent;
 
 /**
  *

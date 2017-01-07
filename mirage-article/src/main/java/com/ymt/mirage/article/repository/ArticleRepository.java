@@ -18,6 +18,6 @@ import com.ymt.pz365.data.jpa.repository.PzRepository;
 @Repository
 public interface ArticleRepository extends PzRepository<Article> {
 
-    List<Article> findByEnableIsFalseAndEnableDateBefore(Date date);
+    List<Article> findByEnableIsFalseAndEnabledIsFalseAndEnableDateBefore(Date date);
 
 }

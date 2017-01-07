@@ -48,6 +48,7 @@ public class OrderExcelWriter extends AbstractExcelWriter<Order> {
         sheet.addCell(new Label(2, rowIndex, new DateTime(data.getCreatedTime()).toString("yyyy-MM-dd"), normalCellFormat));
         sheet.addCell(new Label(3, rowIndex, data.getState().toString(), normalCellFormat));
         sheet.addCell(new Label(4, rowIndex, data.getUser().getNickname(), normalCellFormat));
+        sheet.addCell(new Label(4, rowIndex, data.getUser().getWeixin(), normalCellFormat));
         sheet.addCell(new Label(5, rowIndex, data.getUser().getRealname(), normalCellFormat));
         sheet.addCell(new Label(6, rowIndex, data.getUser().getMobile(), normalCellFormat));
         sheet.addCell(new Label(7, rowIndex, data.getUser().getAddress(), normalCellFormat));
@@ -62,6 +63,7 @@ public class OrderExcelWriter extends AbstractExcelWriter<Order> {
         headers.add("下单时间");
         headers.add("订单状态");
         headers.add("微信昵称");
+        headers.add("微信号");
         headers.add("姓名");
         headers.add("手机号");
         headers.add("收货地址");
