@@ -9,17 +9,22 @@ angular.module('umeditorModule',[]).config(function($stateProvider) {
 	});
 //服务配置
 }).service("umeditorRestService", function($resource, commonService){
-	var config = commonService.getDefaultRestSetting();
+	var config = commonService.getDefaultRestSetting(); 
 	config.getValue = {url:"domain/property", method:"GET"};
 	config.setValue = {url:"domain/property", method:"PUT"};
 	return $resource("domain/:id", {id:"@id"}, config);
 //控制器
 }).controller('umeditorCtrl', function($scope, $stateParams, umeditorRestService, commonService) {
-
+//	console.log(params);
 	$scope.params = {};
+//	$scope.params.target = params.target;
+//	$scope.params.targetId = params.targetId;
+//	$scope.params.targetProp = params.targetProp;
+	
 	$scope.params.target = $stateParams.target;
 	$scope.params.targetId = $stateParams.targetId;
 	$scope.params.targetProp = $stateParams.targetProp;
+
 	
 }).directive('mirageUmeditor', function(commonService, umeditorRestService) {return {
 	restrict : 'A',
@@ -43,7 +48,11 @@ angular.module('umeditorModule',[]).config(function($stateProvider) {
 		var um = UM.getEditor('myEditor');
 		
 		umeditorRestService.getValue(scope.params).$promise.then(function(result){
-			um.setContent(result.content, false);
+			var content = result.content;
+			if(!content) {
+				content = "";
+			}
+			um.setContent(content, false);
 		});
 		
 	}

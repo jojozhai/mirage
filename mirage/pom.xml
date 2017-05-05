@@ -7,7 +7,7 @@
 	<packaging>pom</packaging>
 
 	<properties>
-		<pzx.framework.version>1.0.0-SNAPSHOT</pzx.framework.version>
+		<pzx.framework.version>1.0.1-SNAPSHOT</pzx.framework.version>
 		<mirage.version>1.0.0-SNAPSHOT</mirage.version>
 	</properties>
 

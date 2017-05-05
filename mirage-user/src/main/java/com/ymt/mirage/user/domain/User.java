@@ -156,6 +156,8 @@ public class User extends DomainImpl implements UserDetails {
      * 排序金额 
      */
     private BigDecimal moneySort;
+    
+    private String draw;
 	
 	public boolean isRegisted() {
 	    return StringUtils.isNotBlank(getRealname()) && StringUtils.isNotBlank(getMobile());
@@ -663,6 +665,20 @@ public class User extends DomainImpl implements UserDetails {
      */
     public void setBeans(int beans) {
         this.beans = beans;
+    }
+
+    /**
+     * @return the draw
+     */
+    public String getDraw() {
+        return draw;
+    }
+
+    /**
+     * @param draw the draw to set
+     */
+    public void setDraw(String draw) {
+        this.draw = draw;
     }
 
 }

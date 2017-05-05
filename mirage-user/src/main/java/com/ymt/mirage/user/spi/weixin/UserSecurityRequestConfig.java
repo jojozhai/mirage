@@ -26,7 +26,7 @@ public class UserSecurityRequestConfig extends SecurityRequestConfigAdapter {
 
     @Override
     public String[] getGetRequests() {
-        return new String[]{"/user/current", "/message"};
+        return new String[]{"/user/current", "/message", "/duiba/autologin"};
     }
     
 }

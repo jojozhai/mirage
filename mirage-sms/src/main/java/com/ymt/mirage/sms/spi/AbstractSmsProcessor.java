@@ -13,7 +13,6 @@ import org.springframework.cache.CacheManager;
 import org.springframework.context.ApplicationContext;
 
 import com.ymt.mirage.sms.support.SmsCode;
-import com.ymt.pz365.framework.core.config.cache.CacheNames;
 import com.ymt.pz365.framework.core.exception.PzException;
 
 /**
@@ -31,7 +30,7 @@ public abstract class AbstractSmsProcessor implements SmsProcessor {
 	@Override
 	public String getSmsCodeMessage(String phone) {
 		
-		SmsCode smsCode = cacheManager.getCache(CacheNames.CODE_SMS).get(phone, SmsCode.class);
+		SmsCode smsCode = cacheManager.getCache("code_cms").get(phone, SmsCode.class);
 		if(smsCode != null) {
 			if(new DateTime(smsCode.getApplyTime()).plusMinutes(getSendIntervalMinute()).isAfterNow()){
 				throw new PzException("请求验证码频率过快,请稍后再试");
@@ -43,7 +42,7 @@ public abstract class AbstractSmsProcessor implements SmsProcessor {
 	
 	@Override
 	public void check(String phone, String code) {
-		SmsCode smsCode = cacheManager.getCache(CacheNames.CODE_SMS).get(phone, SmsCode.class);
+		SmsCode smsCode = cacheManager.getCache("code_cms").get(phone, SmsCode.class);
 		if(smsCode == null){
 			throw new PzException("验证码校验失败");
 		}
@@ -82,7 +81,7 @@ public abstract class AbstractSmsProcessor implements SmsProcessor {
 		smsCode = new SmsCode();
 		smsCode.setApplyTime(new Date());
 		smsCode.setCode(code);
-		cacheManager.getCache(CacheNames.CODE_SMS).put(phone, smsCode);
+		cacheManager.getCache("code_cms").put(phone, smsCode);
 		return code;
 	}
 

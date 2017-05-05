@@ -8,6 +8,8 @@ import java.io.InputStream;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URLEncoder;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.lang.StringUtils;
@@ -80,15 +82,19 @@ public class UserPosterServiceImpl implements UserPosterService {
 	@Autowired
 	private ParamService paramService;
 	
-	@Value("${poster.user.point.change.template.id:TOvgurSIjs6kWIzQ-y74yYlAVfzhvDPr5iBFujQ7jVA}")
+//	@Value("${poster.user.point.change.template.id:TOvgurSIjs6kWIzQ-y74yYlAVfzhvDPr5iBFujQ7jVA}")
+	@Value("${poster.user.point.change.template.id:AC3Dl1nIaYyDDidzfyaZL4NEULC-Xkhwz--XE7GKlhs}")
 	private String pointChangeMessageTemplateId;
 
-	@Value("${poster.user.point.active.template.id:731feS0_zCAPj5D0QX2Q46i7l5bpwkDvoRfHf3yMuwc}")
+//	@Value("${poster.user.point.active.template.id:731feS0_zCAPj5D0QX2Q46i7l5bpwkDvoRfHf3yMuwc}")
+	@Value("${poster.user.point.active.template.id:cxneLZQR0_ztvFXuDVZACZ7OpFFsfAYxbDhfpGsKRG8}")
 	private String pointActiveMessageTemplateId;
 	
 	public static void main(String[] args) {
 	    System.out.println(2 << 4);
     }
+	
+	private Set<String> keys = new HashSet<>();
 	
 	/* (non-Javadoc)
 	 * @see com.ymt.mirage.poster.service.UserPosterService#create(java.lang.Long, java.lang.Long)
@@ -99,28 +105,39 @@ public class UserPosterServiceImpl implements UserPosterService {
 	    logger.info("userId:"+userId);
 		logger.info("posterId:"+posterId);
 		
-		User user = userRepository.findOne(userId);
+		String key = userId+""+posterId;
 		
-		
-		if(user != null) {
-		    logger.info(ReflectionToStringBuilder.toString(user));
-		    Poster poster = posterRepository.findOne(posterId);
-	        weixinService.pushTextMessage(user.getWeixinOpenId(), "正在生成海报,请稍候...");
+		if(!keys.contains(key)) {
+		    
+		    keys.add(key);
+		    
+		    User user = userRepository.findOne(userId);
 	        
-	        UserPoster userPoster = userPosterRepository.findByUserIdAndPosterId(userId, posterId);
-	        
-	        if(userPoster == null) {
-	            userPoster = generateNewUserPoster(user, poster);
-	        }else{
-	            if(userPoster.isExpired()){
-	                userPoster.setExpiredTime(new DateTime().plusDays(3).toDate());
-	                setUserPosterProperties(user, poster, userPoster);
+	        if(user != null) {
+	            logger.info(ReflectionToStringBuilder.toString(user));
+	            Poster poster = posterRepository.findOne(posterId);
+	            weixinService.pushTextMessage(user.getWeixinOpenId(), "正在生成海报,请稍候...");
+	            
+	            UserPoster userPoster = userPosterRepository.findByUserIdAndPosterId(userId, posterId);
+	            
+	            if(userPoster == null) {
+	                userPoster = generateNewUserPoster(user, poster);
+	            }else{
+	                if(userPoster.isExpired()){
+	                    userPoster.setExpiredTime(new DateTime().plusDays(3).toDate());
+	                    setUserPosterProperties(user, poster, userPoster);
+	                }
 	            }
+	            
+	            weixinService.pushTextMessage(user.getWeixinOpenId(), poster.getGeneratedTip(userPoster.getExpiredTime()));
+	            weixinService.pushImageMessage(user.getWeixinOpenId(), userPoster.getWeixinMediaId());
 	        }
 	        
-	        weixinService.pushTextMessage(user.getWeixinOpenId(), poster.getGeneratedTip(userPoster.getExpiredTime()));
-	        weixinService.pushImageMessage(user.getWeixinOpenId(), userPoster.getWeixinMediaId());
+	        keys.remove(key);
+	        
 		}
+		
+		
 		
 	}
 
@@ -376,13 +393,13 @@ public class UserPosterServiceImpl implements UserPosterService {
 	 * @since 2016年5月9日
 	 */
 	private TemplateMessage buildActiveMessage(UserPoster userPoster) {
-		String appName = paramService.getParam("app.name").getValue();
+		String appName = paramService.getParam("app.name","霸王课").getValue();
 		User user = userPoster.getUser();
 		Poster poster = userPoster.getPoster();
 		TemplateMessage templateMessage = new TemplateMessage(user.getWeixinOpenId(), pointActiveMessageTemplateId);
 		templateMessage.setUrl(poster.getActiveUrl());
 		templateMessage.addValue("first", appName+"积分服务提醒：");
-		templateMessage.addValue("keyword1", user.getNickname());
+		templateMessage.addValue("keyword1", poster.getActivePoint()+"分");
 		templateMessage.addValue("keyword2", new DateTime().toString("yyyy-MM-dd HH:mm:ss"));
 		templateMessage.addValue("remark", poster.getActiveTip());
 		return templateMessage;

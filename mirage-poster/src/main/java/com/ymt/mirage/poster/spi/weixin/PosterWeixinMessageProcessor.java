@@ -73,7 +73,7 @@ public class PosterWeixinMessageProcessor implements WeixinMessageProcessor {
 			return message.isNewUserScanQrcodeEvent() || message.isOldUserScanQrcodeEvent();
 		}
 	}
-
+	
 	/* (non-Javadoc)
 	 * @see com.ymt.pz365.framework.weixin.spi.message.WeixinMessageProcessor#process(com.ymt.pz365.framework.weixin.dto.ReceivedMessage)
 	 */

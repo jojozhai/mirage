@@ -85,7 +85,7 @@ public class VideoServiceImpl implements VideoService {
 				Videos videos = new Videos();
 				videos.setVideo(video);
 				videos.setSet(videoSetRepository.getOne(setInfo.getId()));
-				videos.setSort(index++);
+				videos.setIndex(index++);
 				videosRepository.save(videos);
 			}
 		}

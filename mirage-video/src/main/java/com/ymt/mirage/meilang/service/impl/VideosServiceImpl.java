@@ -57,7 +57,7 @@ public class VideosServiceImpl implements VideosService {
 	public void update(List<VideosInfo> infos) {
 		for (int i = 0; i < infos.size(); i++) {
 			Videos videos = videosRepository.findOne(infos.get(i).getId());
-			videos.setSort(i);
+			videos.setIndex(i);
 			videosRepository.save(videos);
 		}
 		
