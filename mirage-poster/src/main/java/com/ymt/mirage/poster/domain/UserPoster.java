@@ -5,6 +5,7 @@ package com.ymt.mirage.poster.domain;
 
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
@@ -52,10 +53,12 @@ public class UserPoster extends DomainImpl {
 	/**
 	 * 二维码在阿里OSS服务上的url;
 	 */
+	@Column(length = 2000)
 	private String qrcodeOssUrl;
 	/**
 	 * 整个海报在阿里OSS服务上的url;
 	 */
+	@Column(length = 2000)
 	private String ossUrl;
 	
 	public boolean isExpired() {
