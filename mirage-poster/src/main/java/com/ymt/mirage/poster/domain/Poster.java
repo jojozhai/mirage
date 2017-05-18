@@ -7,6 +7,7 @@ import java.util.Date;
 
 import javax.persistence.Entity;
 
+import org.apache.commons.lang.StringUtils;
 import org.joda.time.DateTime;
 
 import com.ymt.pz365.data.jpa.domain.DomainImpl;
@@ -268,6 +269,10 @@ public class Poster extends DomainImpl {
 	 */
 	public void setActiveUrl(String activeUrl) {
 		this.activeUrl = activeUrl;
+	}
+	
+	public String getActiveUrl(Long id) {
+		return String.format(this.activeUrl, id);
 	}
 	
 }

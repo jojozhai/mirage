@@ -121,7 +121,7 @@ public class DuibaServiceImpl implements DuibaService {
 		
 		DuibaOrder duibaOrder = duibaOrderRepository.findByOrderNum(orderNum);
 		
-		if(!duibaOrder.getPointStatus().equals(DuibaPointStatus.PENDING)) {
+		if(duibaOrder.getPointStatus().equals(DuibaPointStatus.PENDING)) {
 			if(params.isSuccess()){
 				//兑换成功
 				duibaOrder.setOrderStatus(DuibaOrderStatus.SUCCESS);

@@ -3,12 +3,18 @@ package com.ymt.mirage.user.support.duiba;
 public class CreditConsumeResult {
 
 	private boolean success;
+	private String status;
 	private String errorMessage="";
 	private String bizId="";
 	private Long credits=-1L;//用户积分余额
 	
 	public CreditConsumeResult(boolean success){
 		this.success=success;
+		if(success){
+			this.status = "ok";
+		}else{
+			this.status = "fail";
+		}
 	}
 	
 	
@@ -48,6 +54,21 @@ public class CreditConsumeResult {
 
 	public void setCredits(Long credits) {
 		this.credits = credits;
+	}
+
+	/**
+	 * @return the status
+	 */
+	public String getStatus() {
+		return status;
+	}
+
+
+	/**
+	 * @param status the status to set
+	 */
+	public void setStatus(String status) {
+		this.status = status;
 	}
 
 }

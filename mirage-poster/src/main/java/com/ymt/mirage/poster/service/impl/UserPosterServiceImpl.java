@@ -90,6 +90,9 @@ public class UserPosterServiceImpl implements UserPosterService {
 	@Value("${poster.user.point.active.template.id:cxneLZQR0_ztvFXuDVZACZ7OpFFsfAYxbDhfpGsKRG8}")
 	private String pointActiveMessageTemplateId;
 	
+	@Value("${poster.default.point:1}")
+	private int posterPoint;
+	
 	public static void main(String[] args) {
 	    System.out.println(2 << 4);
     }
@@ -361,8 +364,8 @@ public class UserPosterServiceImpl implements UserPosterService {
 	private void doAddSenderPoint(UserPoster senderUserPoster, User scaner) throws Exception {
 		User sender = senderUserPoster.getUser();
 		if(!sender.getId().equals(scaner.getId())) {
-			senderUserPoster.setPointCount(senderUserPoster.getPointCount() + 1);
-			sender.setPoint( sender.getPoint() + 1);
+			senderUserPoster.setPointCount(senderUserPoster.getPointCount() + posterPoint);
+			sender.setPoint( sender.getPoint() + posterPoint);
 			weixinService.pushTemplateMessage(buildPointMessage(scaner, sender));
 			//发送海报激活事件
 			sendPosterActiveMessage(senderUserPoster);
@@ -397,7 +400,7 @@ public class UserPosterServiceImpl implements UserPosterService {
 		User user = userPoster.getUser();
 		Poster poster = userPoster.getPoster();
 		TemplateMessage templateMessage = new TemplateMessage(user.getWeixinOpenId(), pointActiveMessageTemplateId);
-		templateMessage.setUrl(poster.getActiveUrl());
+		templateMessage.setUrl(poster.getActiveUrl(user.getId()));
 		templateMessage.addValue("first", appName+"积分服务提醒：");
 		templateMessage.addValue("keyword1", poster.getActivePoint()+"分");
 		templateMessage.addValue("keyword2", new DateTime().toString("yyyy-MM-dd HH:mm:ss"));
