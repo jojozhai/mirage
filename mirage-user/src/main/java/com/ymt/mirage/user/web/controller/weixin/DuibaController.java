@@ -58,16 +58,16 @@ public class DuibaController implements InitializingBean {
 		Long userId = CurrentUserHolder.getCurrentUserId();
 		params.put("uid", userId.toString());
 		params.put("credits", new Integer(userRepository.findOne(userId).getPoint()).toString());
-		String url = tool.buildUrlWithSign("http://www.duiba.com.cn/autoLogin/autologin?", params);
+		String url = tool.buildUrlWithSign("https://www.duiba.com.cn/autoLogin/autologin?", params);
 		return new SuccessResponse(url);
 	}
 	
-	@RequestMapping(value = "/duiba/autologin/:id", method = RequestMethod.GET)
-	public void toLoginUrl(@PathVariable Long userId, HttpServletResponse response) throws IOException {
+	@RequestMapping(value = "/duiba/autologin/{id}", method = RequestMethod.GET)
+	public void toLoginUrl(@PathVariable Long id, HttpServletResponse response) throws IOException {
 		Map<String, String> params = new HashMap<>();
-		params.put("uid", userId.toString());
-		params.put("credits", new Integer(userRepository.findOne(userId).getPoint()).toString());
-		String url = tool.buildUrlWithSign("http://www.duiba.com.cn/autoLogin/autologin?", params);
+		params.put("uid", id.toString());
+		params.put("credits", new Integer(userRepository.findOne(id).getPoint()).toString());
+		String url = tool.buildUrlWithSign("https://www.duiba.com.cn/autoLogin/autologin?", params);
 		response.sendRedirect(url);
 	}
 	

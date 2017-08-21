@@ -39,6 +39,7 @@ import com.ymt.mirage.poster.repository.spec.UserPosterSpec;
 import com.ymt.mirage.poster.service.UserPosterService;
 import com.ymt.mirage.user.domain.User;
 import com.ymt.mirage.user.repository.UserRepository;
+import com.ymt.mirage.user.service.UserService;
 import com.ymt.pz365.data.jpa.support.AbstractDomain2InfoConverter;
 import com.ymt.pz365.data.jpa.support.QueryResultConverter;
 import com.ymt.pz365.framework.aliyun.oss.OssFileService;
@@ -82,12 +83,18 @@ public class UserPosterServiceImpl implements UserPosterService {
 	@Autowired
 	private ParamService paramService;
 	
+	@Autowired
+	private UserService userService;
+	
 //	@Value("${poster.user.point.change.template.id:TOvgurSIjs6kWIzQ-y74yYlAVfzhvDPr5iBFujQ7jVA}")
-	@Value("${poster.user.point.change.template.id:AC3Dl1nIaYyDDidzfyaZL4NEULC-Xkhwz--XE7GKlhs}")
+//	@Value("${poster.user.point.change.template.id:AC3Dl1nIaYyDDidzfyaZL4NEULC-Xkhwz--XE7GKlhs}")
+//	@Value("${poster.user.point.change.template.id:9uCLyMmViz6cYmM_ea0Hw2ofHa4gB5yf2WozMY72OC8}")
+	@Value("${poster.user.point.change.template.id:mjhB2XsB7E5Bphgk6A5boANseyJJjKd7WZ8f1sK8YEE}")
 	private String pointChangeMessageTemplateId;
-
+	
 //	@Value("${poster.user.point.active.template.id:731feS0_zCAPj5D0QX2Q46i7l5bpwkDvoRfHf3yMuwc}")
-	@Value("${poster.user.point.active.template.id:cxneLZQR0_ztvFXuDVZACZ7OpFFsfAYxbDhfpGsKRG8}")
+//	@Value("${poster.user.point.active.template.id:cxneLZQR0_ztvFXuDVZACZ7OpFFsfAYxbDhfpGsKRG8}")
+	@Value("${poster.user.point.active.template.id:RbGkvW4NhBlQBSuuSOxbHwTSxOLkr9fxjPVceUmI-fM}")
 	private String pointActiveMessageTemplateId;
 	
 	@Value("${poster.default.point:1}")
@@ -103,42 +110,50 @@ public class UserPosterServiceImpl implements UserPosterService {
 	 * @see com.ymt.mirage.poster.service.UserPosterService#create(java.lang.Long, java.lang.Long)
 	 */
 	@Override
-	public void create(Long userId, Long posterId) throws Exception {
+	public void create(User user, Long posterId) throws Exception {
 	    
-	    logger.info("userId:"+userId);
+	    logger.info("userId:"+user.getId());
 		logger.info("posterId:"+posterId);
 		
-		String key = userId+""+posterId;
+		String key = user.getId()+""+posterId;
 		
-		if(!keys.contains(key)) {
-		    
-		    keys.add(key);
-		    
-		    User user = userRepository.findOne(userId);
-	        
-	        if(user != null) {
-	            logger.info(ReflectionToStringBuilder.toString(user));
-	            Poster poster = posterRepository.findOne(posterId);
-	            weixinService.pushTextMessage(user.getWeixinOpenId(), "正在生成海报,请稍候...");
-	            
-	            UserPoster userPoster = userPosterRepository.findByUserIdAndPosterId(userId, posterId);
-	            
-	            if(userPoster == null) {
-	                userPoster = generateNewUserPoster(user, poster);
-	            }else{
-	                if(userPoster.isExpired()){
-	                    userPoster.setExpiredTime(new DateTime().plusDays(3).toDate());
-	                    setUserPosterProperties(user, poster, userPoster);
-	                }
-	            }
-	            
-	            weixinService.pushTextMessage(user.getWeixinOpenId(), poster.getGeneratedTip(userPoster.getExpiredTime()));
-	            weixinService.pushImageMessage(user.getWeixinOpenId(), userPoster.getWeixinMediaId());
-	        }
-	        
-	        keys.remove(key);
-	        
+		try {
+			if(!keys.contains(key)) {
+			    
+			    keys.add(key);
+			    
+//			    User user = userRepository.findOne(userId);
+		        
+		        if(user != null) {
+		            logger.info(ReflectionToStringBuilder.toString(user));
+		            Poster poster = posterRepository.findOne(posterId);
+		            weixinService.pushTextMessage(user.getWeixinOpenId(), "正在生成海报,请稍候...");
+		            
+		            UserPoster userPoster = userPosterRepository.findByUserIdAndPosterId(user.getId(), posterId);
+		            
+		            if(userPoster == null) {
+		                userPoster = generateNewUserPoster(user, poster);
+		            }else{
+		                if(userPoster.isExpired()){
+		                    userPoster.setExpiredTime(new DateTime().plusDays(3).toDate());
+		                    setUserPosterProperties(user, poster, userPoster);
+		                }
+		            }
+		            
+		            weixinService.pushTextMessage(user.getWeixinOpenId(), poster.getGeneratedTip(userPoster.getExpiredTime()));
+		            weixinService.pushImageMessage(user.getWeixinOpenId(), userPoster.getWeixinMediaId());
+		        }
+		        
+		        keys.remove(key);
+		        
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+		} finally {
+			keys.remove(key);
 		}
+		
+		
 		
 		
 		
@@ -334,7 +349,13 @@ public class UserPosterServiceImpl implements UserPosterService {
 			UserPoster senderUserPoster = userPosterRepository.findOne(senderUserPosterId);
 			User scaner = userRepository.findOne(scanerId);
 			createUserPosterScan(senderUserPoster, scaner);
-			doAddSenderPoint(senderUserPoster, scaner);
+			
+			//每个人只能送出一次积分?
+//			List<UserPosterScan> history = userPosterScanRepository.findByUserPosterPosterIdAndScanerId(senderUserPoster.getPoster().getId(), scanerId);
+//			if(CollectionUtils.isEmpty(history)) {
+				doAddSenderPoint(senderUserPoster, scaner);
+//			}
+			
 		}
 	}
 
@@ -365,8 +386,9 @@ public class UserPosterServiceImpl implements UserPosterService {
 		User sender = senderUserPoster.getUser();
 		if(!sender.getId().equals(scaner.getId())) {
 			senderUserPoster.setPointCount(senderUserPoster.getPointCount() + posterPoint);
-			sender.setPoint( sender.getPoint() + posterPoint);
-			weixinService.pushTemplateMessage(buildPointMessage(scaner, sender));
+			
+			userService.changePoint(sender.getId(), posterPoint, "创城代言人");
+			
 			//发送海报激活事件
 			sendPosterActiveMessage(senderUserPoster);
 		}
@@ -383,9 +405,21 @@ public class UserPosterServiceImpl implements UserPosterService {
 		if(senderUserPoster.getPointCount() >= senderUserPoster.getPoster().getActivePoint()) {
 //			if(!senderUserPoster.isActive()) {
 				senderUserPoster.setActive(true);
-				weixinService.pushTemplateMessage(buildActiveMessage(senderUserPoster));
+				weixinService.pushTemplateMessage(buildActiveMessage(senderUserPoster, posterPoint));
 //			}
 		}
+	}
+	
+	private TemplateMessage buildActiveMessage(UserPoster userPoster, Integer amount) {
+//		String appName = paramService.getParam("app.name").getValue();
+		String url = userPoster.getPoster().getActiveUrl(userPoster.getUser().getId());
+		TemplateMessage templateMessage = new TemplateMessage(userPoster.getUser().getWeixinOpenId(), pointChangeMessageTemplateId, url);
+		templateMessage.addValue("first", "好厉害，您的积分已经达标，恭喜您成为创城大使，感谢您对美丽马驹桥活动的支持。点击这个文本框，就可以到积分商城去兑换礼品啦~~~");
+		templateMessage.addValue("keyword1", "创城随手拍");
+		templateMessage.addValue("keyword2", "新增鲜花积分"+amount+"分，累计鲜花积分"+userPoster.getUser().getPoint()+"分");
+		templateMessage.addValue("keyword3", "线上办理");
+		templateMessage.addValue("remark", "美丽城市，全民共建！");
+		return templateMessage;
 	}
 
 	/**
@@ -395,36 +429,17 @@ public class UserPosterServiceImpl implements UserPosterService {
 	 * @author zhailiang
 	 * @since 2016年5月9日
 	 */
-	private TemplateMessage buildActiveMessage(UserPoster userPoster) {
-		String appName = paramService.getParam("app.name","霸王课").getValue();
-		User user = userPoster.getUser();
-		Poster poster = userPoster.getPoster();
-		TemplateMessage templateMessage = new TemplateMessage(user.getWeixinOpenId(), pointActiveMessageTemplateId);
-		templateMessage.setUrl(poster.getActiveUrl(user.getId()));
-		templateMessage.addValue("first", appName+"积分服务提醒：");
-		templateMessage.addValue("keyword1", poster.getActivePoint()+"分");
-		templateMessage.addValue("keyword2", new DateTime().toString("yyyy-MM-dd HH:mm:ss"));
-		templateMessage.addValue("remark", poster.getActiveTip());
-		return templateMessage;
-	}
-
-	/**
-	 * 构建积分变化的模板消息
-	 * @param scaner
-	 * @param sender
-	 * @return
-	 * @since 2016年5月9日
-	 */
-	private TemplateMessage buildPointMessage(User scaner, User sender) {
-		String appName = paramService.getParam("app.name").getValue();
-		TemplateMessage templateMessage = new TemplateMessage(sender.getWeixinOpenId(), pointChangeMessageTemplateId);
-		templateMessage.addValue("first", "亲爱的"+sender.getNickname()+"，您的"+appName+"积分有新的变动，具体内容如下：");
-		templateMessage.addValue("keyword1", new DateTime().toString("yyyy-MM-dd HH:mm:ss"));
-		templateMessage.addValue("keyword2", "1");
-		templateMessage.addValue("keyword3", "好友("+scaner.getNickname()+")通过您的海报关注了"+appName+"的公众号");
-		templateMessage.addValue("keyword4", new Integer(sender.getPoint()).toString());
-		templateMessage.addValue("remark", "感谢您对"+appName+"的支持");
-		return templateMessage;
-	}
+//	private TemplateMessage buildActiveMessage(UserPoster userPoster) {
+//		String appName = paramService.getParam("app.name","霸王课").getValue();
+//		User user = userPoster.getUser();
+//		Poster poster = userPoster.getPoster();
+//		TemplateMessage templateMessage = new TemplateMessage(user.getWeixinOpenId(), pointActiveMessageTemplateId);
+//		templateMessage.setUrl(poster.getActiveUrl(user.getId()));
+//		templateMessage.addValue("first", appName+"积分服务提醒：");
+//		templateMessage.addValue("keyword1", poster.getActivePoint()+"分");
+//		templateMessage.addValue("keyword2", new DateTime().toString("yyyy-MM-dd HH:mm:ss"));
+//		templateMessage.addValue("remark", poster.getActiveTip());
+//		return templateMessage;
+//	}
 
 }

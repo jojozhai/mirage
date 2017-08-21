@@ -10,6 +10,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.web.client.RestClientException;
 
 import com.ymt.mirage.poster.dto.UserPosterInfo;
+import com.ymt.mirage.user.domain.User;
 
 /**
  * @author zhailiang
@@ -17,7 +18,7 @@ import com.ymt.mirage.poster.dto.UserPosterInfo;
  */
 public interface UserPosterService {
 
-	void create(Long userId, Long posterId) throws Exception;
+	void create(User user, Long posterId) throws Exception;
 
 	Page<UserPosterInfo> query(UserPosterInfo condition, Pageable pageable);
 

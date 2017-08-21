@@ -42,4 +42,6 @@ public interface UserService extends UserDetailsService {
 
     void resetPassword(ResetPasswordInfo resetPasswordInfo);
 
+	void changePoint(Long id, int amount, String type) throws Exception;
+
 }

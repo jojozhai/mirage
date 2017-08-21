@@ -7,6 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.ymt.mirage.poster.service.UserPosterService;
+import com.ymt.mirage.user.domain.User;
 
 /**
  * @author zhailiang
@@ -14,7 +15,7 @@ import com.ymt.mirage.poster.service.UserPosterService;
  */
 public class PosterGenerater implements Runnable {
 	
-	private Long userId;
+	private User user;
 	
 	private Long posterId;
 	
@@ -22,8 +23,8 @@ public class PosterGenerater implements Runnable {
 	
 	private Logger logger = LoggerFactory.getLogger(getClass());
 	
-	public PosterGenerater(UserPosterService userPosterService, Long userId, Long posterId){
-		this.userId = userId;
+	public PosterGenerater(UserPosterService userPosterService, User user, Long posterId){
+		this.user = user;
 		this.posterId = posterId;
 		this.userPosterService = userPosterService;
 	}
@@ -34,24 +35,24 @@ public class PosterGenerater implements Runnable {
 	@Override
 	public void run() {
 		try {
-			userPosterService.create(userId, posterId);
+			userPosterService.create(user, posterId);
 		} catch (Exception e) {
 			logger.info("生成海报失败.", e);
 		}
 	}
 
 	/**
-	 * @return the userId
+	 * @return the user
 	 */
-	public Long getUserId() {
-		return userId;
+	public User getUser() {
+		return user;
 	}
 
 	/**
-	 * @param userId the userId to set
+	 * @param user the user to set
 	 */
-	public void setUserId(Long userId) {
-		this.userId = userId;
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 	/**

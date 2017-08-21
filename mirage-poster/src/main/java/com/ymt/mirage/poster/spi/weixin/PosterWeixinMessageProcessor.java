@@ -11,7 +11,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.core.task.TaskExecutor;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.ymt.mirage.poster.domain.Poster;
 import com.ymt.mirage.poster.domain.UserPoster;
@@ -32,6 +34,7 @@ import com.ymt.pz365.framework.weixin.support.message.ReceivedMessage;
  * @since 2016年5月6日
  */
 @Component
+@Transactional
 public class PosterWeixinMessageProcessor implements WeixinMessageProcessor {
 	
 	@Autowired
@@ -78,26 +81,32 @@ public class PosterWeixinMessageProcessor implements WeixinMessageProcessor {
 	 * @see com.ymt.pz365.framework.weixin.spi.message.WeixinMessageProcessor#process(com.ymt.pz365.framework.weixin.dto.ReceivedMessage)
 	 */
 	@Override
+	@Async
 	public void process(ReceivedMessage message) throws Exception {
 		logger.info("process message "+ReflectionToStringBuilder.toString(message));
+		
 		
 		User user = getSender(message);
 		Poster poster = getPoster(message);
 		
 		if(poster != null && user != null) {
-			posterTaskExecutor.execute(new PosterGenerater(userPosterService, user.getId(), poster.getId()));
+//			userPosterService.create(user.getId(), poster.getId());
+			posterTaskExecutor.execute(new PosterGenerater(userPosterService, user, poster.getId()));
 		}
 		
-		UserPoster senderUserPoster = getSenderUserPoster(message);
-		if(senderUserPoster != null) {
-		    
-		    applicationEventPublisher.publishEvent(new ScanQrcodeEvent(senderUserPoster.getUser().getId(), user.getId()));
-		    
-			if(message.isNewUserScanQrcodeEvent() || 
-					(message.isOldUserScanQrcodeEvent() && !senderUserPoster.getPoster().isOnlyNewUserAddPoint())){
-				userPosterService.addSenderPoint(senderUserPoster.getId(), user.getId());
+		if(user != null) {
+			UserPoster senderUserPoster = getSenderUserPoster(message);
+			if(senderUserPoster != null) {
+			    
+			    applicationEventPublisher.publishEvent(new ScanQrcodeEvent(senderUserPoster.getUser().getId(), user.getId()));
+			    
+				if(message.isNewUserScanQrcodeEvent() || 
+						(message.isOldUserScanQrcodeEvent() && !senderUserPoster.getPoster().isOnlyNewUserAddPoint())){
+					userPosterService.addSenderPoint(senderUserPoster.getId(), user.getId());
+				}
 			}
 		}
+		
 	}
 
 	private User getSender(ReceivedMessage message) {

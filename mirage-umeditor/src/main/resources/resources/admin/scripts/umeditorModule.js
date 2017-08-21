@@ -14,20 +14,20 @@ angular.module('umeditorModule',[]).config(function($stateProvider) {
 	config.setValue = {url:"domain/property", method:"PUT"};
 	return $resource("domain/:id", {id:"@id"}, config);
 //控制器
-}).controller('umeditorCtrl', function($scope, $stateParams, umeditorRestService, commonService) {
+}).controller('umeditorCtrl', function($scope, $stateParams, params, umeditorRestService, commonService) {
 //	console.log(params);
 	
 //	varparams = {};
 	
 	$scope.params = {};
 //	
-//	$scope.params.target = params.target || $stateParams.target;
-//	$scope.params.targetId = params.targetId || $stateParams.targetId;
-//	$scope.params.targetProp = params.targetProp || $stateParams.targetProp;
+	$scope.params.target = params.target || $stateParams.target;
+	$scope.params.targetId = params.targetId || $stateParams.targetId;
+	$scope.params.targetProp = params.targetProp || $stateParams.targetProp;
 //	
-	$scope.params.target = $stateParams.target;
-	$scope.params.targetId = $stateParams.targetId;
-	$scope.params.targetProp = $stateParams.targetProp;
+//	$scope.params.target = $stateParams.target;
+//	$scope.params.targetId = $stateParams.targetId;
+//	$scope.params.targetProp = $stateParams.targetProp;
 
 	
 }).directive('mirageUmeditor', function(commonService, umeditorRestService) {return {

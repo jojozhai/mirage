@@ -11,17 +11,7 @@
 		<mirage.version>1.0.0-SNAPSHOT</mirage.version>
 	</properties>
 
-	<repositories>
-		<repository>
-			<id>nexus</id>
-			<name>Idea Nexus Repository</name>
-			<url>http://mvn.pinzhi365.com/nexus/content/groups/public</url>
-		</repository>
-		<repository>
-			<id>mvn-repo</id>
-			<url>http://maven.ansj.org/</url>
-		</repository>
-	</repositories>
+	
 
 	<distributionManagement>
 		<repository>
@@ -35,6 +25,18 @@
 			<url>http://mvn.pinzhi365.com/nexus/content/repositories/snapshots</url>
 		</snapshotRepository>
 	</distributionManagement>
+	
+	<repositories>
+		<repository>
+			<id>nexus</id>
+			<name>Idea Nexus Repository</name>
+			<url>http://mvn.pinzhi365.com/nexus/content/groups/public</url>
+		</repository>
+		<repository>
+			<id>mvn-repo</id>
+			<url>http://maven.ansj.org/</url>
+		</repository>
+	</repositories>
 
 	<dependencyManagement>
 		<dependencies>
