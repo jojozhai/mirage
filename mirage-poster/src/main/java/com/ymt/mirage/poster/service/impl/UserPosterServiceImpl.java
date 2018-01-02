@@ -83,11 +83,13 @@ public class UserPosterServiceImpl implements UserPosterService {
 	private ParamService paramService;
 	
 //	@Value("${poster.user.point.change.template.id:TOvgurSIjs6kWIzQ-y74yYlAVfzhvDPr5iBFujQ7jVA}")
-	@Value("${poster.user.point.change.template.id:AC3Dl1nIaYyDDidzfyaZL4NEULC-Xkhwz--XE7GKlhs}")
+//	@Value("${poster.user.point.change.template.id:AC3Dl1nIaYyDDidzfyaZL4NEULC-Xkhwz--XE7GKlhs}")
+	@Value("${poster.user.point.change.template.id:mjhB2XsB7E5Bphgk6A5boANseyJJjKd7WZ8f1sK8YEE}")
 	private String pointChangeMessageTemplateId;
 
 //	@Value("${poster.user.point.active.template.id:731feS0_zCAPj5D0QX2Q46i7l5bpwkDvoRfHf3yMuwc}")
-	@Value("${poster.user.point.active.template.id:cxneLZQR0_ztvFXuDVZACZ7OpFFsfAYxbDhfpGsKRG8}")
+//	@Value("${poster.user.point.active.template.id:cxneLZQR0_ztvFXuDVZACZ7OpFFsfAYxbDhfpGsKRG8}")
+	@Value("${poster.user.point.active.template.id:_YevTcqP_weOZtEACFw_Jk0eDrtcakVz3OdPGI5fP_A}")
 	private String pointActiveMessageTemplateId;
 	
 	public static void main(String[] args) {
@@ -398,9 +400,10 @@ public class UserPosterServiceImpl implements UserPosterService {
 		Poster poster = userPoster.getPoster();
 		TemplateMessage templateMessage = new TemplateMessage(user.getWeixinOpenId(), pointActiveMessageTemplateId);
 		templateMessage.setUrl(poster.getActiveUrl());
-		templateMessage.addValue("first", appName+"积分服务提醒：");
-		templateMessage.addValue("keyword1", poster.getActivePoint()+"分");
-		templateMessage.addValue("keyword2", new DateTime().toString("yyyy-MM-dd HH:mm:ss"));
+		templateMessage.addValue("first", "同学您好，感谢您的支持，恭喜您报名成功");
+		templateMessage.addValue("keyword1", poster.getName());
+		templateMessage.addValue("keyword2", "霸王课特邀导师");
+		templateMessage.addValue("keyword3", "以通知时间为准");
 		templateMessage.addValue("remark", poster.getActiveTip());
 		return templateMessage;
 	}
@@ -414,13 +417,16 @@ public class UserPosterServiceImpl implements UserPosterService {
 	 */
 	private TemplateMessage buildPointMessage(User scaner, User sender) {
 		String appName = paramService.getParam("app.name").getValue();
+		if(StringUtils.isBlank(appName)){
+		    appName = "霸王课";
+		}
 		TemplateMessage templateMessage = new TemplateMessage(sender.getWeixinOpenId(), pointChangeMessageTemplateId);
 		templateMessage.addValue("first", "亲爱的"+sender.getNickname()+"，您的"+appName+"积分有新的变动，具体内容如下：");
-		templateMessage.addValue("keyword1", new DateTime().toString("yyyy-MM-dd HH:mm:ss"));
-		templateMessage.addValue("keyword2", "1");
-		templateMessage.addValue("keyword3", "好友("+scaner.getNickname()+")通过您的海报关注了"+appName+"的公众号");
+		templateMessage.addValue("keyword1", "1");
+		templateMessage.addValue("keyword2", "好友("+scaner.getNickname()+")为您助力");
+		templateMessage.addValue("keyword3", new DateTime().toString("yyyy-MM-dd HH:mm:ss"));
 		templateMessage.addValue("keyword4", new Integer(sender.getPoint()).toString());
-		templateMessage.addValue("remark", "感谢您对"+appName+"的支持");
+		templateMessage.addValue("remark", "剩余积分达到3分，即可免费参与本次活动");
 		return templateMessage;
 	}
 
